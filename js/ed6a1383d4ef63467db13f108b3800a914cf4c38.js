@@ -1,8 +1,8 @@
 /*
  AnythingSlider v1.5.21 minified using Google Closure Compiler
- By Chris Coyier: http://css-tricks.com
- with major improvements by Doug Neiner: http://pixelgraphics.us/
- based on work by Remy Sharp: http://jqueryfordesigners.com/
+ By Chris Coyier: //css-tricks.com
+ with major improvements by Doug Neiner: //pixelgraphics.us/
+ based on work by Remy Sharp: //jqueryfordesigners.com/
 */
 
 (function(d){d.anythingSlider=function(i,j){var a=this,b;a.$el=d(i).addClass("anythingBase").wrap('<div class="anythingSlider"><div class="anythingWindow" /></div>');a.$el.data("AnythingSlider",a);a.init=function(){a.options=b=d.extend({},d.anythingSlider.defaults,j);a.initialized=!1;d.isFunction(b.onBeforeInitialize)&&a.$el.bind("before_initialize",b.onBeforeInitialize);a.$el.trigger("before_initialize",a);a.$wrapper=a.$el.parent().closest("div.anythingSlider").addClass("anythingSlider-"+b.theme); a.$window=a.$el.closest("div.anythingWindow");a.$controls=d('<div class="anythingControls"></div>').appendTo(b.appendControlsTo!==null&&d(b.appendControlsTo).length?d(b.appendControlsTo):a.$wrapper);a.win=window;a.$win=d(a.win);a.$nav=d('<ul class="thumbNav" />').appendTo(a.$controls);a.flag=!1;a.playing=!1;a.slideshow=!1;a.hovered=!1;a.panelSize=[];a.currentPage=b.startPanel=parseInt(b.startPanel,10)||1;a.adjustLimit=b.infiniteSlides?0:1;a.outerPad=[a.$wrapper.innerWidth()-a.$wrapper.width(),a.$wrapper.innerHeight()- a.$wrapper.height()];b.playRtl&&a.$wrapper.addClass("rtl");a.original=[b.autoPlay,b.buildNavigation,b.buildArrows];if(b.expand)a.$outer=a.$wrapper.parent(),a.$window.css({width:"100%",height:"100%"}),a.outerDim=[a.$outer.width(),a.$outer.height()],a.checkResize();a.updateSlider();a.$lastPage=a.$currentPage;a.runTimes=d("div.anythingSlider").index(a.$wrapper)+1;a.regex=RegExp("panel"+a.runTimes+"-(\\d+)","i");if(!d.isFunction(d.easing[b.easing]))b.easing="swing";b.pauseOnHover&&a.$wrapper.hover(function(){a.playing&& (a.$el.trigger("slideshow_paused",a),a.clearTimer(!0))},function(){a.playing&&(a.$el.trigger("slideshow_unpaused",a),a.startStop(a.playing,!0))});var c,e=b.hashTags?a.gotoHash()||b.startPanel:b.startPanel;a.setCurrentPage(e,!1);a.slideControls(!1);a.$wrapper.bind("mouseenter mouseleave",function(b){a.hovered=b.type==="mouseenter"?!0:!1;a.slideControls(a.hovered,!1)});b.enableKeyboard&&d(document).keyup(function(b){if(a.$wrapper.is(".activeSlider")&&!b.target.tagName.match("TEXTAREA|INPUT|SELECT"))switch(b.which){case 39:a.goForward(); break;case 37:a.goBack()}});c="slideshow_paused slideshow_unpaused slide_init slide_begin slideshow_stop slideshow_start initialized swf_completed".split(" ");d.each("onShowPause onShowUnpause onSlideInit onSlideBegin onShowStop onShowStart onInitialized onSWFComplete".split(" "),function(b,e){d.isFunction(a.options[e])&&a.$el.bind(c[b],a.options[e])});d.isFunction(b.onSlideComplete)&&a.$el.bind("slide_complete",function(){setTimeout(function(){b.onSlideComplete(a)},0)});a.initialized=!0;a.$el.trigger("initialized", a)};a.updateSlider=function(){a.$el.children(".cloned").remove();a.$nav.empty();a.$items=a.$el.children();a.pages=a.$items.length;b.showMultiple=parseInt(b.showMultiple,10)||1;if(b.showMultiple>1){if(b.showMultiple>a.pages)b.showMultiple=a.pages;a.adjustMultiple=b.infiniteSlides&&a.pages>1?0:parseInt(b.showMultiple,10)-1;a.pages=a.$items.length-a.adjustMultiple}if(a.pages<=1)b.autoPlay=!1,b.buildNavigation=!1,b.buildArrows=!1,a.$controls.hide(),a.$nav.hide(),a.$forward&&a.$forward.add(a.$back).hide(); else{b.autoPlay=a.original[0];b.buildNavigation=a.original[1];b.buildArrows=a.original[2];a.$controls.show();a.$nav.show();a.$forward&&a.$forward.add(a.$back).show();a.buildNavigation();if(b.autoPlay)a.playing=!b.startStopped,a.buildAutoPlay();b.buildArrows&&a.buildNextBackButtons()}b.infiniteSlides&&a.pages>1&&(a.$el.prepend(a.$items.filter(":last").clone().addClass("cloned").removeAttr("id")),b.showMultiple>1?a.$el.append(a.$items.filter(":lt("+b.showMultiple+")").clone().addClass("cloned").addClass("multiple").removeAttr("id")): a.$el.append(a.$items.filter(":first").clone().addClass("cloned").removeAttr("id")),a.$el.find(".cloned").each(function(){d(this).find("a,input,textarea,select").attr("disabled","disabled");d(this).find("[id]").removeAttr("id")}));a.$items=a.$el.children().addClass("panel");a.setDimensions();b.resizeContents?(b.width&&(a.$items.css("width",b.width),a.$wrapper.css("width",a.getDim(a.currentPage)[0])),b.height&&a.$wrapper.add(a.$items).css("height",b.height)):a.$win.load(function(){a.setDimensions()}); if(a.currentPage>a.pages)a.currentPage=a.pages;a.setCurrentPage(a.currentPage,!1);a.$nav.find("a").eq(a.currentPage-1).addClass("cur");a.hasEmb=a.$items.find("embed[src*=youtube]").length;a.hasSwfo=typeof swfobject!=="undefined"&&swfobject.hasOwnProperty("embedSWF")&&d.isFunction(swfobject.embedSWF)?!0:!1;a.hasEmb&&a.hasSwfo&&a.$items.find("embed[src*=youtube]").each(function(c){var e=d(this).parent()[0].tagName==="OBJECT"?d(this).parent():d(this);e.wrap('<div id="ytvideo'+c+'"></div>');swfobject.embedSWF(d(this).attr("src")+ "&enablejsapi=1&version=3&playerapiid=ytvideo"+c,"ytvideo"+c,e.attr("width"),e.attr("height"),"10",null,null,{allowScriptAccess:"always",wmode:b.addWmodeToObject,allowfullscreen:!0},{"class":e.attr("class"),style:e.attr("style")},function(){c>=a.hasEmb-1&&a.$el.trigger("swf_completed",a)})});b.showMultiple===!1&&a.$items.find("a").unbind("focus").bind("focus",function(b){a.$items.find(".focusedLink").removeClass("focusedLink");d(this).addClass("focusedLink");var e=d(this).closest(".panel");e.is(".activePage")|| (a.gotoPage(a.$items.index(e)),b.preventDefault())})};a.buildNavigation=function(){var c,e,f;b.buildNavigation&&a.pages>1&&a.$items.filter(":not(.cloned)").each(function(g){var h=g+1;e=(h===1?"first":"")+(h===a.pages?"last":"");f=d('<a href="#"></a>').addClass("panel"+h).wrap('<li class="'+e+'" />');a.$nav.append(f.parent());d.isFunction(b.navigationFormatter)?(c=b.navigationFormatter(h,d(this)),f.html("<span>"+c+"</span>"),parseInt(f.find("span").css("text-indent"),10)<0&&f.addClass(b.tooltipClass).attr("title", c)):f.html("<span>"+h+"</span>");f.bind(b.clickControls,function(c){if(!a.flag&&b.enableNavigation)a.flag=!0,setTimeout(function(){a.flag=!1},100),a.gotoPage(h),b.hashTags&&a.setHash(h);c.preventDefault()})})};a.buildNextBackButtons=function(){if(!a.$forward)a.$forward=d('<span class="arrow forward"><a href="#"><span>'+b.forwardText+"</span></a></span>"),a.$back=d('<span class="arrow back"><a href="#"><span>'+b.backText+"</span></a></span>"),a.$back.bind(b.clickArrows,function(b){a.goBack();b.preventDefault()}), a.$forward.bind(b.clickArrows,function(b){a.goForward();b.preventDefault()}),a.$back.add(a.$forward).find("a").bind("focusin focusout",function(){d(this).toggleClass("hover")}),a.$wrapper.prepend(a.$forward).prepend(a.$back),a.$arrowWidth=a.$forward.width()};a.buildAutoPlay=function(){if(!(a.$startStop||a.pages<2))a.$startStop=d("<a href='#' class='start-stop'></a>").html("<span>"+(a.playing?b.stopText:b.startText)+"</span>"),a.$controls.prepend(a.$startStop),a.$startStop.bind(b.clickSlideshow,function(c){b.enablePlay&& (a.startStop(!a.playing),a.playing&&(b.playRtl?a.goBack(!0):a.goForward(!0)));c.preventDefault()}).bind("focusin focusout",function(){d(this).toggleClass("hover")}),a.startStop(a.playing)};a.checkResize=function(b){clearTimeout(a.resizeTimer);a.resizeTimer=setTimeout(function(){var e=a.$outer.width(),d=a.$outer[0].tagName==="BODY"?a.$win.height():a.$outer.height(),g=a.outerDim;if(g[0]!==e||g[1]!==d)a.outerDim=[e,d],a.setDimensions(),a.gotoPage(a.currentPage,a.playing,null,1);typeof b==="undefined"&& a.checkResize()},500)};a.setDimensions=function(){var c,e,f,g,h,i=0,k=b.showMultiple>1?b.width||a.$window.width()/b.showMultiple:a.$window.width(),j=a.$win.width();b.expand&&(c=a.$outer.width()-a.outerPad[0],e=a.$outer.height()-a.outerPad[1],a.$wrapper.add(a.$window).add(a.$items).css({width:c,height:e}),k=b.showMultiple>1?c/b.showMultiple:c);a.$items.each(function(l){f=d(this).children("*");b.resizeContents?(c=parseInt(b.width,10)||k,e=parseInt(b.height,10)||a.$window.height(),d(this).css({width:c, height:e}),f.length===1&&(f.css({width:"100%",height:"100%"}),f[0].tagName==="OBJECT"&&f.find("embed").andSelf().attr({width:"100%",height:"100%"}))):(c=d(this).width(),h=c>=j?!0:!1,f.length===1&&h&&(g=f.width()>=j?k:f.width(),d(this).css("width",g),f.css("max-width",g),c=g),c=h?b.width||k:c,d(this).css("width",c),e=d(this).outerHeight(),d(this).css("height",e));a.panelSize[l]=[c,e,i];i+=c});a.$el.css("width",i<b.maxOverallWidth?i:b.maxOverallWidth)};a.getDim=function(c){var c=b.infiniteSlides&&a.pages> 1?c:c-1,e,d=a.panelSize[c][0],g=a.panelSize[c][1];if(b.showMultiple>1)for(e=1;e<b.showMultiple;e++)d+=a.panelSize[(c+e)%b.showMultiple][0],g=Math.max(g,a.panelSize[c+e][1]);return[d,g]};a.gotoPage=function(c,e,d,g){if(!(a.pages<=1)){a.$lastPage=a.$currentPage;if(typeof c!=="number")c=b.startPanel,a.setCurrentPage(c);if(!a.hasEmb||!a.checkVideo(a.playing))c>a.pages+1-a.adjustLimit&&(c=!b.infiniteSlides&&!b.stopAtEnd?1:a.pages),c<a.adjustLimit&&(c=!b.infiniteSlides&&!b.stopAtEnd?a.pages:1),a.currentPage= c>a.pages?a.pages:c<1?1:a.currentPage,a.$currentPage=a.$items.eq(a.currentPage-a.adjustLimit),a.exactPage=c,a.$targetPage=a.$items.eq(c===0?a.pages-a.adjustLimit:c>a.pages?1-a.adjustLimit:c-a.adjustLimit),a.$el.trigger("slide_init",a),a.slideControls(!0,!1),e!==!0&&(e=!1),(!e||b.stopAtEnd&&c===a.pages)&&a.startStop(!1),a.$el.trigger("slide_begin",a),b.resizeContents||(e=a.getDim(c),a.$wrapper.filter(":not(:animated)").animate({width:e[0],height:e[1]},{queue:!1,duration:g||b.animationTime,easing:b.easing})), a.$el.filter(":not(:animated)").animate({left:-a.panelSize[b.infiniteSlides&&a.pages>1?c:c-1][2]},{queue:!1,duration:g||b.animationTime,easing:b.easing,complete:function(){a.endAnimation(c,d)}})}};a.endAnimation=function(c,e){c===0?(a.$el.css("left",-a.panelSize[a.pages][2]),c=a.pages):c>a.pages&&(a.$el.css("left",-a.panelSize[1][2]),c=1);a.exactPage=c;a.setCurrentPage(c,!1);a.$items.removeClass("activePage").eq(c-a.adjustLimit).addClass("activePage");a.hovered||a.slideControls(!1);if(a.hasEmb){var f= a.$currentPage.find("object[id*=ytvideo], embed[id*=ytvideo]");f.length&&d.isFunction(f[0].getPlayerState)&&f[0].getPlayerState()>0&&f[0].getPlayerState()!==5&&f[0].playVideo()}a.$el.trigger("slide_complete",a);typeof e==="function"&&e(a);b.autoPlayLocked&&!a.playing&&setTimeout(function(){a.startStop(!0)},b.resumeDelay-b.delay)};a.setCurrentPage=function(c,e){c=parseInt(c,10);c>a.pages+1-a.adjustLimit&&(c=a.pages-a.adjustLimit);c<a.adjustLimit&&(c=1);b.buildNavigation&&(a.$nav.find(".cur").removeClass("cur"), a.$nav.find("a").eq(c-1).addClass("cur"));!b.infiniteSlides&&b.stopAtEnd&&(a.$wrapper.find("span.forward")[c===a.pages?"addClass":"removeClass"]("disabled"),a.$wrapper.find("span.back")[c===1?"addClass":"removeClass"]("disabled"),c===a.pages&&a.playing&&a.startStop());if(!e){var f=a.getDim(c);a.$wrapper.css({width:f[0],height:f[1]});a.$wrapper.scrollLeft(0);a.$el.css("left",-a.panelSize[b.infiniteSlides&&a.pages>1?c:c-1][2])}a.currentPage=c;a.$currentPage=a.$items.eq(c-a.adjustLimit).addClass("activePage"); a.$wrapper.is(".activeSlider")||(d(".activeSlider").removeClass("activeSlider"),a.$wrapper.addClass("activeSlider"))};a.goForward=function(b){b!==!0&&(b=!1,a.startStop(!1));a.gotoPage(a.currentPage+1,b)};a.goBack=function(b){b!==!0&&(b=!1,a.startStop(!1));a.gotoPage(a.currentPage-1,b)};a.gotoHash=function(){var b=a.win.location.hash.match(a.regex);return b===null?"":parseInt(b[1],10)};a.setHash=function(b){var e="panel"+a.runTimes+"-",d=a.win.location.hash;if(typeof d!=="undefined")a.win.location.hash= d.indexOf(e)>0?d.replace(a.regex,e+b):d+"&"+e+b};a.slideControls=function(c){var d=c?0:b.animationTime,f=c?b.animationTime:0,g=c?1:0,h=c?0:1;b.toggleControls&&a.$controls.stop(!0,!0).delay(d)[c?"slideDown":"slideUp"](b.animationTime/2).delay(f);b.buildArrows&&b.toggleArrows&&(!a.hovered&&a.playing&&(h=1,g=0),a.$forward.stop(!0,!0).delay(d).animate({right:h*a.$arrowWidth,opacity:g},b.animationTime/2),a.$back.stop(!0,!0).delay(d).animate({left:h*a.$arrowWidth,opacity:g},b.animationTime/2))};a.clearTimer= function(b){if(a.timer&&(a.win.clearInterval(a.timer),!b&&a.slideshow))a.$el.trigger("slideshow_stop",a),a.slideshow=!1};a.startStop=function(c,d){c!==!0&&(c=!1);if(c&&!d)a.$el.trigger("slideshow_start",a),a.slideshow=!0;a.playing=c;b.autoPlay&&(a.$startStop.toggleClass("playing",c).html("<span>"+(c?b.stopText:b.startText)+"</span>"),parseInt(a.$startStop.find("span").css("text-indent"),10)<0&&a.$startStop.addClass(b.tooltipClass).attr("title",c?"Stop":"Start"));c?(a.clearTimer(!0),a.timer=a.win.setInterval(function(){if(!a.hasEmb|| !a.checkVideo(c))b.playRtl?a.goBack(!0):a.goForward(!0)},b.delay)):a.clearTimer()};a.checkVideo=function(c){var e,f,g=!1;a.$items.find("object[id*=ytvideo], embed[id*=ytvideo]").each(function(){e=d(this);e.length&&d.isFunction(e[0].getPlayerState)&&(f=e[0].getPlayerState(),c&&(f===1||f>2)&&a.$items.index(e.closest(".panel"))===a.currentPage&&b.resumeOnVideoEnd?g=!0:f>0&&e[0].pauseVideo())});return g};a.init()};d.anythingSlider.defaults={width:null,height:null,expand:!1,resizeContents:!0,showMultiple:!1, tooltipClass:"tooltip",theme:"default",startPanel:1,hashTags:!0,infiniteSlides:!0,enableKeyboard:!0,buildArrows:!0,toggleArrows:!1,buildNavigation:!0,enableNavigation:!0,toggleControls:!1,appendControlsTo:null,navigationFormatter:null,forwardText:"&raquo;",backText:"&laquo;",enablePlay:!0,autoPlay:!0,autoPlayLocked:!1,startStopped:!1,pauseOnHover:!0,resumeOnVideoEnd:!0,stopAtEnd:!1,playRtl:!1,startText:"Start",stopText:"Stop",delay:3E3,resumeDelay:15E3,animationTime:600,easing:"swing",clickArrows:"click", clickControls:"click focusin",clickSlideshow:"click",addWmodeToObject:"opaque",maxOverallWidth:32766};d.fn.anythingSlider=function(i,j){return this.each(function(){var a,b=d(this).data("AnythingSlider");(typeof i).match("object|undefined")?b?b.updateSlider():new d.anythingSlider(this,i):/\d/.test(i)&&!isNaN(i)&&b&&(a=typeof i==="number"?i:parseInt(d.trim(i),10),a>=1&&a<=b.pages&&b.gotoPage(a,!1,j))})}})(jQuery);
@@ -13,14 +13,14 @@
  */
 (function(h){h.fn.anythingSliderFx=function(g){var l=h(this).closest(".anythingSlider"),i=l.width(),n=l.height(),o=function(a){return{top:[{inFx:{top:0},outFx:{top:"-"+(a||n)}}],bottom:[{inFx:{bottom:0},outFx:{bottom:a||n}}],left:[{inFx:{left:0},outFx:{left:"-"+(a||i)}}],right:[{inFx:{right:0},outFx:{right:a||i}}],fade:[{inFx:{opacity:1},outFx:{opacity:0}}],expand:[{inFx:{width:"100%",top:"0%",left:"0%"},outFx:{width:a||"10%",top:"50%",left:"50%"}}],listLR:[{inFx:{left:0,opacity:1},outFx:[{left:a|| i,opacity:0},{left:"-"+(a||i),opacity:0}],selector:[":odd",":even"]}],listRL:[{inFx:{left:0,opacity:1},outFx:[{left:a||i,opacity:0},{left:"-"+(a||i),opacity:0}],selector:[":even",":odd"]}],"caption-Top":[{inFx:{top:0,opacity:0.8},outFx:{top:"-"+a||-50,opacity:0}}],"caption-Right":[{inFx:{right:0,opacity:0.8},outFx:{right:"-"+a||-150,opacity:0}}],"caption-Bottom":[{inFx:{bottom:0,opacity:0.8},outFx:{bottom:"-"+a||-50,opacity:0}}],"caption-Left":[{inFx:{left:0,opacity:0.8},outFx:{left:"-"+a||-150,opacity:0}}]}}; return this.each(function(){var a=o(),k={easing:"swing",timeIn:400,timeOut:350},i=function(e){e.each(function(){h(this).closest(".panel").is(".activePage")||h(this).css("visibility","hidden")})},m=function(e,a,c){if(!(e.length===0||typeof a==="undefined")){var b=a[0]||a,d=b[1]||"",h=parseInt(d===""?b.duration:b[0].duration,10);if(c&&(e.css("position")!=="absolute"&&e.css({position:"relative"}),e.stop(),d!=="")){e.filter(a[1][0]).animate(b[0],{queue:!1,duration:h,easing:b[0].easing});e.filter(a[1][1]).animate(d, {queue:!1,duration:h,easing:b[0].easing,complete:function(){setTimeout(function(){i(e)},k.timeOut)}});return}c||e.css("visibility","visible").show();e.animate(b,{queue:!1,duration:h,easing:b.easing,complete:function(){c&&setTimeout(function(){i(e)},k.timeOut)}})}},l=function(e,f){var c,b,d=f?"outFx":"inFx",g={},i=f?k.timeOut:k.timeIn,j=h.trim(e[0].replace(/\s+/g," ")).split(" ");if(f&&j.length===1&&a.hasOwnProperty(j)&&typeof a[j][0].selector!=="undefined")return b=a[j][0].outFx,b[0].duration=e[2]|| k.timeOut,b[0].easing=e[3]||k.easing,[b,a[j][0].selector||[]];h.each(j,function(b,f){if(a.hasOwnProperty(f)){var j=f==="fade"?1:2;c=typeof e[1]==="undefined"?a:o(e[1]);h.extend(!0,g,c[f][0][d]);g.duration=e[j]||g.duration||i;g.easing=e[j+1]||k.easing}});return[g]};h(this).bind("slide_init",function(a,f){var c,b,d=f.$lastPage.add(f.$items.eq(f.exactPage));f.exactPage===0&&(d=d.add(f.$items.eq(f.pages)));d=d.find("*").andSelf();for(c in g)if(c==="outFx")for(b in g.outFx)d.filter(b).length&&m(d.filter(b), g.outFx[b],!0);else c!=="inFx"&&h.isArray(g[c])&&d.filter(c).length&&m(d.filter(c),l(g[c],!0),!0)}).bind("slide_complete",function(a,f){var c,b,d=f.$currentPage.add(f.$items.eq(f.exactPage)),d=d.find("*").andSelf();for(c in g)if(c==="inFx")for(b in g.inFx)d.filter(b).length&&m(d.filter(b),g.inFx[b],!1);else c!=="outFx"&&h.isArray(g[c])&&d.filter(c).length&&m(d.filter(c),l(g[c],!1),!1)})})}})(jQuery);
 /*
- * jQuery EasIng v1.1.2 - http://gsgd.co.uk/sandbox/jquery.easIng.php
+ * jQuery EasIng v1.1.2 - //gsgd.co.uk/sandbox/jquery.easIng.php
  *
  * Uses the built In easIng capabilities added In jQuery 1.1
  * to offer multiple easIng options
  *
  * Copyright (c) 2007 George Smith
  * Licensed under the MIT License:
- *   http://www.opensource.org/licenses/mit-license.php
+ *   //www.opensource.org/licenses/mit-license.php
  */
 
 // t: current time, b: begInnIng value, c: change In value, d: duration
@@ -129,7 +129,7 @@ jQuery.extend( jQuery.easing,
 		return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
 	},
 	easeInOutBack: function (x, t, b, c, d, s) {
-		if (s == undefined) s = 1.70158; 
+		if (s == undefined) s = 1.70158;
 		if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
 		return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
 	},
@@ -151,18 +151,18 @@ jQuery.extend( jQuery.easing,
 		if (t < d/2) return jQuery.easing.easeInBounce (x, t*2, 0, c, d) * .5 + b;
 		return jQuery.easing.easeOutBounce (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
 	}
-});/*	SWFObject v2.2 <http://code.google.com/p/swfobject/> 
-	is released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
+});/*	SWFObject v2.2 <//code.google.com/p/swfobject/>
+	is released under the MIT License <//www.opensource.org/licenses/mit-license.php>
 */
 var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="ShockwaveFlash.ShockwaveFlash",q="application/x-shockwave-flash",R="SWFObjectExprInst",x="onreadystatechange",O=window,j=document,t=navigator,T=false,U=[h],o=[],N=[],I=[],l,Q,E,B,J=false,a=false,n,G,m=true,M=function(){var aa=typeof j.getElementById!=D&&typeof j.getElementsByTagName!=D&&typeof j.createElement!=D,ah=t.userAgent.toLowerCase(),Y=t.platform.toLowerCase(),ae=Y?/win/.test(Y):/win/.test(ah),ac=Y?/mac/.test(Y):/mac/.test(ah),af=/webkit/.test(ah)?parseFloat(ah.replace(/^.*webkit\/(\d+(\.\d+)?).*$/,"$1")):false,X=!+"\v1",ag=[0,0,0],ab=null;if(typeof t.plugins!=D&&typeof t.plugins[S]==r){ab=t.plugins[S].description;if(ab&&!(typeof t.mimeTypes!=D&&t.mimeTypes[q]&&!t.mimeTypes[q].enabledPlugin)){T=true;X=false;ab=ab.replace(/^.*\s+(\S+\s+\S+$)/,"$1");ag[0]=parseInt(ab.replace(/^(.*)\..*$/,"$1"),10);ag[1]=parseInt(ab.replace(/^.*\.(.*)\s.*$/,"$1"),10);ag[2]=/[a-zA-Z]/.test(ab)?parseInt(ab.replace(/^.*[a-zA-Z]+(.*)$/,"$1"),10):0}}else{if(typeof O.ActiveXObject!=D){try{var ad=new ActiveXObject(W);if(ad){ab=ad.GetVariable("$version");if(ab){X=true;ab=ab.split(" ")[1].split(",");ag=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}}catch(Z){}}}return{w3:aa,pv:ag,wk:af,ie:X,win:ae,mac:ac}}(),k=function(){if(!M.w3){return}if((typeof j.readyState!=D&&j.readyState=="complete")||(typeof j.readyState==D&&(j.getElementsByTagName("body")[0]||j.body))){f()}if(!J){if(typeof j.addEventListener!=D){j.addEventListener("DOMContentLoaded",f,false)}if(M.ie&&M.win){j.attachEvent(x,function(){if(j.readyState=="complete"){j.detachEvent(x,arguments.callee);f()}});if(O==top){(function(){if(J){return}try{j.documentElement.doScroll("left")}catch(X){setTimeout(arguments.callee,0);return}f()})()}}if(M.wk){(function(){if(J){return}if(!/loaded|complete/.test(j.readyState)){setTimeout(arguments.callee,0);return}f()})()}s(f)}}();function f(){if(J){return}try{var Z=j.getElementsByTagName("body")[0].appendChild(C("span"));Z.parentNode.removeChild(Z)}catch(aa){return}J=true;var X=U.length;for(var Y=0;Y<X;Y++){U[Y]()}}function K(X){if(J){X()}else{U[U.length]=X}}function s(Y){if(typeof O.addEventListener!=D){O.addEventListener("load",Y,false)}else{if(typeof j.addEventListener!=D){j.addEventListener("load",Y,false)}else{if(typeof O.attachEvent!=D){i(O,"onload",Y)}else{if(typeof O.onload=="function"){var X=O.onload;O.onload=function(){X();Y()}}else{O.onload=Y}}}}}function h(){if(T){V()}else{H()}}function V(){var X=j.getElementsByTagName("body")[0];var aa=C(r);aa.setAttribute("type",q);var Z=X.appendChild(aa);if(Z){var Y=0;(function(){if(typeof Z.GetVariable!=D){var ab=Z.GetVariable("$version");if(ab){ab=ab.split(" ")[1].split(",");M.pv=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}else{if(Y<10){Y++;setTimeout(arguments.callee,10);return}}X.removeChild(aa);Z=null;H()})()}else{H()}}function H(){var ag=o.length;if(ag>0){for(var af=0;af<ag;af++){var Y=o[af].id;var ab=o[af].callbackFn;var aa={success:false,id:Y};if(M.pv[0]>0){var ae=c(Y);if(ae){if(F(o[af].swfVersion)&&!(M.wk&&M.wk<312)){w(Y,true);if(ab){aa.success=true;aa.ref=z(Y);ab(aa)}}else{if(o[af].expressInstall&&A()){var ai={};ai.data=o[af].expressInstall;ai.width=ae.getAttribute("width")||"0";ai.height=ae.getAttribute("height")||"0";if(ae.getAttribute("class")){ai.styleclass=ae.getAttribute("class")}if(ae.getAttribute("align")){ai.align=ae.getAttribute("align")}var ah={};var X=ae.getElementsByTagName("param");var ac=X.length;for(var ad=0;ad<ac;ad++){if(X[ad].getAttribute("name").toLowerCase()!="movie"){ah[X[ad].getAttribute("name")]=X[ad].getAttribute("value")}}P(ai,ah,Y,ab)}else{p(ae);if(ab){ab(aa)}}}}}else{w(Y,true);if(ab){var Z=z(Y);if(Z&&typeof Z.SetVariable!=D){aa.success=true;aa.ref=Z}ab(aa)}}}}}function z(aa){var X=null;var Y=c(aa);if(Y&&Y.nodeName=="OBJECT"){if(typeof Y.SetVariable!=D){X=Y}else{var Z=Y.getElementsByTagName(r)[0];if(Z){X=Z}}}return X}function A(){return !a&&F("6.0.65")&&(M.win||M.mac)&&!(M.wk&&M.wk<312)}function P(aa,ab,X,Z){a=true;E=Z||null;B={success:false,id:X};var ae=c(X);if(ae){if(ae.nodeName=="OBJECT"){l=g(ae);Q=null}else{l=ae;Q=X}aa.id=R;if(typeof aa.width==D||(!/%$/.test(aa.width)&&parseInt(aa.width,10)<310)){aa.width="310"}if(typeof aa.height==D||(!/%$/.test(aa.height)&&parseInt(aa.height,10)<137)){aa.height="137"}j.title=j.title.slice(0,47)+" - Flash Player Installation";var ad=M.ie&&M.win?"ActiveX":"PlugIn",ac="MMredirectURL="+O.location.toString().replace(/&/g,"%26")+"&MMplayerType="+ad+"&MMdoctitle="+j.title;if(typeof ab.flashvars!=D){ab.flashvars+="&"+ac}else{ab.flashvars=ac}if(M.ie&&M.win&&ae.readyState!=4){var Y=C("div");X+="SWFObjectNew";Y.setAttribute("id",X);ae.parentNode.insertBefore(Y,ae);ae.style.display="none";(function(){if(ae.readyState==4){ae.parentNode.removeChild(ae)}else{setTimeout(arguments.callee,10)}})()}u(aa,ab,X)}}function p(Y){if(M.ie&&M.win&&Y.readyState!=4){var X=C("div");Y.parentNode.insertBefore(X,Y);X.parentNode.replaceChild(g(Y),X);Y.style.display="none";(function(){if(Y.readyState==4){Y.parentNode.removeChild(Y)}else{setTimeout(arguments.callee,10)}})()}else{Y.parentNode.replaceChild(g(Y),Y)}}function g(ab){var aa=C("div");if(M.win&&M.ie){aa.innerHTML=ab.innerHTML}else{var Y=ab.getElementsByTagName(r)[0];if(Y){var ad=Y.childNodes;if(ad){var X=ad.length;for(var Z=0;Z<X;Z++){if(!(ad[Z].nodeType==1&&ad[Z].nodeName=="PARAM")&&!(ad[Z].nodeType==8)){aa.appendChild(ad[Z].cloneNode(true))}}}}}return aa}function u(ai,ag,Y){var X,aa=c(Y);if(M.wk&&M.wk<312){return X}if(aa){if(typeof ai.id==D){ai.id=Y}if(M.ie&&M.win){var ah="";for(var ae in ai){if(ai[ae]!=Object.prototype[ae]){if(ae.toLowerCase()=="data"){ag.movie=ai[ae]}else{if(ae.toLowerCase()=="styleclass"){ah+=' class="'+ai[ae]+'"'}else{if(ae.toLowerCase()!="classid"){ah+=" "+ae+'="'+ai[ae]+'"'}}}}}var af="";for(var ad in ag){if(ag[ad]!=Object.prototype[ad]){af+='<param name="'+ad+'" value="'+ag[ad]+'" />'}}aa.outerHTML='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'+ah+">"+af+"</object>";N[N.length]=ai.id;X=c(ai.id)}else{var Z=C(r);Z.setAttribute("type",q);for(var ac in ai){if(ai[ac]!=Object.prototype[ac]){if(ac.toLowerCase()=="styleclass"){Z.setAttribute("class",ai[ac])}else{if(ac.toLowerCase()!="classid"){Z.setAttribute(ac,ai[ac])}}}}for(var ab in ag){if(ag[ab]!=Object.prototype[ab]&&ab.toLowerCase()!="movie"){e(Z,ab,ag[ab])}}aa.parentNode.replaceChild(Z,aa);X=Z}}return X}function e(Z,X,Y){var aa=C("param");aa.setAttribute("name",X);aa.setAttribute("value",Y);Z.appendChild(aa)}function y(Y){var X=c(Y);if(X&&X.nodeName=="OBJECT"){if(M.ie&&M.win){X.style.display="none";(function(){if(X.readyState==4){b(Y)}else{setTimeout(arguments.callee,10)}})()}else{X.parentNode.removeChild(X)}}}function b(Z){var Y=c(Z);if(Y){for(var X in Y){if(typeof Y[X]=="function"){Y[X]=null}}Y.parentNode.removeChild(Y)}}function c(Z){var X=null;try{X=j.getElementById(Z)}catch(Y){}return X}function C(X){return j.createElement(X)}function i(Z,X,Y){Z.attachEvent(X,Y);I[I.length]=[Z,X,Y]}function F(Z){var Y=M.pv,X=Z.split(".");X[0]=parseInt(X[0],10);X[1]=parseInt(X[1],10)||0;X[2]=parseInt(X[2],10)||0;return(Y[0]>X[0]||(Y[0]==X[0]&&Y[1]>X[1])||(Y[0]==X[0]&&Y[1]==X[1]&&Y[2]>=X[2]))?true:false}function v(ac,Y,ad,ab){if(M.ie&&M.mac){return}var aa=j.getElementsByTagName("head")[0];if(!aa){return}var X=(ad&&typeof ad=="string")?ad:"screen";if(ab){n=null;G=null}if(!n||G!=X){var Z=C("style");Z.setAttribute("type","text/css");Z.setAttribute("media",X);n=aa.appendChild(Z);if(M.ie&&M.win&&typeof j.styleSheets!=D&&j.styleSheets.length>0){n=j.styleSheets[j.styleSheets.length-1]}G=X}if(M.ie&&M.win){if(n&&typeof n.addRule==r){n.addRule(ac,Y)}}else{if(n&&typeof j.createTextNode!=D){n.appendChild(j.createTextNode(ac+" {"+Y+"}"))}}}function w(Z,X){if(!m){return}var Y=X?"visible":"hidden";if(J&&c(Z)){c(Z).style.visibility=Y}else{v("#"+Z,"visibility:"+Y)}}function L(Y){var Z=/[\\\"<>\.;]/;var X=Z.exec(Y)!=null;return X&&typeof encodeURIComponent!=D?encodeURIComponent(Y):Y}var d=function(){if(M.ie&&M.win){window.attachEvent("onunload",function(){var ac=I.length;for(var ab=0;ab<ac;ab++){I[ab][0].detachEvent(I[ab][1],I[ab][2])}var Z=N.length;for(var aa=0;aa<Z;aa++){y(N[aa])}for(var Y in M){M[Y]=null}M=null;for(var X in swfobject){swfobject[X]=null}swfobject=null})}}();return{registerObject:function(ab,X,aa,Z){if(M.w3&&ab&&X){var Y={};Y.id=ab;Y.swfVersion=X;Y.expressInstall=aa;Y.callbackFn=Z;o[o.length]=Y;w(ab,false)}else{if(Z){Z({success:false,id:ab})}}},getObjectById:function(X){if(M.w3){return z(X)}},embedSWF:function(ab,ah,ae,ag,Y,aa,Z,ad,af,ac){var X={success:false,id:ah};if(M.w3&&!(M.wk&&M.wk<312)&&ab&&ah&&ae&&ag&&Y){w(ah,false);K(function(){ae+="";ag+="";var aj={};if(af&&typeof af===r){for(var al in af){aj[al]=af[al]}}aj.data=ab;aj.width=ae;aj.height=ag;var am={};if(ad&&typeof ad===r){for(var ak in ad){am[ak]=ad[ak]}}if(Z&&typeof Z===r){for(var ai in Z){if(typeof am.flashvars!=D){am.flashvars+="&"+ai+"="+Z[ai]}else{am.flashvars=ai+"="+Z[ai]}}}if(F(Y)){var an=u(aj,am,ah);if(aj.id==ah){w(ah,true)}X.success=true;X.ref=an}else{if(aa&&A()){aj.data=aa;P(aj,am,ah,ac);return}else{w(ah,true)}}if(ac){ac(X)}})}else{if(ac){ac(X)}}},switchOffAutoHideShow:function(){m=false},ua:M,getFlashPlayerVersion:function(){return{major:M.pv[0],minor:M.pv[1],release:M.pv[2]}},hasFlashPlayerVersion:F,createSWF:function(Z,Y,X){if(M.w3){return u(Z,Y,X)}else{return undefined}},showExpressInstall:function(Z,aa,X,Y){if(M.w3&&A()){P(Z,aa,X,Y)}},removeSWF:function(X){if(M.w3){y(X)}},createCSS:function(aa,Z,Y,X){if(M.w3){v(aa,Z,Y,X)}},addDomLoadEvent:K,addLoadEvent:s,getQueryParamValue:function(aa){var Z=j.location.search||j.location.hash;if(Z){if(/\?/.test(Z)){Z=Z.split("?")[1]}if(aa==null){return L(Z)}var Y=Z.split("&");for(var X=0;X<Y.length;X++){if(Y[X].substring(0,Y[X].indexOf("="))==aa){return L(Y[X].substring((Y[X].indexOf("=")+1)))}}}return""},expressInstallCallback:function(){if(a){var X=c(R);if(X&&l){X.parentNode.replaceChild(l,X);if(Q){w(Q,true);if(M.ie&&M.win){l.style.display="block"}}if(E){E(B)}}a=false}}}}();/** @license
 
  SoundManager 2: JavaScript Sound for the Web
  ----------------------------------------------
- http://schillmania.com/projects/soundmanager2/
+ //schillmania.com/projects/soundmanager2/
 
  Copyright (c) 2007, Scott Schiller. All rights reserved.
  Code provided under the BSD License:
- http://schillmania.com/projects/soundmanager2/license.txt
+ //schillmania.com/projects/soundmanager2/license.txt
 
  V2.97a.20110424
 */
@@ -322,16 +322,16 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 					});
 		}
 	});
-	
+
 	$(function () {
 		if ( $.cookie('muteMusic') == 'mute' ) {
 			$('#mute').toggleClass("mutted") ;
 		}
 	});
-	
+
 	soundManager.ontimeout(function() {
 	});
-	
+
 	$('#mute').click(function() {
 		$(this).toggleClass("mutted");
 		if($(this).hasClass("mutted")) {
@@ -345,17 +345,17 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				});
 			$.cookie('muteMusic', null);
 		}
-	
-	
+
+
 	});
 	// ColorBox v1.3.17.2 - a full featured, light-weight, customizable lightbox based on jQuery 1.3+
 // Copyright (c) 2011 Jack Moore - jack@colorpowered.com
-// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+// Licensed under the MIT license: //www.opensource.org/licenses/mit-license.php
 
 (function ($, document, window) {
 	var
-	// ColorBox Default Settings.	
-	// See http://colorpowered.com/colorbox for details.
+	// ColorBox Default Settings.
+	// See //colorpowered.com/colorbox for details.
 	defaults = {
 		transition: "elastic",
 		speed: 300,
@@ -396,7 +396,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 		onComplete: false,
 		onCleanup: false,
 		onClosed: false,
-		overlayClose: true,		
+		overlayClose: true,
 		escKey: true,
 		arrowKey: true,
         top: false,
@@ -406,20 +406,20 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
         fixed: false,
         data: false
 	},
-	
+
 	// Abstracting the HTML and event identifiers for easy rebranding
 	colorbox = 'colorbox',
 	prefix = 'cbox',
     boxElement = prefix + 'Element',
-	
-	// Events	
+
+	// Events
 	event_open = prefix + '_open',
 	event_load = prefix + '_load',
 	event_complete = prefix + '_complete',
 	event_cleanup = prefix + '_cleanup',
 	event_closed = prefix + '_closed',
 	event_purge = prefix + '_purge',
-	
+
 	// Special Handling for IE
 	isIE = $.browser.msie && !$.support.opacity, // Detects IE6,7,8.  IE9 supports opacity.  Feature detection alone gave a false positive on at least one phone browser and on some development versions of Chrome, hence the user-agent test.
 	isIE6 = isIE && $.browser.version < 7,
@@ -462,13 +462,13 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
     handler,
     loadingTimer,
     publicMethod;
-	
+
 	// ****************
 	// HELPER FUNCTIONS
 	// ****************
 
 	// jQuery object generator to reduce code size
-	function $div(id, cssText, div) { 
+	function $div(id, cssText, div) {
 		div = document.createElement('div');
 		if (id) {
             div.id = prefix + id;
@@ -481,27 +481,27 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	function setSize(size, dimension) {
 		return Math.round((/%/.test(size) ? ((dimension === 'x' ? $window.width() : $window.height()) / 100) : 1) * parseInt(size, 10));
 	}
-	
+
 	// Checks an href to see if it is a photo.
 	// There is a force photo option (photo: true) for hrefs that cannot be matched by this regex.
 	function isImage(url) {
 		return settings.photo || /\.(gif|png|jpg|jpeg|bmp)(?:\?([^#]*))?(?:#(\.*))?$/i.test(url);
 	}
-	
+
 	// Assigns function results to their respective settings.  This allows functions to be used as values.
 	function makeSettings(i) {
         settings = $.extend({}, $.data(element, colorbox));
-        
+
 		for (i in settings) {
 			if ($.isFunction(settings[i]) && i.substring(0, 2) !== 'on') { // checks to make sure the function isn't one of the callbacks, they will be handled at the appropriate time.
 			    settings[i] = settings[i].call(element);
 			}
 		}
-        
+
 		settings.rel = settings.rel || element.rel || 'nofollow';
 		settings.href = settings.href || $(element).attr('href');
 		settings.title = settings.title || element.title;
-        
+
         if (typeof settings.href === "string") {
             settings.href = $.trim(settings.href);
         }
@@ -523,7 +523,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 		start,
 		stop,
 		clear;
-		
+
 		if (settings.slideshow && $related[1]) {
 			start = function () {
 				$slideshow
@@ -541,7 +541,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				$box.removeClass(className + "off").addClass(className + "on");
 				timeOut = setTimeout(publicMethod.next, settings.slideshowSpeed);
 			};
-			
+
 			stop = function () {
 				clearTimeout(timeOut);
 				$slideshow
@@ -550,7 +550,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 					.one(click, start);
 				$box.removeClass(className + "on").addClass(className + "off");
 			};
-			
+
 			if (settings.slideshowAuto) {
 				start();
 			} else {
@@ -563,34 +563,34 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 
 	function launch(target) {
 		if (!closing) {
-			
+
 			element = target;
-			
+
 			makeSettings();
-			
+
 			$related = $(element);
-			
+
 			index = 0;
-			
+
 			if (settings.rel !== 'nofollow') {
 				$related = $('.' + boxElement).filter(function () {
 					var relRelated = $.data(this, colorbox).rel || this.rel;
 					return (relRelated === settings.rel);
 				});
 				index = $related.index(element);
-				
+
 				// Check direct calls to ColorBox.
 				if (index === -1) {
 					$related = $related.add(element);
 					index = $related.length - 1;
 				}
 			}
-			
+
 			if (!open) {
 				open = active = true; // Prevents the page-change action from queuing up if the visitor holds down the left or right keys.
-				
+
 				$box.show();
-				
+
 				if (settings.returnFocus) {
 					try {
 						element.blur();
@@ -605,28 +605,28 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 						// do nothing
 					}
 				}
-				
+
 				// +settings.opacity avoids a problem in IE when using non-zero-prefixed-string-values, like '.5'
 				$overlay.css({"opacity": +settings.opacity, "cursor": settings.overlayClose ? "pointer" : "auto"}).show();
-				
+
 				// Opens inital empty ColorBox prior to content being loaded.
 				settings.w = setSize(settings.initialWidth, 'x');
 				settings.h = setSize(settings.initialHeight, 'y');
 				publicMethod.position();
-				
+
 				if (isIE6) {
 					$window.bind('resize.' + event_ie6 + ' scroll.' + event_ie6, function () {
 						$overlay.css({width: $window.width(), height: $window.height(), top: $window.scrollTop(), left: $window.scrollLeft()});
 					}).trigger('resize.' + event_ie6);
 				}
-				
+
 				trigger(event_open, settings.onOpen);
-				
+
 				$groupControls.add($title).hide();
-				
+
 				$close.html(settings.close).show();
 			}
-			
+
 			publicMethod.load(true);
 		}
 	}
@@ -636,12 +636,12 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	// Usage format: $.fn.colorbox.close();
 	// Usage from within an iframe: parent.$.fn.colorbox.close();
 	// ****************
-	
+
 	publicMethod = $.fn[colorbox] = $[colorbox] = function (options, callback) {
 		var $this = this;
-		
+
         options = options || {};
-        
+
 		if (!$this[0]) {
 			if ($this.selector) { // if a selector was given and it didn't match any elements, go ahead and exit.
                 return $this;
@@ -650,20 +650,20 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			$this = $('<a/>');
 			options.open = true; // assume an immediate open
 		}
-		
+
 		if (callback) {
 			options.onComplete = callback;
 		}
-		
+
 		$this.each(function () {
 			$.data(this, colorbox, $.extend({}, $.data(this, colorbox) || defaults, options));
 			$(this).addClass(boxElement);
 		});
-		
+
         if (($.isFunction(options.open) && options.open.call($this)) || options.open) {
 			launch($this[0]);
 		}
-        
+
 		return $this;
 	};
 
@@ -675,7 +675,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 		$window = $(window);
 		$box = $div().attr({id: colorbox, 'class': isIE ? prefix + (isIE6 ? 'IE6' : 'IE') : ''});
 		$overlay = $div("Overlay", isIE6 ? 'position:absolute' : '').hide();
-		
+
 		$wrap = $div("Wrapper");
 		$content = $div("Content").append(
 			$loaded = $div("LoadedContent", 'width:0; height:0; overflow:hidden'),
@@ -704,27 +704,27 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				$div("BottomRight")
 			)
 		).children().children().css({'float': 'left'});
-		
+
 		$loadingBay = $div(false, 'position:absolute; width:9999px; visibility:hidden; display:none');
-		
+
 		$('body').prepend($overlay, $box.append($wrap, $loadingBay));
-		
+
 		$content.children()
 		.hover(function () {
 			$(this).addClass('hover');
 		}, function () {
 			$(this).removeClass('hover');
 		}).addClass('hover');
-		
+
 		// Cache values needed for size calculations
 		interfaceHeight = $topBorder.height() + $bottomBorder.height() + $content.outerHeight(true) - $content.height();//Subtraction needed for IE6
 		interfaceWidth = $leftBorder.width() + $rightBorder.width() + $content.outerWidth(true) - $content.width();
 		loadedHeight = $loaded.outerHeight(true);
 		loadedWidth = $loaded.outerWidth(true);
-		
+
 		// Setting padding to remove the need to do size conversions during the animation step.
 		$box.css({"padding-bottom": interfaceHeight, "padding-right": interfaceWidth}).hide();
-		
+
         // Setup button events.
         // Anonymous functions here keep the public method from being cached, thereby allowing them to be redefined on the fly.
         $next.click(function () {
@@ -736,19 +736,19 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
         $close.click(function () {
             publicMethod.close();
         });
-		
+
 		$groupControls = $next.add($prev).add($current).add($slideshow);
-		
+
 		// Adding the 'hover' class allowed the browser to load the hover-state
 		// background graphics in case the images were not part of a sprite.  The class can now can be removed.
 		$content.children().removeClass('hover');
-		
+
 		$overlay.click(function () {
 			if (settings.overlayClose) {
 				publicMethod.close();
 			}
 		});
-		
+
 		// Set Navigation Key Bindings
 		$(document).bind('keydown.' + prefix, function (e) {
             var key = e.keyCode;
@@ -767,7 +767,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			}
 		});
 	};
-	
+
 	publicMethod.remove = function () {
 		$box.add($overlay).remove();
 		$('.' + boxElement).removeData(colorbox).removeClass(boxElement);
@@ -775,12 +775,12 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 
 	publicMethod.position = function (speed, loadedCallback) {
         var top = 0, left = 0;
-        
+
         $window.unbind('resize.' + prefix);
-        
-        // remove the modal so that it doesn't influence the document width/height        
+
+        // remove the modal so that it doesn't influence the document width/height
         $box.hide();
-        
+
         if (settings.fixed && !isIE6) {
             $box.css({position: 'fixed'});
         } else {
@@ -788,7 +788,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
             left = $window.scrollLeft();
             $box.css({position: 'absolute'});
         }
-        
+
 		// keeps the top and left positions within the browser's viewport.
         if (settings.right !== false) {
             left += Math.max($window.width() - settings.w - loadedWidth - interfaceWidth - setSize(settings.right, 'x'), 0);
@@ -797,7 +797,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
         } else {
             left += Math.round(Math.max($window.width() - settings.w - loadedWidth - interfaceWidth, 0) / 2);
         }
-        
+
         if (settings.bottom !== false) {
             top += Math.max(document.documentElement.clientHeight - settings.h - loadedHeight - interfaceHeight - setSize(settings.bottom, 'y'), 0);
         } else if (settings.top !== false) {
@@ -805,38 +805,38 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
         } else {
             top += Math.round(Math.max(document.documentElement.clientHeight - settings.h - loadedHeight - interfaceHeight, 0) / 2);
         }
-        
+
         $box.show();
-        
+
 		// setting the speed to 0 to reduce the delay between same-sized content.
 		speed = ($box.width() === settings.w + loadedWidth && $box.height() === settings.h + loadedHeight) ? 0 : speed || 0;
-        
+
 		// this gives the wrapper plenty of breathing room so it's floated contents can move around smoothly,
 		// but it has to be shrank down around the size of div#colorbox when it's done.  If not,
 		// it can invoke an obscure IE bug when using iframes.
 		$wrap[0].style.width = $wrap[0].style.height = "9999px";
-		
+
 		function modalDimensions(that) {
 			// loading overlay height has to be explicitly set for IE6.
 			$topBorder[0].style.width = $bottomBorder[0].style.width = $content[0].style.width = that.style.width;
 			$loadingOverlay[0].style.height = $loadingOverlay[1].style.height = $content[0].style.height = $leftBorder[0].style.height = $rightBorder[0].style.height = that.style.height;
 		}
-		
+
 		$box.dequeue().animate({width: settings.w + loadedWidth, height: settings.h + loadedHeight, top: top, left: left}, {
 			duration: speed,
 			complete: function () {
 				modalDimensions(this);
-				
+
 				active = false;
-				
+
 				// shrink the wrapper down to exactly the size of colorbox to avoid a bug in IE's iframe implementation.
 				$wrap[0].style.width = (settings.w + loadedWidth + interfaceWidth) + "px";
 				$wrap[0].style.height = (settings.h + loadedHeight + interfaceHeight) + "px";
-				
+
 				if (loadedCallback) {
 					loadedCallback();
 				}
-                
+
                 setTimeout(function(){  // small delay before binding onresize due to an IE8 bug.
                     $window.bind('resize.' + prefix, publicMethod.position);
                 }, 1);
@@ -850,7 +850,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	publicMethod.resize = function (options) {
 		if (open) {
 			options = options || {};
-			
+
 			if (options.width) {
 				settings.w = setSize(options.width, 'x') - loadedWidth - interfaceWidth;
 			}
@@ -858,20 +858,20 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				settings.w = setSize(options.innerWidth, 'x');
 			}
 			$loaded.css({width: settings.w});
-			
+
 			if (options.height) {
 				settings.h = setSize(options.height, 'y') - loadedHeight - interfaceHeight;
 			}
 			if (options.innerHeight) {
 				settings.h = setSize(options.innerHeight, 'y');
 			}
-			if (!options.innerHeight && !options.height) {				
+			if (!options.innerHeight && !options.height) {
 				var $child = $loaded.wrapInner("<div style='overflow:auto'></div>").children(); // temporary wrapper to get an accurate estimate of just how high the total content should be.
 				settings.h = $child.height();
 				$child.replaceWith($child.children()); // ditch the temporary wrapper div used in height calculation
 			}
 			$loaded.css({height: settings.h});
-			
+
 			publicMethod.position(settings.transition === "none" ? 0 : settings.speed);
 		}
 	};
@@ -880,12 +880,12 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 		if (!open) {
 			return;
 		}
-		
+
 		var callback, speed = settings.transition === "none" ? 0 : settings.speed;
-		
+
 		$loaded.remove();
 		$loaded = $div('LoadedContent').append(object);
-		
+
 		function getWidth() {
 			settings.w = settings.w || $loaded.width();
 			settings.w = settings.mw && settings.mw < settings.w ? settings.mw : settings.w;
@@ -896,20 +896,20 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			settings.h = settings.mh && settings.mh < settings.h ? settings.mh : settings.h;
 			return settings.h;
 		}
-		
+
 		$loaded.hide()
 		.appendTo($loadingBay.show())// content has to be appended to the DOM for accurate size calculations.
 		.css({width: getWidth(), overflow: settings.scrolling ? 'auto' : 'hidden'})
 		.css({height: getHeight()})// sets the height independently from the width in case the new width influences the value of height.
 		.prependTo($content);
-		
+
 		$loadingBay.hide();
-		
+
 		// floating the IMG removes the bottom line-height and fixed a problem where IE miscalculates the width of the parent element as 100% of the document width.
 		//$(photo).css({'float': 'none', marginLeft: 'auto', marginRight: 'auto'});
-		
+
         $(photo).css({'float': 'none'});
-        
+
 		// Hides SELECT elements in IE6 because they would otherwise sit on top of the overlay.
 		if (isIE6) {
 			$('select').not($box.find('select')).filter(function () {
@@ -918,62 +918,62 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				this.style.visibility = 'inherit';
 			});
 		}
-		
+
 		callback = function () {
             var prev, prevSrc, next, nextSrc, total = $related.length, iframe, complete;
-            
+
             if (!open) {
                 return;
             }
-            
+
             function removeFilter() {
                 if (isIE) {
                     $box[0].style.removeAttribute('filter');
                 }
             }
-            
+
             complete = function () {
                 clearTimeout(loadingTimer);
                 $loadingOverlay.hide();
                 trigger(event_complete, settings.onComplete);
             };
-            
+
             if (isIE) {
                 //This fadeIn helps the bicubic resampling to kick-in.
                 if (photo) {
                     $loaded.fadeIn(100);
                 }
             }
-            
+
             $title.html(settings.title).add($loaded).show();
-            
+
             if (total > 1) { // handle grouping
                 if (typeof settings.current === "string") {
                     $current.html(settings.current.replace('{current}', index + 1).replace('{total}', total)).show();
                 }
-                
+
                 $next[(settings.loop || index < total - 1) ? "show" : "hide"]().html(settings.next);
                 $prev[(settings.loop || index) ? "show" : "hide"]().html(settings.previous);
-                
+
                 prev = index ? $related[index - 1] : $related[total - 1];
                 next = index < total - 1 ? $related[index + 1] : $related[0];
-                
+
                 if (settings.slideshow) {
                     $slideshow.show();
                 }
-                
+
                 // Preloads images within a rel group
                 if (settings.preloading) {
                     nextSrc = $.data(next, colorbox).href || next.href;
                     prevSrc = $.data(prev, colorbox).href || prev.href;
-                    
+
                     nextSrc = $.isFunction(nextSrc) ? nextSrc.call(next) : nextSrc;
                     prevSrc = $.isFunction(prevSrc) ? prevSrc.call(prev) : prevSrc;
-                    
+
                     if (isImage(nextSrc)) {
                         $('<img/>')[0].src = nextSrc;
                     }
-                    
+
                     if (isImage(prevSrc)) {
                         $('<img/>')[0].src = prevSrc;
                     }
@@ -981,10 +981,10 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
             } else {
                 $groupControls.hide();
             }
-            
+
             if (settings.iframe) {
                 iframe = $('<iframe/>').addClass(prefix + 'Iframe')[0];
-                
+
                 if (settings.fastIframe) {
                     complete();
                 } else {
@@ -992,30 +992,30 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
                 }
                 iframe.name = prefix + (+new Date());
                 iframe.src = settings.href;
-                
+
                 if (!settings.scrolling) {
                     iframe.scrolling = "no";
                 }
-                
+
                 if (isIE) {
                     iframe.frameBorder = 0;
                     iframe.allowTransparency = "true";
                 }
-                
+
                 $(iframe).appendTo($loaded).one(event_purge, function () {
                     iframe.src = "//about:blank";
                 });
             } else {
                 complete();
             }
-            
+
             if (settings.transition === 'fade') {
                 $box.fadeTo(speed, 1, removeFilter);
             } else {
                 removeFilter();
             }
 		};
-		
+
 		if (settings.transition === 'fade') {
 			$box.fadeTo(speed, 0, function () {
 				publicMethod.position(0, callback);
@@ -1027,33 +1027,33 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 
 	publicMethod.load = function (launched) {
 		var href, setResize, prep = publicMethod.prep;
-		
+
 		active = true;
-		
+
 		photo = false;
-		
+
 		element = $related[index];
-		
+
 		if (!launched) {
 			makeSettings();
 		}
-		
+
 		trigger(event_purge);
-		
+
 		trigger(event_load, settings.onLoad);
-		
+
 		settings.h = settings.height ?
 				setSize(settings.height, 'y') - loadedHeight - interfaceHeight :
 				settings.innerHeight && setSize(settings.innerHeight, 'y');
-		
+
 		settings.w = settings.width ?
 				setSize(settings.width, 'x') - loadedWidth - interfaceWidth :
 				settings.innerWidth && setSize(settings.innerWidth, 'x');
-		
+
 		// Sets the minimum dimensions for use in image scaling
 		settings.mw = settings.w;
 		settings.mh = settings.h;
-		
+
 		// Re-evaluate the minimum width and height based on maxWidth and maxHeight values.
 		// If the width or height exceed the maxWidth or maxHeight, use the maximum values instead.
 		if (settings.maxWidth) {
@@ -1064,13 +1064,13 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			settings.mh = setSize(settings.maxHeight, 'y') - loadedHeight - interfaceHeight;
 			settings.mh = settings.h && settings.h < settings.mh ? settings.h : settings.mh;
 		}
-		
+
 		href = settings.href;
-		
+
         loadingTimer = setTimeout(function () {
             $loadingOverlay.show();
         }, 100);
-        
+
 		if (settings.inline) {
 			// Inserts an empty placeholder where inline content is being pulled from.
 			// An event is bound to put inline content back when ColorBox closes or loads new content.
@@ -1094,11 +1094,11 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			.load(function () {
 				var percent;
 				photo.onload = null; //stops animated gifs from firing the onload repeatedly.
-				
+
 				if (settings.scalePhotos) {
 					setResize = function () {
 						photo.height -= photo.height * percent;
-						photo.width -= photo.width * percent;	
+						photo.width -= photo.width * percent;
 					};
 					if (settings.mw && photo.width > settings.mw) {
 						percent = (photo.width - settings.mw) / photo.width;
@@ -1109,27 +1109,27 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 						setResize();
 					}
 				}
-				
+
 				if (settings.h) {
 					photo.style.marginTop = Math.max(settings.h - photo.height, 0) / 2 + 'px';
 				}
-				
+
 				if ($related[1] && (index < $related.length - 1 || settings.loop)) {
 					photo.style.cursor = 'pointer';
 					photo.onclick = function () {
                         publicMethod.next();
                     };
 				}
-				
+
 				if (isIE) {
 					photo.style.msInterpolationMode = 'bicubic';
 				}
-				
+
 				setTimeout(function () { // A pause because Chrome will sometimes report a 0 by 0 size otherwise.
 					prep(photo);
 				}, 1);
 			});
-			
+
 			setTimeout(function () { // A pause because Opera 10.6+ will sometimes not run the onload function otherwise.
 				photo.src = href;
 			}, 1);
@@ -1139,7 +1139,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			});
 		}
 	};
-        
+
 	// Navigates to the next page/image in a set.
 	publicMethod.next = function () {
 		if (!active && $related[1] && (index < $related.length - 1 || settings.loop)) {
@@ -1147,7 +1147,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			publicMethod.load();
 		}
 	};
-	
+
 	publicMethod.prev = function () {
 		if (!active && $related[1] && (index || settings.loop)) {
 			index = index ? index - 1 : $related.length - 1;
@@ -1158,25 +1158,25 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	// Note: to use this within an iframe use the following format: parent.$.fn.colorbox.close();
 	publicMethod.close = function () {
 		if (open && !closing) {
-			
+
 			closing = true;
-			
+
 			open = false;
-			
+
 			trigger(event_cleanup, settings.onCleanup);
-			
+
 			$window.unbind('.' + prefix + ' .' + event_ie6);
-			
+
 			$overlay.fadeTo(200, 0);
-			
+
 			$box.stop().fadeTo(300, 0, function () {
-                 
+
 				$box.add($overlay).css({'opacity': 1, cursor: 'auto'}).hide();
-				
+
 				trigger(event_purge);
-				
+
 				$loaded.remove();
-				
+
 				setTimeout(function () {
 					closing = false;
 					trigger(event_closed, settings.onClosed);
@@ -1192,7 +1192,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	};
 
 	publicMethod.settings = defaults;
-    
+
 	// Bind the live event before DOM-ready for maximum performance in IE6 & 7.
     handler = function (e) {
         // checks to see if it was a non-left mouse-click and for clicks modified with ctrl, shift, or alt.
@@ -1201,21 +1201,21 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
             launch(this);
         }
     };
-    
+
     if ($.fn.delegate) {
         $(document).delegate('.' + boxElement, 'click', handler);
     } else {
         $('.' + boxElement).live('click', handler);
     }
-    
+
 	// Initializes ColorBox when the DOM has loaded
 	$(publicMethod.init);
 
 }(jQuery, document, this));window.log=function(){log.history=log.history||[];log.history.push(arguments);if(this.console){arguments.callee=arguments.callee.caller;console.log(Array.prototype.slice.call(arguments))}};(function(e){function h(){}for(var g="assert,count,debug,dir,dirxml,error,exception,group,groupCollapsed,groupEnd,info,log,markTimeline,profile,profileEnd,time,timeEnd,trace,warn".split(","),f;f=g.pop();){e[f]=e[f]||h}})(window.console=window.console||{});jQuery.cookie=function(c,l,p){if(typeof l!="undefined"||(c&&typeof c!="string")){if(typeof c=="string"){p=p||{};if(l===null){l="";p.expires=-1}var e="";if(p.expires&&(typeof p.expires=="number"||p.expires.toUTCString)){var g;if(typeof p.expires=="number"){g=new Date();g.setTime(g.getTime()+(p.expires*24*60*60*1000))}else{g=p.expires}e="; expires="+g.toUTCString()}var o=p.path?"; path="+(p.path):"";var h=p.domain?"; domain="+(p.domain):"";var a=p.secure?"; secure":"";document.cookie=c+"="+encodeURIComponent(l)+e+o+h+a}else{for(var f in c){jQuery.cookie(f,c[f],l||p)}}}else{var b={};if(document.cookie){var m=document.cookie.split(";");for(var j=0;j<m.length;j++){var d=jQuery.trim(m[j]);if(!c){var k=d.indexOf("=");b[d.substr(0,k)]=decodeURIComponent(d.substr(k+1))}else{if(d.substr(0,c.length+1)==(c+"=")){b=decodeURIComponent(d.substr(c.length+1));break}}}}return b}};/*
  AnythingSlider v1.5.21 minified using Google Closure Compiler
- By Chris Coyier: http://css-tricks.com
- with major improvements by Doug Neiner: http://pixelgraphics.us/
- based on work by Remy Sharp: http://jqueryfordesigners.com/
+ By Chris Coyier: //css-tricks.com
+ with major improvements by Doug Neiner: //pixelgraphics.us/
+ based on work by Remy Sharp: //jqueryfordesigners.com/
 */
 
 (function(d){d.anythingSlider=function(i,j){var a=this,b;a.$el=d(i).addClass("anythingBase").wrap('<div class="anythingSlider"><div class="anythingWindow" /></div>');a.$el.data("AnythingSlider",a);a.init=function(){a.options=b=d.extend({},d.anythingSlider.defaults,j);a.initialized=!1;d.isFunction(b.onBeforeInitialize)&&a.$el.bind("before_initialize",b.onBeforeInitialize);a.$el.trigger("before_initialize",a);a.$wrapper=a.$el.parent().closest("div.anythingSlider").addClass("anythingSlider-"+b.theme); a.$window=a.$el.closest("div.anythingWindow");a.$controls=d('<div class="anythingControls"></div>').appendTo(b.appendControlsTo!==null&&d(b.appendControlsTo).length?d(b.appendControlsTo):a.$wrapper);a.win=window;a.$win=d(a.win);a.$nav=d('<ul class="thumbNav" />').appendTo(a.$controls);a.flag=!1;a.playing=!1;a.slideshow=!1;a.hovered=!1;a.panelSize=[];a.currentPage=b.startPanel=parseInt(b.startPanel,10)||1;a.adjustLimit=b.infiniteSlides?0:1;a.outerPad=[a.$wrapper.innerWidth()-a.$wrapper.width(),a.$wrapper.innerHeight()- a.$wrapper.height()];b.playRtl&&a.$wrapper.addClass("rtl");a.original=[b.autoPlay,b.buildNavigation,b.buildArrows];if(b.expand)a.$outer=a.$wrapper.parent(),a.$window.css({width:"100%",height:"100%"}),a.outerDim=[a.$outer.width(),a.$outer.height()],a.checkResize();a.updateSlider();a.$lastPage=a.$currentPage;a.runTimes=d("div.anythingSlider").index(a.$wrapper)+1;a.regex=RegExp("panel"+a.runTimes+"-(\\d+)","i");if(!d.isFunction(d.easing[b.easing]))b.easing="swing";b.pauseOnHover&&a.$wrapper.hover(function(){a.playing&& (a.$el.trigger("slideshow_paused",a),a.clearTimer(!0))},function(){a.playing&&(a.$el.trigger("slideshow_unpaused",a),a.startStop(a.playing,!0))});var c,e=b.hashTags?a.gotoHash()||b.startPanel:b.startPanel;a.setCurrentPage(e,!1);a.slideControls(!1);a.$wrapper.bind("mouseenter mouseleave",function(b){a.hovered=b.type==="mouseenter"?!0:!1;a.slideControls(a.hovered,!1)});b.enableKeyboard&&d(document).keyup(function(b){if(a.$wrapper.is(".activeSlider")&&!b.target.tagName.match("TEXTAREA|INPUT|SELECT"))switch(b.which){case 39:a.goForward(); break;case 37:a.goBack()}});c="slideshow_paused slideshow_unpaused slide_init slide_begin slideshow_stop slideshow_start initialized swf_completed".split(" ");d.each("onShowPause onShowUnpause onSlideInit onSlideBegin onShowStop onShowStart onInitialized onSWFComplete".split(" "),function(b,e){d.isFunction(a.options[e])&&a.$el.bind(c[b],a.options[e])});d.isFunction(b.onSlideComplete)&&a.$el.bind("slide_complete",function(){setTimeout(function(){b.onSlideComplete(a)},0)});a.initialized=!0;a.$el.trigger("initialized", a)};a.updateSlider=function(){a.$el.children(".cloned").remove();a.$nav.empty();a.$items=a.$el.children();a.pages=a.$items.length;b.showMultiple=parseInt(b.showMultiple,10)||1;if(b.showMultiple>1){if(b.showMultiple>a.pages)b.showMultiple=a.pages;a.adjustMultiple=b.infiniteSlides&&a.pages>1?0:parseInt(b.showMultiple,10)-1;a.pages=a.$items.length-a.adjustMultiple}if(a.pages<=1)b.autoPlay=!1,b.buildNavigation=!1,b.buildArrows=!1,a.$controls.hide(),a.$nav.hide(),a.$forward&&a.$forward.add(a.$back).hide(); else{b.autoPlay=a.original[0];b.buildNavigation=a.original[1];b.buildArrows=a.original[2];a.$controls.show();a.$nav.show();a.$forward&&a.$forward.add(a.$back).show();a.buildNavigation();if(b.autoPlay)a.playing=!b.startStopped,a.buildAutoPlay();b.buildArrows&&a.buildNextBackButtons()}b.infiniteSlides&&a.pages>1&&(a.$el.prepend(a.$items.filter(":last").clone().addClass("cloned").removeAttr("id")),b.showMultiple>1?a.$el.append(a.$items.filter(":lt("+b.showMultiple+")").clone().addClass("cloned").addClass("multiple").removeAttr("id")): a.$el.append(a.$items.filter(":first").clone().addClass("cloned").removeAttr("id")),a.$el.find(".cloned").each(function(){d(this).find("a,input,textarea,select").attr("disabled","disabled");d(this).find("[id]").removeAttr("id")}));a.$items=a.$el.children().addClass("panel");a.setDimensions();b.resizeContents?(b.width&&(a.$items.css("width",b.width),a.$wrapper.css("width",a.getDim(a.currentPage)[0])),b.height&&a.$wrapper.add(a.$items).css("height",b.height)):a.$win.load(function(){a.setDimensions()}); if(a.currentPage>a.pages)a.currentPage=a.pages;a.setCurrentPage(a.currentPage,!1);a.$nav.find("a").eq(a.currentPage-1).addClass("cur");a.hasEmb=a.$items.find("embed[src*=youtube]").length;a.hasSwfo=typeof swfobject!=="undefined"&&swfobject.hasOwnProperty("embedSWF")&&d.isFunction(swfobject.embedSWF)?!0:!1;a.hasEmb&&a.hasSwfo&&a.$items.find("embed[src*=youtube]").each(function(c){var e=d(this).parent()[0].tagName==="OBJECT"?d(this).parent():d(this);e.wrap('<div id="ytvideo'+c+'"></div>');swfobject.embedSWF(d(this).attr("src")+ "&enablejsapi=1&version=3&playerapiid=ytvideo"+c,"ytvideo"+c,e.attr("width"),e.attr("height"),"10",null,null,{allowScriptAccess:"always",wmode:b.addWmodeToObject,allowfullscreen:!0},{"class":e.attr("class"),style:e.attr("style")},function(){c>=a.hasEmb-1&&a.$el.trigger("swf_completed",a)})});b.showMultiple===!1&&a.$items.find("a").unbind("focus").bind("focus",function(b){a.$items.find(".focusedLink").removeClass("focusedLink");d(this).addClass("focusedLink");var e=d(this).closest(".panel");e.is(".activePage")|| (a.gotoPage(a.$items.index(e)),b.preventDefault())})};a.buildNavigation=function(){var c,e,f;b.buildNavigation&&a.pages>1&&a.$items.filter(":not(.cloned)").each(function(g){var h=g+1;e=(h===1?"first":"")+(h===a.pages?"last":"");f=d('<a href="#"></a>').addClass("panel"+h).wrap('<li class="'+e+'" />');a.$nav.append(f.parent());d.isFunction(b.navigationFormatter)?(c=b.navigationFormatter(h,d(this)),f.html("<span>"+c+"</span>"),parseInt(f.find("span").css("text-indent"),10)<0&&f.addClass(b.tooltipClass).attr("title", c)):f.html("<span>"+h+"</span>");f.bind(b.clickControls,function(c){if(!a.flag&&b.enableNavigation)a.flag=!0,setTimeout(function(){a.flag=!1},100),a.gotoPage(h),b.hashTags&&a.setHash(h);c.preventDefault()})})};a.buildNextBackButtons=function(){if(!a.$forward)a.$forward=d('<span class="arrow forward"><a href="#"><span>'+b.forwardText+"</span></a></span>"),a.$back=d('<span class="arrow back"><a href="#"><span>'+b.backText+"</span></a></span>"),a.$back.bind(b.clickArrows,function(b){a.goBack();b.preventDefault()}), a.$forward.bind(b.clickArrows,function(b){a.goForward();b.preventDefault()}),a.$back.add(a.$forward).find("a").bind("focusin focusout",function(){d(this).toggleClass("hover")}),a.$wrapper.prepend(a.$forward).prepend(a.$back),a.$arrowWidth=a.$forward.width()};a.buildAutoPlay=function(){if(!(a.$startStop||a.pages<2))a.$startStop=d("<a href='#' class='start-stop'></a>").html("<span>"+(a.playing?b.stopText:b.startText)+"</span>"),a.$controls.prepend(a.$startStop),a.$startStop.bind(b.clickSlideshow,function(c){b.enablePlay&& (a.startStop(!a.playing),a.playing&&(b.playRtl?a.goBack(!0):a.goForward(!0)));c.preventDefault()}).bind("focusin focusout",function(){d(this).toggleClass("hover")}),a.startStop(a.playing)};a.checkResize=function(b){clearTimeout(a.resizeTimer);a.resizeTimer=setTimeout(function(){var e=a.$outer.width(),d=a.$outer[0].tagName==="BODY"?a.$win.height():a.$outer.height(),g=a.outerDim;if(g[0]!==e||g[1]!==d)a.outerDim=[e,d],a.setDimensions(),a.gotoPage(a.currentPage,a.playing,null,1);typeof b==="undefined"&& a.checkResize()},500)};a.setDimensions=function(){var c,e,f,g,h,i=0,k=b.showMultiple>1?b.width||a.$window.width()/b.showMultiple:a.$window.width(),j=a.$win.width();b.expand&&(c=a.$outer.width()-a.outerPad[0],e=a.$outer.height()-a.outerPad[1],a.$wrapper.add(a.$window).add(a.$items).css({width:c,height:e}),k=b.showMultiple>1?c/b.showMultiple:c);a.$items.each(function(l){f=d(this).children("*");b.resizeContents?(c=parseInt(b.width,10)||k,e=parseInt(b.height,10)||a.$window.height(),d(this).css({width:c, height:e}),f.length===1&&(f.css({width:"100%",height:"100%"}),f[0].tagName==="OBJECT"&&f.find("embed").andSelf().attr({width:"100%",height:"100%"}))):(c=d(this).width(),h=c>=j?!0:!1,f.length===1&&h&&(g=f.width()>=j?k:f.width(),d(this).css("width",g),f.css("max-width",g),c=g),c=h?b.width||k:c,d(this).css("width",c),e=d(this).outerHeight(),d(this).css("height",e));a.panelSize[l]=[c,e,i];i+=c});a.$el.css("width",i<b.maxOverallWidth?i:b.maxOverallWidth)};a.getDim=function(c){var c=b.infiniteSlides&&a.pages> 1?c:c-1,e,d=a.panelSize[c][0],g=a.panelSize[c][1];if(b.showMultiple>1)for(e=1;e<b.showMultiple;e++)d+=a.panelSize[(c+e)%b.showMultiple][0],g=Math.max(g,a.panelSize[c+e][1]);return[d,g]};a.gotoPage=function(c,e,d,g){if(!(a.pages<=1)){a.$lastPage=a.$currentPage;if(typeof c!=="number")c=b.startPanel,a.setCurrentPage(c);if(!a.hasEmb||!a.checkVideo(a.playing))c>a.pages+1-a.adjustLimit&&(c=!b.infiniteSlides&&!b.stopAtEnd?1:a.pages),c<a.adjustLimit&&(c=!b.infiniteSlides&&!b.stopAtEnd?a.pages:1),a.currentPage= c>a.pages?a.pages:c<1?1:a.currentPage,a.$currentPage=a.$items.eq(a.currentPage-a.adjustLimit),a.exactPage=c,a.$targetPage=a.$items.eq(c===0?a.pages-a.adjustLimit:c>a.pages?1-a.adjustLimit:c-a.adjustLimit),a.$el.trigger("slide_init",a),a.slideControls(!0,!1),e!==!0&&(e=!1),(!e||b.stopAtEnd&&c===a.pages)&&a.startStop(!1),a.$el.trigger("slide_begin",a),b.resizeContents||(e=a.getDim(c),a.$wrapper.filter(":not(:animated)").animate({width:e[0],height:e[1]},{queue:!1,duration:g||b.animationTime,easing:b.easing})), a.$el.filter(":not(:animated)").animate({left:-a.panelSize[b.infiniteSlides&&a.pages>1?c:c-1][2]},{queue:!1,duration:g||b.animationTime,easing:b.easing,complete:function(){a.endAnimation(c,d)}})}};a.endAnimation=function(c,e){c===0?(a.$el.css("left",-a.panelSize[a.pages][2]),c=a.pages):c>a.pages&&(a.$el.css("left",-a.panelSize[1][2]),c=1);a.exactPage=c;a.setCurrentPage(c,!1);a.$items.removeClass("activePage").eq(c-a.adjustLimit).addClass("activePage");a.hovered||a.slideControls(!1);if(a.hasEmb){var f= a.$currentPage.find("object[id*=ytvideo], embed[id*=ytvideo]");f.length&&d.isFunction(f[0].getPlayerState)&&f[0].getPlayerState()>0&&f[0].getPlayerState()!==5&&f[0].playVideo()}a.$el.trigger("slide_complete",a);typeof e==="function"&&e(a);b.autoPlayLocked&&!a.playing&&setTimeout(function(){a.startStop(!0)},b.resumeDelay-b.delay)};a.setCurrentPage=function(c,e){c=parseInt(c,10);c>a.pages+1-a.adjustLimit&&(c=a.pages-a.adjustLimit);c<a.adjustLimit&&(c=1);b.buildNavigation&&(a.$nav.find(".cur").removeClass("cur"), a.$nav.find("a").eq(c-1).addClass("cur"));!b.infiniteSlides&&b.stopAtEnd&&(a.$wrapper.find("span.forward")[c===a.pages?"addClass":"removeClass"]("disabled"),a.$wrapper.find("span.back")[c===1?"addClass":"removeClass"]("disabled"),c===a.pages&&a.playing&&a.startStop());if(!e){var f=a.getDim(c);a.$wrapper.css({width:f[0],height:f[1]});a.$wrapper.scrollLeft(0);a.$el.css("left",-a.panelSize[b.infiniteSlides&&a.pages>1?c:c-1][2])}a.currentPage=c;a.$currentPage=a.$items.eq(c-a.adjustLimit).addClass("activePage"); a.$wrapper.is(".activeSlider")||(d(".activeSlider").removeClass("activeSlider"),a.$wrapper.addClass("activeSlider"))};a.goForward=function(b){b!==!0&&(b=!1,a.startStop(!1));a.gotoPage(a.currentPage+1,b)};a.goBack=function(b){b!==!0&&(b=!1,a.startStop(!1));a.gotoPage(a.currentPage-1,b)};a.gotoHash=function(){var b=a.win.location.hash.match(a.regex);return b===null?"":parseInt(b[1],10)};a.setHash=function(b){var e="panel"+a.runTimes+"-",d=a.win.location.hash;if(typeof d!=="undefined")a.win.location.hash= d.indexOf(e)>0?d.replace(a.regex,e+b):d+"&"+e+b};a.slideControls=function(c){var d=c?0:b.animationTime,f=c?b.animationTime:0,g=c?1:0,h=c?0:1;b.toggleControls&&a.$controls.stop(!0,!0).delay(d)[c?"slideDown":"slideUp"](b.animationTime/2).delay(f);b.buildArrows&&b.toggleArrows&&(!a.hovered&&a.playing&&(h=1,g=0),a.$forward.stop(!0,!0).delay(d).animate({right:h*a.$arrowWidth,opacity:g},b.animationTime/2),a.$back.stop(!0,!0).delay(d).animate({left:h*a.$arrowWidth,opacity:g},b.animationTime/2))};a.clearTimer= function(b){if(a.timer&&(a.win.clearInterval(a.timer),!b&&a.slideshow))a.$el.trigger("slideshow_stop",a),a.slideshow=!1};a.startStop=function(c,d){c!==!0&&(c=!1);if(c&&!d)a.$el.trigger("slideshow_start",a),a.slideshow=!0;a.playing=c;b.autoPlay&&(a.$startStop.toggleClass("playing",c).html("<span>"+(c?b.stopText:b.startText)+"</span>"),parseInt(a.$startStop.find("span").css("text-indent"),10)<0&&a.$startStop.addClass(b.tooltipClass).attr("title",c?"Stop":"Start"));c?(a.clearTimer(!0),a.timer=a.win.setInterval(function(){if(!a.hasEmb|| !a.checkVideo(c))b.playRtl?a.goBack(!0):a.goForward(!0)},b.delay)):a.clearTimer()};a.checkVideo=function(c){var e,f,g=!1;a.$items.find("object[id*=ytvideo], embed[id*=ytvideo]").each(function(){e=d(this);e.length&&d.isFunction(e[0].getPlayerState)&&(f=e[0].getPlayerState(),c&&(f===1||f>2)&&a.$items.index(e.closest(".panel"))===a.currentPage&&b.resumeOnVideoEnd?g=!0:f>0&&e[0].pauseVideo())});return g};a.init()};d.anythingSlider.defaults={width:null,height:null,expand:!1,resizeContents:!0,showMultiple:!1, tooltipClass:"tooltip",theme:"default",startPanel:1,hashTags:!0,infiniteSlides:!0,enableKeyboard:!0,buildArrows:!0,toggleArrows:!1,buildNavigation:!0,enableNavigation:!0,toggleControls:!1,appendControlsTo:null,navigationFormatter:null,forwardText:"&raquo;",backText:"&laquo;",enablePlay:!0,autoPlay:!0,autoPlayLocked:!1,startStopped:!1,pauseOnHover:!0,resumeOnVideoEnd:!0,stopAtEnd:!1,playRtl:!1,startText:"Start",stopText:"Stop",delay:3E3,resumeDelay:15E3,animationTime:600,easing:"swing",clickArrows:"click", clickControls:"click focusin",clickSlideshow:"click",addWmodeToObject:"opaque",maxOverallWidth:32766};d.fn.anythingSlider=function(i,j){return this.each(function(){var a,b=d(this).data("AnythingSlider");(typeof i).match("object|undefined")?b?b.updateSlider():new d.anythingSlider(this,i):/\d/.test(i)&&!isNaN(i)&&b&&(a=typeof i==="number"?i:parseInt(d.trim(i),10),a>=1&&a<=b.pages&&b.gotoPage(a,!1,j))})}})(jQuery);
@@ -1226,14 +1226,14 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
  */
 (function(h){h.fn.anythingSliderFx=function(g){var l=h(this).closest(".anythingSlider"),i=l.width(),n=l.height(),o=function(a){return{top:[{inFx:{top:0},outFx:{top:"-"+(a||n)}}],bottom:[{inFx:{bottom:0},outFx:{bottom:a||n}}],left:[{inFx:{left:0},outFx:{left:"-"+(a||i)}}],right:[{inFx:{right:0},outFx:{right:a||i}}],fade:[{inFx:{opacity:1},outFx:{opacity:0}}],expand:[{inFx:{width:"100%",top:"0%",left:"0%"},outFx:{width:a||"10%",top:"50%",left:"50%"}}],listLR:[{inFx:{left:0,opacity:1},outFx:[{left:a|| i,opacity:0},{left:"-"+(a||i),opacity:0}],selector:[":odd",":even"]}],listRL:[{inFx:{left:0,opacity:1},outFx:[{left:a||i,opacity:0},{left:"-"+(a||i),opacity:0}],selector:[":even",":odd"]}],"caption-Top":[{inFx:{top:0,opacity:0.8},outFx:{top:"-"+a||-50,opacity:0}}],"caption-Right":[{inFx:{right:0,opacity:0.8},outFx:{right:"-"+a||-150,opacity:0}}],"caption-Bottom":[{inFx:{bottom:0,opacity:0.8},outFx:{bottom:"-"+a||-50,opacity:0}}],"caption-Left":[{inFx:{left:0,opacity:0.8},outFx:{left:"-"+a||-150,opacity:0}}]}}; return this.each(function(){var a=o(),k={easing:"swing",timeIn:400,timeOut:350},i=function(e){e.each(function(){h(this).closest(".panel").is(".activePage")||h(this).css("visibility","hidden")})},m=function(e,a,c){if(!(e.length===0||typeof a==="undefined")){var b=a[0]||a,d=b[1]||"",h=parseInt(d===""?b.duration:b[0].duration,10);if(c&&(e.css("position")!=="absolute"&&e.css({position:"relative"}),e.stop(),d!=="")){e.filter(a[1][0]).animate(b[0],{queue:!1,duration:h,easing:b[0].easing});e.filter(a[1][1]).animate(d, {queue:!1,duration:h,easing:b[0].easing,complete:function(){setTimeout(function(){i(e)},k.timeOut)}});return}c||e.css("visibility","visible").show();e.animate(b,{queue:!1,duration:h,easing:b.easing,complete:function(){c&&setTimeout(function(){i(e)},k.timeOut)}})}},l=function(e,f){var c,b,d=f?"outFx":"inFx",g={},i=f?k.timeOut:k.timeIn,j=h.trim(e[0].replace(/\s+/g," ")).split(" ");if(f&&j.length===1&&a.hasOwnProperty(j)&&typeof a[j][0].selector!=="undefined")return b=a[j][0].outFx,b[0].duration=e[2]|| k.timeOut,b[0].easing=e[3]||k.easing,[b,a[j][0].selector||[]];h.each(j,function(b,f){if(a.hasOwnProperty(f)){var j=f==="fade"?1:2;c=typeof e[1]==="undefined"?a:o(e[1]);h.extend(!0,g,c[f][0][d]);g.duration=e[j]||g.duration||i;g.easing=e[j+1]||k.easing}});return[g]};h(this).bind("slide_init",function(a,f){var c,b,d=f.$lastPage.add(f.$items.eq(f.exactPage));f.exactPage===0&&(d=d.add(f.$items.eq(f.pages)));d=d.find("*").andSelf();for(c in g)if(c==="outFx")for(b in g.outFx)d.filter(b).length&&m(d.filter(b), g.outFx[b],!0);else c!=="inFx"&&h.isArray(g[c])&&d.filter(c).length&&m(d.filter(c),l(g[c],!0),!0)}).bind("slide_complete",function(a,f){var c,b,d=f.$currentPage.add(f.$items.eq(f.exactPage)),d=d.find("*").andSelf();for(c in g)if(c==="inFx")for(b in g.inFx)d.filter(b).length&&m(d.filter(b),g.inFx[b],!1);else c!=="outFx"&&h.isArray(g[c])&&d.filter(c).length&&m(d.filter(c),l(g[c],!1),!1)})})}})(jQuery);
 /*
- * jQuery EasIng v1.1.2 - http://gsgd.co.uk/sandbox/jquery.easIng.php
+ * jQuery EasIng v1.1.2 - //gsgd.co.uk/sandbox/jquery.easIng.php
  *
  * Uses the built In easIng capabilities added In jQuery 1.1
  * to offer multiple easIng options
  *
  * Copyright (c) 2007 George Smith
  * Licensed under the MIT License:
- *   http://www.opensource.org/licenses/mit-license.php
+ *   //www.opensource.org/licenses/mit-license.php
  */
 
 // t: current time, b: begInnIng value, c: change In value, d: duration
@@ -1342,7 +1342,7 @@ jQuery.extend( jQuery.easing,
 		return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
 	},
 	easeInOutBack: function (x, t, b, c, d, s) {
-		if (s == undefined) s = 1.70158; 
+		if (s == undefined) s = 1.70158;
 		if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
 		return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
 	},
@@ -1364,18 +1364,18 @@ jQuery.extend( jQuery.easing,
 		if (t < d/2) return jQuery.easing.easeInBounce (x, t*2, 0, c, d) * .5 + b;
 		return jQuery.easing.easeOutBounce (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
 	}
-});/*	SWFObject v2.2 <http://code.google.com/p/swfobject/> 
-	is released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
+});/*	SWFObject v2.2 <//code.google.com/p/swfobject/>
+	is released under the MIT License <//www.opensource.org/licenses/mit-license.php>
 */
 var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="ShockwaveFlash.ShockwaveFlash",q="application/x-shockwave-flash",R="SWFObjectExprInst",x="onreadystatechange",O=window,j=document,t=navigator,T=false,U=[h],o=[],N=[],I=[],l,Q,E,B,J=false,a=false,n,G,m=true,M=function(){var aa=typeof j.getElementById!=D&&typeof j.getElementsByTagName!=D&&typeof j.createElement!=D,ah=t.userAgent.toLowerCase(),Y=t.platform.toLowerCase(),ae=Y?/win/.test(Y):/win/.test(ah),ac=Y?/mac/.test(Y):/mac/.test(ah),af=/webkit/.test(ah)?parseFloat(ah.replace(/^.*webkit\/(\d+(\.\d+)?).*$/,"$1")):false,X=!+"\v1",ag=[0,0,0],ab=null;if(typeof t.plugins!=D&&typeof t.plugins[S]==r){ab=t.plugins[S].description;if(ab&&!(typeof t.mimeTypes!=D&&t.mimeTypes[q]&&!t.mimeTypes[q].enabledPlugin)){T=true;X=false;ab=ab.replace(/^.*\s+(\S+\s+\S+$)/,"$1");ag[0]=parseInt(ab.replace(/^(.*)\..*$/,"$1"),10);ag[1]=parseInt(ab.replace(/^.*\.(.*)\s.*$/,"$1"),10);ag[2]=/[a-zA-Z]/.test(ab)?parseInt(ab.replace(/^.*[a-zA-Z]+(.*)$/,"$1"),10):0}}else{if(typeof O.ActiveXObject!=D){try{var ad=new ActiveXObject(W);if(ad){ab=ad.GetVariable("$version");if(ab){X=true;ab=ab.split(" ")[1].split(",");ag=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}}catch(Z){}}}return{w3:aa,pv:ag,wk:af,ie:X,win:ae,mac:ac}}(),k=function(){if(!M.w3){return}if((typeof j.readyState!=D&&j.readyState=="complete")||(typeof j.readyState==D&&(j.getElementsByTagName("body")[0]||j.body))){f()}if(!J){if(typeof j.addEventListener!=D){j.addEventListener("DOMContentLoaded",f,false)}if(M.ie&&M.win){j.attachEvent(x,function(){if(j.readyState=="complete"){j.detachEvent(x,arguments.callee);f()}});if(O==top){(function(){if(J){return}try{j.documentElement.doScroll("left")}catch(X){setTimeout(arguments.callee,0);return}f()})()}}if(M.wk){(function(){if(J){return}if(!/loaded|complete/.test(j.readyState)){setTimeout(arguments.callee,0);return}f()})()}s(f)}}();function f(){if(J){return}try{var Z=j.getElementsByTagName("body")[0].appendChild(C("span"));Z.parentNode.removeChild(Z)}catch(aa){return}J=true;var X=U.length;for(var Y=0;Y<X;Y++){U[Y]()}}function K(X){if(J){X()}else{U[U.length]=X}}function s(Y){if(typeof O.addEventListener!=D){O.addEventListener("load",Y,false)}else{if(typeof j.addEventListener!=D){j.addEventListener("load",Y,false)}else{if(typeof O.attachEvent!=D){i(O,"onload",Y)}else{if(typeof O.onload=="function"){var X=O.onload;O.onload=function(){X();Y()}}else{O.onload=Y}}}}}function h(){if(T){V()}else{H()}}function V(){var X=j.getElementsByTagName("body")[0];var aa=C(r);aa.setAttribute("type",q);var Z=X.appendChild(aa);if(Z){var Y=0;(function(){if(typeof Z.GetVariable!=D){var ab=Z.GetVariable("$version");if(ab){ab=ab.split(" ")[1].split(",");M.pv=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}else{if(Y<10){Y++;setTimeout(arguments.callee,10);return}}X.removeChild(aa);Z=null;H()})()}else{H()}}function H(){var ag=o.length;if(ag>0){for(var af=0;af<ag;af++){var Y=o[af].id;var ab=o[af].callbackFn;var aa={success:false,id:Y};if(M.pv[0]>0){var ae=c(Y);if(ae){if(F(o[af].swfVersion)&&!(M.wk&&M.wk<312)){w(Y,true);if(ab){aa.success=true;aa.ref=z(Y);ab(aa)}}else{if(o[af].expressInstall&&A()){var ai={};ai.data=o[af].expressInstall;ai.width=ae.getAttribute("width")||"0";ai.height=ae.getAttribute("height")||"0";if(ae.getAttribute("class")){ai.styleclass=ae.getAttribute("class")}if(ae.getAttribute("align")){ai.align=ae.getAttribute("align")}var ah={};var X=ae.getElementsByTagName("param");var ac=X.length;for(var ad=0;ad<ac;ad++){if(X[ad].getAttribute("name").toLowerCase()!="movie"){ah[X[ad].getAttribute("name")]=X[ad].getAttribute("value")}}P(ai,ah,Y,ab)}else{p(ae);if(ab){ab(aa)}}}}}else{w(Y,true);if(ab){var Z=z(Y);if(Z&&typeof Z.SetVariable!=D){aa.success=true;aa.ref=Z}ab(aa)}}}}}function z(aa){var X=null;var Y=c(aa);if(Y&&Y.nodeName=="OBJECT"){if(typeof Y.SetVariable!=D){X=Y}else{var Z=Y.getElementsByTagName(r)[0];if(Z){X=Z}}}return X}function A(){return !a&&F("6.0.65")&&(M.win||M.mac)&&!(M.wk&&M.wk<312)}function P(aa,ab,X,Z){a=true;E=Z||null;B={success:false,id:X};var ae=c(X);if(ae){if(ae.nodeName=="OBJECT"){l=g(ae);Q=null}else{l=ae;Q=X}aa.id=R;if(typeof aa.width==D||(!/%$/.test(aa.width)&&parseInt(aa.width,10)<310)){aa.width="310"}if(typeof aa.height==D||(!/%$/.test(aa.height)&&parseInt(aa.height,10)<137)){aa.height="137"}j.title=j.title.slice(0,47)+" - Flash Player Installation";var ad=M.ie&&M.win?"ActiveX":"PlugIn",ac="MMredirectURL="+O.location.toString().replace(/&/g,"%26")+"&MMplayerType="+ad+"&MMdoctitle="+j.title;if(typeof ab.flashvars!=D){ab.flashvars+="&"+ac}else{ab.flashvars=ac}if(M.ie&&M.win&&ae.readyState!=4){var Y=C("div");X+="SWFObjectNew";Y.setAttribute("id",X);ae.parentNode.insertBefore(Y,ae);ae.style.display="none";(function(){if(ae.readyState==4){ae.parentNode.removeChild(ae)}else{setTimeout(arguments.callee,10)}})()}u(aa,ab,X)}}function p(Y){if(M.ie&&M.win&&Y.readyState!=4){var X=C("div");Y.parentNode.insertBefore(X,Y);X.parentNode.replaceChild(g(Y),X);Y.style.display="none";(function(){if(Y.readyState==4){Y.parentNode.removeChild(Y)}else{setTimeout(arguments.callee,10)}})()}else{Y.parentNode.replaceChild(g(Y),Y)}}function g(ab){var aa=C("div");if(M.win&&M.ie){aa.innerHTML=ab.innerHTML}else{var Y=ab.getElementsByTagName(r)[0];if(Y){var ad=Y.childNodes;if(ad){var X=ad.length;for(var Z=0;Z<X;Z++){if(!(ad[Z].nodeType==1&&ad[Z].nodeName=="PARAM")&&!(ad[Z].nodeType==8)){aa.appendChild(ad[Z].cloneNode(true))}}}}}return aa}function u(ai,ag,Y){var X,aa=c(Y);if(M.wk&&M.wk<312){return X}if(aa){if(typeof ai.id==D){ai.id=Y}if(M.ie&&M.win){var ah="";for(var ae in ai){if(ai[ae]!=Object.prototype[ae]){if(ae.toLowerCase()=="data"){ag.movie=ai[ae]}else{if(ae.toLowerCase()=="styleclass"){ah+=' class="'+ai[ae]+'"'}else{if(ae.toLowerCase()!="classid"){ah+=" "+ae+'="'+ai[ae]+'"'}}}}}var af="";for(var ad in ag){if(ag[ad]!=Object.prototype[ad]){af+='<param name="'+ad+'" value="'+ag[ad]+'" />'}}aa.outerHTML='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'+ah+">"+af+"</object>";N[N.length]=ai.id;X=c(ai.id)}else{var Z=C(r);Z.setAttribute("type",q);for(var ac in ai){if(ai[ac]!=Object.prototype[ac]){if(ac.toLowerCase()=="styleclass"){Z.setAttribute("class",ai[ac])}else{if(ac.toLowerCase()!="classid"){Z.setAttribute(ac,ai[ac])}}}}for(var ab in ag){if(ag[ab]!=Object.prototype[ab]&&ab.toLowerCase()!="movie"){e(Z,ab,ag[ab])}}aa.parentNode.replaceChild(Z,aa);X=Z}}return X}function e(Z,X,Y){var aa=C("param");aa.setAttribute("name",X);aa.setAttribute("value",Y);Z.appendChild(aa)}function y(Y){var X=c(Y);if(X&&X.nodeName=="OBJECT"){if(M.ie&&M.win){X.style.display="none";(function(){if(X.readyState==4){b(Y)}else{setTimeout(arguments.callee,10)}})()}else{X.parentNode.removeChild(X)}}}function b(Z){var Y=c(Z);if(Y){for(var X in Y){if(typeof Y[X]=="function"){Y[X]=null}}Y.parentNode.removeChild(Y)}}function c(Z){var X=null;try{X=j.getElementById(Z)}catch(Y){}return X}function C(X){return j.createElement(X)}function i(Z,X,Y){Z.attachEvent(X,Y);I[I.length]=[Z,X,Y]}function F(Z){var Y=M.pv,X=Z.split(".");X[0]=parseInt(X[0],10);X[1]=parseInt(X[1],10)||0;X[2]=parseInt(X[2],10)||0;return(Y[0]>X[0]||(Y[0]==X[0]&&Y[1]>X[1])||(Y[0]==X[0]&&Y[1]==X[1]&&Y[2]>=X[2]))?true:false}function v(ac,Y,ad,ab){if(M.ie&&M.mac){return}var aa=j.getElementsByTagName("head")[0];if(!aa){return}var X=(ad&&typeof ad=="string")?ad:"screen";if(ab){n=null;G=null}if(!n||G!=X){var Z=C("style");Z.setAttribute("type","text/css");Z.setAttribute("media",X);n=aa.appendChild(Z);if(M.ie&&M.win&&typeof j.styleSheets!=D&&j.styleSheets.length>0){n=j.styleSheets[j.styleSheets.length-1]}G=X}if(M.ie&&M.win){if(n&&typeof n.addRule==r){n.addRule(ac,Y)}}else{if(n&&typeof j.createTextNode!=D){n.appendChild(j.createTextNode(ac+" {"+Y+"}"))}}}function w(Z,X){if(!m){return}var Y=X?"visible":"hidden";if(J&&c(Z)){c(Z).style.visibility=Y}else{v("#"+Z,"visibility:"+Y)}}function L(Y){var Z=/[\\\"<>\.;]/;var X=Z.exec(Y)!=null;return X&&typeof encodeURIComponent!=D?encodeURIComponent(Y):Y}var d=function(){if(M.ie&&M.win){window.attachEvent("onunload",function(){var ac=I.length;for(var ab=0;ab<ac;ab++){I[ab][0].detachEvent(I[ab][1],I[ab][2])}var Z=N.length;for(var aa=0;aa<Z;aa++){y(N[aa])}for(var Y in M){M[Y]=null}M=null;for(var X in swfobject){swfobject[X]=null}swfobject=null})}}();return{registerObject:function(ab,X,aa,Z){if(M.w3&&ab&&X){var Y={};Y.id=ab;Y.swfVersion=X;Y.expressInstall=aa;Y.callbackFn=Z;o[o.length]=Y;w(ab,false)}else{if(Z){Z({success:false,id:ab})}}},getObjectById:function(X){if(M.w3){return z(X)}},embedSWF:function(ab,ah,ae,ag,Y,aa,Z,ad,af,ac){var X={success:false,id:ah};if(M.w3&&!(M.wk&&M.wk<312)&&ab&&ah&&ae&&ag&&Y){w(ah,false);K(function(){ae+="";ag+="";var aj={};if(af&&typeof af===r){for(var al in af){aj[al]=af[al]}}aj.data=ab;aj.width=ae;aj.height=ag;var am={};if(ad&&typeof ad===r){for(var ak in ad){am[ak]=ad[ak]}}if(Z&&typeof Z===r){for(var ai in Z){if(typeof am.flashvars!=D){am.flashvars+="&"+ai+"="+Z[ai]}else{am.flashvars=ai+"="+Z[ai]}}}if(F(Y)){var an=u(aj,am,ah);if(aj.id==ah){w(ah,true)}X.success=true;X.ref=an}else{if(aa&&A()){aj.data=aa;P(aj,am,ah,ac);return}else{w(ah,true)}}if(ac){ac(X)}})}else{if(ac){ac(X)}}},switchOffAutoHideShow:function(){m=false},ua:M,getFlashPlayerVersion:function(){return{major:M.pv[0],minor:M.pv[1],release:M.pv[2]}},hasFlashPlayerVersion:F,createSWF:function(Z,Y,X){if(M.w3){return u(Z,Y,X)}else{return undefined}},showExpressInstall:function(Z,aa,X,Y){if(M.w3&&A()){P(Z,aa,X,Y)}},removeSWF:function(X){if(M.w3){y(X)}},createCSS:function(aa,Z,Y,X){if(M.w3){v(aa,Z,Y,X)}},addDomLoadEvent:K,addLoadEvent:s,getQueryParamValue:function(aa){var Z=j.location.search||j.location.hash;if(Z){if(/\?/.test(Z)){Z=Z.split("?")[1]}if(aa==null){return L(Z)}var Y=Z.split("&");for(var X=0;X<Y.length;X++){if(Y[X].substring(0,Y[X].indexOf("="))==aa){return L(Y[X].substring((Y[X].indexOf("=")+1)))}}}return""},expressInstallCallback:function(){if(a){var X=c(R);if(X&&l){X.parentNode.replaceChild(l,X);if(Q){w(Q,true);if(M.ie&&M.win){l.style.display="block"}}if(E){E(B)}}a=false}}}}();/** @license
 
  SoundManager 2: JavaScript Sound for the Web
  ----------------------------------------------
- http://schillmania.com/projects/soundmanager2/
+ //schillmania.com/projects/soundmanager2/
 
  Copyright (c) 2007, Scott Schiller. All rights reserved.
  Code provided under the BSD License:
- http://schillmania.com/projects/soundmanager2/license.txt
+ //schillmania.com/projects/soundmanager2/license.txt
 
  V2.97a.20110424
 */
@@ -1535,16 +1535,16 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 					});
 		}
 	});
-	
+
 	$(function () {
 		if ( $.cookie('muteMusic') == 'mute' ) {
 			$('#mute').toggleClass("mutted") ;
 		}
 	});
-	
+
 	soundManager.ontimeout(function() {
 	});
-	
+
 	$('#mute').click(function() {
 		$(this).toggleClass("mutted");
 		if($(this).hasClass("mutted")) {
@@ -1558,17 +1558,17 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				});
 			$.cookie('muteMusic', null);
 		}
-	
-	
+
+
 	});
 	// ColorBox v1.3.17.2 - a full featured, light-weight, customizable lightbox based on jQuery 1.3+
 // Copyright (c) 2011 Jack Moore - jack@colorpowered.com
-// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+// Licensed under the MIT license: //www.opensource.org/licenses/mit-license.php
 
 (function ($, document, window) {
 	var
-	// ColorBox Default Settings.	
-	// See http://colorpowered.com/colorbox for details.
+	// ColorBox Default Settings.
+	// See //colorpowered.com/colorbox for details.
 	defaults = {
 		transition: "elastic",
 		speed: 300,
@@ -1609,7 +1609,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 		onComplete: false,
 		onCleanup: false,
 		onClosed: false,
-		overlayClose: true,		
+		overlayClose: true,
 		escKey: true,
 		arrowKey: true,
         top: false,
@@ -1619,20 +1619,20 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
         fixed: false,
         data: false
 	},
-	
+
 	// Abstracting the HTML and event identifiers for easy rebranding
 	colorbox = 'colorbox',
 	prefix = 'cbox',
     boxElement = prefix + 'Element',
-	
-	// Events	
+
+	// Events
 	event_open = prefix + '_open',
 	event_load = prefix + '_load',
 	event_complete = prefix + '_complete',
 	event_cleanup = prefix + '_cleanup',
 	event_closed = prefix + '_closed',
 	event_purge = prefix + '_purge',
-	
+
 	// Special Handling for IE
 	isIE = $.browser.msie && !$.support.opacity, // Detects IE6,7,8.  IE9 supports opacity.  Feature detection alone gave a false positive on at least one phone browser and on some development versions of Chrome, hence the user-agent test.
 	isIE6 = isIE && $.browser.version < 7,
@@ -1675,13 +1675,13 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
     handler,
     loadingTimer,
     publicMethod;
-	
+
 	// ****************
 	// HELPER FUNCTIONS
 	// ****************
 
 	// jQuery object generator to reduce code size
-	function $div(id, cssText, div) { 
+	function $div(id, cssText, div) {
 		div = document.createElement('div');
 		if (id) {
             div.id = prefix + id;
@@ -1694,27 +1694,27 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	function setSize(size, dimension) {
 		return Math.round((/%/.test(size) ? ((dimension === 'x' ? $window.width() : $window.height()) / 100) : 1) * parseInt(size, 10));
 	}
-	
+
 	// Checks an href to see if it is a photo.
 	// There is a force photo option (photo: true) for hrefs that cannot be matched by this regex.
 	function isImage(url) {
 		return settings.photo || /\.(gif|png|jpg|jpeg|bmp)(?:\?([^#]*))?(?:#(\.*))?$/i.test(url);
 	}
-	
+
 	// Assigns function results to their respective settings.  This allows functions to be used as values.
 	function makeSettings(i) {
         settings = $.extend({}, $.data(element, colorbox));
-        
+
 		for (i in settings) {
 			if ($.isFunction(settings[i]) && i.substring(0, 2) !== 'on') { // checks to make sure the function isn't one of the callbacks, they will be handled at the appropriate time.
 			    settings[i] = settings[i].call(element);
 			}
 		}
-        
+
 		settings.rel = settings.rel || element.rel || 'nofollow';
 		settings.href = settings.href || $(element).attr('href');
 		settings.title = settings.title || element.title;
-        
+
         if (typeof settings.href === "string") {
             settings.href = $.trim(settings.href);
         }
@@ -1736,7 +1736,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 		start,
 		stop,
 		clear;
-		
+
 		if (settings.slideshow && $related[1]) {
 			start = function () {
 				$slideshow
@@ -1754,7 +1754,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				$box.removeClass(className + "off").addClass(className + "on");
 				timeOut = setTimeout(publicMethod.next, settings.slideshowSpeed);
 			};
-			
+
 			stop = function () {
 				clearTimeout(timeOut);
 				$slideshow
@@ -1763,7 +1763,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 					.one(click, start);
 				$box.removeClass(className + "on").addClass(className + "off");
 			};
-			
+
 			if (settings.slideshowAuto) {
 				start();
 			} else {
@@ -1776,34 +1776,34 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 
 	function launch(target) {
 		if (!closing) {
-			
+
 			element = target;
-			
+
 			makeSettings();
-			
+
 			$related = $(element);
-			
+
 			index = 0;
-			
+
 			if (settings.rel !== 'nofollow') {
 				$related = $('.' + boxElement).filter(function () {
 					var relRelated = $.data(this, colorbox).rel || this.rel;
 					return (relRelated === settings.rel);
 				});
 				index = $related.index(element);
-				
+
 				// Check direct calls to ColorBox.
 				if (index === -1) {
 					$related = $related.add(element);
 					index = $related.length - 1;
 				}
 			}
-			
+
 			if (!open) {
 				open = active = true; // Prevents the page-change action from queuing up if the visitor holds down the left or right keys.
-				
+
 				$box.show();
-				
+
 				if (settings.returnFocus) {
 					try {
 						element.blur();
@@ -1818,28 +1818,28 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 						// do nothing
 					}
 				}
-				
+
 				// +settings.opacity avoids a problem in IE when using non-zero-prefixed-string-values, like '.5'
 				$overlay.css({"opacity": +settings.opacity, "cursor": settings.overlayClose ? "pointer" : "auto"}).show();
-				
+
 				// Opens inital empty ColorBox prior to content being loaded.
 				settings.w = setSize(settings.initialWidth, 'x');
 				settings.h = setSize(settings.initialHeight, 'y');
 				publicMethod.position();
-				
+
 				if (isIE6) {
 					$window.bind('resize.' + event_ie6 + ' scroll.' + event_ie6, function () {
 						$overlay.css({width: $window.width(), height: $window.height(), top: $window.scrollTop(), left: $window.scrollLeft()});
 					}).trigger('resize.' + event_ie6);
 				}
-				
+
 				trigger(event_open, settings.onOpen);
-				
+
 				$groupControls.add($title).hide();
-				
+
 				$close.html(settings.close).show();
 			}
-			
+
 			publicMethod.load(true);
 		}
 	}
@@ -1849,12 +1849,12 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	// Usage format: $.fn.colorbox.close();
 	// Usage from within an iframe: parent.$.fn.colorbox.close();
 	// ****************
-	
+
 	publicMethod = $.fn[colorbox] = $[colorbox] = function (options, callback) {
 		var $this = this;
-		
+
         options = options || {};
-        
+
 		if (!$this[0]) {
 			if ($this.selector) { // if a selector was given and it didn't match any elements, go ahead and exit.
                 return $this;
@@ -1863,20 +1863,20 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			$this = $('<a/>');
 			options.open = true; // assume an immediate open
 		}
-		
+
 		if (callback) {
 			options.onComplete = callback;
 		}
-		
+
 		$this.each(function () {
 			$.data(this, colorbox, $.extend({}, $.data(this, colorbox) || defaults, options));
 			$(this).addClass(boxElement);
 		});
-		
+
         if (($.isFunction(options.open) && options.open.call($this)) || options.open) {
 			launch($this[0]);
 		}
-        
+
 		return $this;
 	};
 
@@ -1888,7 +1888,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 		$window = $(window);
 		$box = $div().attr({id: colorbox, 'class': isIE ? prefix + (isIE6 ? 'IE6' : 'IE') : ''});
 		$overlay = $div("Overlay", isIE6 ? 'position:absolute' : '').hide();
-		
+
 		$wrap = $div("Wrapper");
 		$content = $div("Content").append(
 			$loaded = $div("LoadedContent", 'width:0; height:0; overflow:hidden'),
@@ -1917,27 +1917,27 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				$div("BottomRight")
 			)
 		).children().children().css({'float': 'left'});
-		
+
 		$loadingBay = $div(false, 'position:absolute; width:9999px; visibility:hidden; display:none');
-		
+
 		$('body').prepend($overlay, $box.append($wrap, $loadingBay));
-		
+
 		$content.children()
 		.hover(function () {
 			$(this).addClass('hover');
 		}, function () {
 			$(this).removeClass('hover');
 		}).addClass('hover');
-		
+
 		// Cache values needed for size calculations
 		interfaceHeight = $topBorder.height() + $bottomBorder.height() + $content.outerHeight(true) - $content.height();//Subtraction needed for IE6
 		interfaceWidth = $leftBorder.width() + $rightBorder.width() + $content.outerWidth(true) - $content.width();
 		loadedHeight = $loaded.outerHeight(true);
 		loadedWidth = $loaded.outerWidth(true);
-		
+
 		// Setting padding to remove the need to do size conversions during the animation step.
 		$box.css({"padding-bottom": interfaceHeight, "padding-right": interfaceWidth}).hide();
-		
+
         // Setup button events.
         // Anonymous functions here keep the public method from being cached, thereby allowing them to be redefined on the fly.
         $next.click(function () {
@@ -1949,19 +1949,19 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
         $close.click(function () {
             publicMethod.close();
         });
-		
+
 		$groupControls = $next.add($prev).add($current).add($slideshow);
-		
+
 		// Adding the 'hover' class allowed the browser to load the hover-state
 		// background graphics in case the images were not part of a sprite.  The class can now can be removed.
 		$content.children().removeClass('hover');
-		
+
 		$overlay.click(function () {
 			if (settings.overlayClose) {
 				publicMethod.close();
 			}
 		});
-		
+
 		// Set Navigation Key Bindings
 		$(document).bind('keydown.' + prefix, function (e) {
             var key = e.keyCode;
@@ -1980,7 +1980,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			}
 		});
 	};
-	
+
 	publicMethod.remove = function () {
 		$box.add($overlay).remove();
 		$('.' + boxElement).removeData(colorbox).removeClass(boxElement);
@@ -1988,12 +1988,12 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 
 	publicMethod.position = function (speed, loadedCallback) {
         var top = 0, left = 0;
-        
+
         $window.unbind('resize.' + prefix);
-        
-        // remove the modal so that it doesn't influence the document width/height        
+
+        // remove the modal so that it doesn't influence the document width/height
         $box.hide();
-        
+
         if (settings.fixed && !isIE6) {
             $box.css({position: 'fixed'});
         } else {
@@ -2001,7 +2001,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
             left = $window.scrollLeft();
             $box.css({position: 'absolute'});
         }
-        
+
 		// keeps the top and left positions within the browser's viewport.
         if (settings.right !== false) {
             left += Math.max($window.width() - settings.w - loadedWidth - interfaceWidth - setSize(settings.right, 'x'), 0);
@@ -2010,7 +2010,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
         } else {
             left += Math.round(Math.max($window.width() - settings.w - loadedWidth - interfaceWidth, 0) / 2);
         }
-        
+
         if (settings.bottom !== false) {
             top += Math.max(document.documentElement.clientHeight - settings.h - loadedHeight - interfaceHeight - setSize(settings.bottom, 'y'), 0);
         } else if (settings.top !== false) {
@@ -2018,38 +2018,38 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
         } else {
             top += Math.round(Math.max(document.documentElement.clientHeight - settings.h - loadedHeight - interfaceHeight, 0) / 2);
         }
-        
+
         $box.show();
-        
+
 		// setting the speed to 0 to reduce the delay between same-sized content.
 		speed = ($box.width() === settings.w + loadedWidth && $box.height() === settings.h + loadedHeight) ? 0 : speed || 0;
-        
+
 		// this gives the wrapper plenty of breathing room so it's floated contents can move around smoothly,
 		// but it has to be shrank down around the size of div#colorbox when it's done.  If not,
 		// it can invoke an obscure IE bug when using iframes.
 		$wrap[0].style.width = $wrap[0].style.height = "9999px";
-		
+
 		function modalDimensions(that) {
 			// loading overlay height has to be explicitly set for IE6.
 			$topBorder[0].style.width = $bottomBorder[0].style.width = $content[0].style.width = that.style.width;
 			$loadingOverlay[0].style.height = $loadingOverlay[1].style.height = $content[0].style.height = $leftBorder[0].style.height = $rightBorder[0].style.height = that.style.height;
 		}
-		
+
 		$box.dequeue().animate({width: settings.w + loadedWidth, height: settings.h + loadedHeight, top: top, left: left}, {
 			duration: speed,
 			complete: function () {
 				modalDimensions(this);
-				
+
 				active = false;
-				
+
 				// shrink the wrapper down to exactly the size of colorbox to avoid a bug in IE's iframe implementation.
 				$wrap[0].style.width = (settings.w + loadedWidth + interfaceWidth) + "px";
 				$wrap[0].style.height = (settings.h + loadedHeight + interfaceHeight) + "px";
-				
+
 				if (loadedCallback) {
 					loadedCallback();
 				}
-                
+
                 setTimeout(function(){  // small delay before binding onresize due to an IE8 bug.
                     $window.bind('resize.' + prefix, publicMethod.position);
                 }, 1);
@@ -2063,7 +2063,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	publicMethod.resize = function (options) {
 		if (open) {
 			options = options || {};
-			
+
 			if (options.width) {
 				settings.w = setSize(options.width, 'x') - loadedWidth - interfaceWidth;
 			}
@@ -2071,20 +2071,20 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				settings.w = setSize(options.innerWidth, 'x');
 			}
 			$loaded.css({width: settings.w});
-			
+
 			if (options.height) {
 				settings.h = setSize(options.height, 'y') - loadedHeight - interfaceHeight;
 			}
 			if (options.innerHeight) {
 				settings.h = setSize(options.innerHeight, 'y');
 			}
-			if (!options.innerHeight && !options.height) {				
+			if (!options.innerHeight && !options.height) {
 				var $child = $loaded.wrapInner("<div style='overflow:auto'></div>").children(); // temporary wrapper to get an accurate estimate of just how high the total content should be.
 				settings.h = $child.height();
 				$child.replaceWith($child.children()); // ditch the temporary wrapper div used in height calculation
 			}
 			$loaded.css({height: settings.h});
-			
+
 			publicMethod.position(settings.transition === "none" ? 0 : settings.speed);
 		}
 	};
@@ -2093,12 +2093,12 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 		if (!open) {
 			return;
 		}
-		
+
 		var callback, speed = settings.transition === "none" ? 0 : settings.speed;
-		
+
 		$loaded.remove();
 		$loaded = $div('LoadedContent').append(object);
-		
+
 		function getWidth() {
 			settings.w = settings.w || $loaded.width();
 			settings.w = settings.mw && settings.mw < settings.w ? settings.mw : settings.w;
@@ -2109,20 +2109,20 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			settings.h = settings.mh && settings.mh < settings.h ? settings.mh : settings.h;
 			return settings.h;
 		}
-		
+
 		$loaded.hide()
 		.appendTo($loadingBay.show())// content has to be appended to the DOM for accurate size calculations.
 		.css({width: getWidth(), overflow: settings.scrolling ? 'auto' : 'hidden'})
 		.css({height: getHeight()})// sets the height independently from the width in case the new width influences the value of height.
 		.prependTo($content);
-		
+
 		$loadingBay.hide();
-		
+
 		// floating the IMG removes the bottom line-height and fixed a problem where IE miscalculates the width of the parent element as 100% of the document width.
 		//$(photo).css({'float': 'none', marginLeft: 'auto', marginRight: 'auto'});
-		
+
         $(photo).css({'float': 'none'});
-        
+
 		// Hides SELECT elements in IE6 because they would otherwise sit on top of the overlay.
 		if (isIE6) {
 			$('select').not($box.find('select')).filter(function () {
@@ -2131,62 +2131,62 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 				this.style.visibility = 'inherit';
 			});
 		}
-		
+
 		callback = function () {
             var prev, prevSrc, next, nextSrc, total = $related.length, iframe, complete;
-            
+
             if (!open) {
                 return;
             }
-            
+
             function removeFilter() {
                 if (isIE) {
                     $box[0].style.removeAttribute('filter');
                 }
             }
-            
+
             complete = function () {
                 clearTimeout(loadingTimer);
                 $loadingOverlay.hide();
                 trigger(event_complete, settings.onComplete);
             };
-            
+
             if (isIE) {
                 //This fadeIn helps the bicubic resampling to kick-in.
                 if (photo) {
                     $loaded.fadeIn(100);
                 }
             }
-            
+
             $title.html(settings.title).add($loaded).show();
-            
+
             if (total > 1) { // handle grouping
                 if (typeof settings.current === "string") {
                     $current.html(settings.current.replace('{current}', index + 1).replace('{total}', total)).show();
                 }
-                
+
                 $next[(settings.loop || index < total - 1) ? "show" : "hide"]().html(settings.next);
                 $prev[(settings.loop || index) ? "show" : "hide"]().html(settings.previous);
-                
+
                 prev = index ? $related[index - 1] : $related[total - 1];
                 next = index < total - 1 ? $related[index + 1] : $related[0];
-                
+
                 if (settings.slideshow) {
                     $slideshow.show();
                 }
-                
+
                 // Preloads images within a rel group
                 if (settings.preloading) {
                     nextSrc = $.data(next, colorbox).href || next.href;
                     prevSrc = $.data(prev, colorbox).href || prev.href;
-                    
+
                     nextSrc = $.isFunction(nextSrc) ? nextSrc.call(next) : nextSrc;
                     prevSrc = $.isFunction(prevSrc) ? prevSrc.call(prev) : prevSrc;
-                    
+
                     if (isImage(nextSrc)) {
                         $('<img/>')[0].src = nextSrc;
                     }
-                    
+
                     if (isImage(prevSrc)) {
                         $('<img/>')[0].src = prevSrc;
                     }
@@ -2194,10 +2194,10 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
             } else {
                 $groupControls.hide();
             }
-            
+
             if (settings.iframe) {
                 iframe = $('<iframe/>').addClass(prefix + 'Iframe')[0];
-                
+
                 if (settings.fastIframe) {
                     complete();
                 } else {
@@ -2205,30 +2205,30 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
                 }
                 iframe.name = prefix + (+new Date());
                 iframe.src = settings.href;
-                
+
                 if (!settings.scrolling) {
                     iframe.scrolling = "no";
                 }
-                
+
                 if (isIE) {
                     iframe.frameBorder = 0;
                     iframe.allowTransparency = "true";
                 }
-                
+
                 $(iframe).appendTo($loaded).one(event_purge, function () {
                     iframe.src = "//about:blank";
                 });
             } else {
                 complete();
             }
-            
+
             if (settings.transition === 'fade') {
                 $box.fadeTo(speed, 1, removeFilter);
             } else {
                 removeFilter();
             }
 		};
-		
+
 		if (settings.transition === 'fade') {
 			$box.fadeTo(speed, 0, function () {
 				publicMethod.position(0, callback);
@@ -2240,33 +2240,33 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 
 	publicMethod.load = function (launched) {
 		var href, setResize, prep = publicMethod.prep;
-		
+
 		active = true;
-		
+
 		photo = false;
-		
+
 		element = $related[index];
-		
+
 		if (!launched) {
 			makeSettings();
 		}
-		
+
 		trigger(event_purge);
-		
+
 		trigger(event_load, settings.onLoad);
-		
+
 		settings.h = settings.height ?
 				setSize(settings.height, 'y') - loadedHeight - interfaceHeight :
 				settings.innerHeight && setSize(settings.innerHeight, 'y');
-		
+
 		settings.w = settings.width ?
 				setSize(settings.width, 'x') - loadedWidth - interfaceWidth :
 				settings.innerWidth && setSize(settings.innerWidth, 'x');
-		
+
 		// Sets the minimum dimensions for use in image scaling
 		settings.mw = settings.w;
 		settings.mh = settings.h;
-		
+
 		// Re-evaluate the minimum width and height based on maxWidth and maxHeight values.
 		// If the width or height exceed the maxWidth or maxHeight, use the maximum values instead.
 		if (settings.maxWidth) {
@@ -2277,13 +2277,13 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			settings.mh = setSize(settings.maxHeight, 'y') - loadedHeight - interfaceHeight;
 			settings.mh = settings.h && settings.h < settings.mh ? settings.h : settings.mh;
 		}
-		
+
 		href = settings.href;
-		
+
         loadingTimer = setTimeout(function () {
             $loadingOverlay.show();
         }, 100);
-        
+
 		if (settings.inline) {
 			// Inserts an empty placeholder where inline content is being pulled from.
 			// An event is bound to put inline content back when ColorBox closes or loads new content.
@@ -2307,11 +2307,11 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			.load(function () {
 				var percent;
 				photo.onload = null; //stops animated gifs from firing the onload repeatedly.
-				
+
 				if (settings.scalePhotos) {
 					setResize = function () {
 						photo.height -= photo.height * percent;
-						photo.width -= photo.width * percent;	
+						photo.width -= photo.width * percent;
 					};
 					if (settings.mw && photo.width > settings.mw) {
 						percent = (photo.width - settings.mw) / photo.width;
@@ -2322,27 +2322,27 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 						setResize();
 					}
 				}
-				
+
 				if (settings.h) {
 					photo.style.marginTop = Math.max(settings.h - photo.height, 0) / 2 + 'px';
 				}
-				
+
 				if ($related[1] && (index < $related.length - 1 || settings.loop)) {
 					photo.style.cursor = 'pointer';
 					photo.onclick = function () {
                         publicMethod.next();
                     };
 				}
-				
+
 				if (isIE) {
 					photo.style.msInterpolationMode = 'bicubic';
 				}
-				
+
 				setTimeout(function () { // A pause because Chrome will sometimes report a 0 by 0 size otherwise.
 					prep(photo);
 				}, 1);
 			});
-			
+
 			setTimeout(function () { // A pause because Opera 10.6+ will sometimes not run the onload function otherwise.
 				photo.src = href;
 			}, 1);
@@ -2352,7 +2352,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			});
 		}
 	};
-        
+
 	// Navigates to the next page/image in a set.
 	publicMethod.next = function () {
 		if (!active && $related[1] && (index < $related.length - 1 || settings.loop)) {
@@ -2360,7 +2360,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 			publicMethod.load();
 		}
 	};
-	
+
 	publicMethod.prev = function () {
 		if (!active && $related[1] && (index || settings.loop)) {
 			index = index ? index - 1 : $related.length - 1;
@@ -2371,25 +2371,25 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	// Note: to use this within an iframe use the following format: parent.$.fn.colorbox.close();
 	publicMethod.close = function () {
 		if (open && !closing) {
-			
+
 			closing = true;
-			
+
 			open = false;
-			
+
 			trigger(event_cleanup, settings.onCleanup);
-			
+
 			$window.unbind('.' + prefix + ' .' + event_ie6);
-			
+
 			$overlay.fadeTo(200, 0);
-			
+
 			$box.stop().fadeTo(300, 0, function () {
-                 
+
 				$box.add($overlay).css({'opacity': 1, cursor: 'auto'}).hide();
-				
+
 				trigger(event_purge);
-				
+
 				$loaded.remove();
-				
+
 				setTimeout(function () {
 					closing = false;
 					trigger(event_closed, settings.onClosed);
@@ -2405,7 +2405,7 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
 	};
 
 	publicMethod.settings = defaults;
-    
+
 	// Bind the live event before DOM-ready for maximum performance in IE6 & 7.
     handler = function (e) {
         // checks to see if it was a non-left mouse-click and for clicks modified with ctrl, shift, or alt.
@@ -2414,13 +2414,13 @@ window.VideoJS=window._V_=VideoJS})(window);	soundManager.url = 'js/mylibs/sound
             launch(this);
         }
     };
-    
+
     if ($.fn.delegate) {
         $(document).delegate('.' + boxElement, 'click', handler);
     } else {
         $('.' + boxElement).live('click', handler);
     }
-    
+
 	// Initializes ColorBox when the DOM has loaded
 	$(publicMethod.init);
 

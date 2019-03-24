@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:ror="http://rorweb.com/0.1/" >
+<rss version="2.0" xmlns:ror="//rorweb.com/0.1/" >
 <channel>
-  <title>ROR Sitemap for http://www.compagnieoursbleu.com/</title>
-  <link>http://www.compagnieoursbleu.com/</link>
+  <title>ROR Sitemap for //www.compagnieoursbleu.com/</title>
+  <link>//www.compagnieoursbleu.com/</link>
 
 <item>
-     <link>http://www.compagnieoursbleu.com/</link>
+     <link>//www.compagnieoursbleu.com/</link>
      <title>Compagne de l'Ours Bleu'</title>
      <description>Compagne de l'Ours Bleu'</description>
      <ror:updatePeriod>daily</ror:updatePeriod>
@@ -13,55 +13,55 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/histoire.html</link>
+     <link>//www.compagnieoursbleu.com/histoire.html</link>
      <title></title>
-     
+
      <ror:updatePeriod>daily</ror:updatePeriod>
      <ror:sortOrder>1</ror:sortOrder>
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/photos.html</link>
+     <link>//www.compagnieoursbleu.com/photos.html</link>
      <title></title>
-     
+
      <ror:updatePeriod>daily</ror:updatePeriod>
      <ror:sortOrder>1</ror:sortOrder>
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/video.html</link>
+     <link>//www.compagnieoursbleu.com/video.html</link>
      <title></title>
-     
+
      <ror:updatePeriod>daily</ror:updatePeriod>
      <ror:sortOrder>1</ror:sortOrder>
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/critiques.html</link>
+     <link>//www.compagnieoursbleu.com/critiques.html</link>
      <title></title>
-     
+
      <ror:updatePeriod>daily</ror:updatePeriod>
      <ror:sortOrder>1</ror:sortOrder>
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/equipe.html</link>
+     <link>//www.compagnieoursbleu.com/equipe.html</link>
      <title></title>
-     
+
      <ror:updatePeriod>daily</ror:updatePeriod>
      <ror:sortOrder>1</ror:sortOrder>
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/img/Plaquette%20spectacle%20Aqualo.pdf</link>
+     <link>//www.compagnieoursbleu.com/img/Plaquette%20spectacle%20Aqualo.pdf</link>
      <title></title>
-     
+
      <ror:updatePeriod>daily</ror:updatePeriod>
      <ror:sortOrder>2</ror:sortOrder>
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/index.html</link>
+     <link>//www.compagnieoursbleu.com/index.html</link>
      <title>Compagne de l'Ours Bleu'</title>
      <description>Compagne de l'Ours Bleu'</description>
      <ror:updatePeriod>daily</ror:updatePeriod>
@@ -69,7 +69,7 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/album/index.html</link>
+     <link>//www.compagnieoursbleu.com/album/index.html</link>
      <title>Photos Aqualo</title>
      <description>Photos Aqualo</description>
      <ror:updatePeriod>daily</ror:updatePeriod>
@@ -77,7 +77,7 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/album/Marionnettes/index.html</link>
+     <link>//www.compagnieoursbleu.com/album/Marionnettes/index.html</link>
      <title>Photos Aqualo &amp;raquo; Marionnettes</title>
      <description>Photos Aqualo</description>
      <ror:updatePeriod>daily</ror:updatePeriod>
@@ -85,7 +85,7 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/album/Décor/index.html</link>
+     <link>//www.compagnieoursbleu.com/album/Décor/index.html</link>
      <title>Photos Aqualo &amp;raquo; Décor</title>
      <description>Photos Aqualo</description>
      <ror:updatePeriod>daily</ror:updatePeriod>
@@ -93,7 +93,7 @@
      <ror:resourceOf>sitemap</ror:resourceOf>
 </item>
 <item>
-     <link>http://www.compagnieoursbleu.com/album/Sur%20la%20route.../index.html</link>
+     <link>//www.compagnieoursbleu.com/album/Sur%20la%20route.../index.html</link>
      <title>Photos Aqualo &amp;raquo; Sur la route...</title>
      <description>Photos Aqualo</description>
      <ror:updatePeriod>daily</ror:updatePeriod>
@@ -102,4 +102,3 @@
 </item>
 </channel>
 </rss>
-  

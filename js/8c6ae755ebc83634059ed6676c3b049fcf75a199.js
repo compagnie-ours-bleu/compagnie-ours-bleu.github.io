@@ -1,9 +1,9 @@
 /*
 	AnythingSlider v1.5.21
 
-	By Chris Coyier: http://css-tricks.com
-	with major improvements by Doug Neiner: http://pixelgraphics.us/
-	based on work by Remy Sharp: http://jqueryfordesigners.com/
+	By Chris Coyier: //css-tricks.com
+	with major improvements by Doug Neiner: //pixelgraphics.us/
+	based on work by Remy Sharp: //jqueryfordesigners.com/
 	and crazy mods by Rob Garrison (aka Mottie): https://github.com/ProLoser/AnythingSlider
 
 	To use the navigationFormatter function, you must have a function that
@@ -136,7 +136,7 @@
 				}
 			});
 			if ($.isFunction(o.onSlideComplete)){
-				// Added setTimeout (zero time) to ensure animation is complete... see this bug report: http://bugs.jquery.com/ticket/7157
+				// Added setTimeout (zero time) to ensure animation is complete... see this bug report: //bugs.jquery.com/ticket/7157
 				base.$el.bind('slide_complete', function(){
 					setTimeout(function(){ o.onSlideComplete(base); }, 0);
 				});
@@ -152,7 +152,7 @@
 			base.$el.children('.cloned').remove();
 			base.$nav.empty();
 
-			base.$items = base.$el.children(); 
+			base.$items = base.$el.children();
 			base.pages = base.$items.length;
 			o.showMultiple = parseInt(o.showMultiple,10) || 1; // only integers allowed
 
@@ -242,7 +242,7 @@
 					swfobject.embedSWF($(this).attr('src') + '&enablejsapi=1&version=3&playerapiid=ytvideo' + i, 'ytvideo' + i,
 						$tar.attr('width'), $tar.attr('height'), '10', null, null,
 						{ allowScriptAccess: "always", wmode : o.addWmodeToObject, allowfullscreen : true },
-						{ 'class' : $tar.attr('class'), 'style' : $tar.attr('style') }, 
+						{ 'class' : $tar.attr('class'), 'style' : $tar.attr('style') },
 						function(){ if (i >= base.hasEmb - 1) { base.$el.trigger('swf_completed', base); } } // swf callback
 					);
 				});
@@ -442,7 +442,7 @@
 			base.currentPage = ( page > base.pages ) ? base.pages : ( page < 1 ) ? 1 : base.currentPage;
 			base.$currentPage = base.$items.eq(base.currentPage - base.adjustLimit);
 			base.exactPage = page;
-			base.$targetPage = base.$items.eq( (page === 0) ? base.pages - base.adjustLimit : (page > base.pages) ? 1 - base.adjustLimit : page - base.adjustLimit ); 
+			base.$targetPage = base.$items.eq( (page === 0) ? base.pages - base.adjustLimit : (page > base.pages) ? 1 - base.adjustLimit : page - base.adjustLimit );
 			base.$el.trigger('slide_init', base);
 
 			base.slideControls(true, false);
@@ -578,7 +578,7 @@
 				op = (toggle) ? 1: 0,
 				sign = (toggle) ? 0 : 1; // 0 = visible, 1 = hidden
 			if (o.toggleControls) {
-				base.$controls.stop(true,true).delay(t1)[dir](o.animationTime/2).delay(t2); 
+				base.$controls.stop(true,true).delay(t1)[dir](o.animationTime/2).delay(t2);
 			}
 			if (o.buildArrows && o.toggleArrows) {
 				if (!base.hovered && base.playing) { sign = 1; op = 0; } // don't animate arrows during slideshow
@@ -589,10 +589,10 @@
 
 		base.clearTimer = function(paused){
 			// Clear the timer only if it is set
-			if (base.timer) { 
-				base.win.clearInterval(base.timer); 
+			if (base.timer) {
+				base.win.clearInterval(base.timer);
 				if (!paused && base.slideshow) {
-					base.$el.trigger('slideshow_stop', base); 
+					base.$el.trigger('slideshow_stop', base);
 					base.slideshow = false;
 				}
 			}
@@ -906,14 +906,14 @@
 	};
 })(jQuery);
 /*
- * jQuery EasIng v1.1.2 - http://gsgd.co.uk/sandbox/jquery.easIng.php
+ * jQuery EasIng v1.1.2 - //gsgd.co.uk/sandbox/jquery.easIng.php
  *
  * Uses the built In easIng capabilities added In jQuery 1.1
  * to offer multiple easIng options
  *
  * Copyright (c) 2007 George Smith
  * Licensed under the MIT License:
- *   http://www.opensource.org/licenses/mit-license.php
+ *   //www.opensource.org/licenses/mit-license.php
  */
 
 // t: current time, b: begInnIng value, c: change In value, d: duration
@@ -1022,7 +1022,7 @@ jQuery.extend( jQuery.easing,
 		return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
 	},
 	easeInOutBack: function (x, t, b, c, d, s) {
-		if (s == undefined) s = 1.70158; 
+		if (s == undefined) s = 1.70158;
 		if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
 		return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
 	},
@@ -1044,17 +1044,17 @@ jQuery.extend( jQuery.easing,
 		if (t < d/2) return jQuery.easing.easeInBounce (x, t*2, 0, c, d) * .5 + b;
 		return jQuery.easing.easeOutBounce (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
 	}
-});/*	SWFObject v2.2 <http://code.google.com/p/swfobject/> 
-	is released under the MIT License <http://www.opensource.org/licenses/mit-license.php> 
+});/*	SWFObject v2.2 <//code.google.com/p/swfobject/>
+	is released under the MIT License <//www.opensource.org/licenses/mit-license.php>
 */
 var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="ShockwaveFlash.ShockwaveFlash",q="application/x-shockwave-flash",R="SWFObjectExprInst",x="onreadystatechange",O=window,j=document,t=navigator,T=false,U=[h],o=[],N=[],I=[],l,Q,E,B,J=false,a=false,n,G,m=true,M=function(){var aa=typeof j.getElementById!=D&&typeof j.getElementsByTagName!=D&&typeof j.createElement!=D,ah=t.userAgent.toLowerCase(),Y=t.platform.toLowerCase(),ae=Y?/win/.test(Y):/win/.test(ah),ac=Y?/mac/.test(Y):/mac/.test(ah),af=/webkit/.test(ah)?parseFloat(ah.replace(/^.*webkit\/(\d+(\.\d+)?).*$/,"$1")):false,X=!+"\v1",ag=[0,0,0],ab=null;if(typeof t.plugins!=D&&typeof t.plugins[S]==r){ab=t.plugins[S].description;if(ab&&!(typeof t.mimeTypes!=D&&t.mimeTypes[q]&&!t.mimeTypes[q].enabledPlugin)){T=true;X=false;ab=ab.replace(/^.*\s+(\S+\s+\S+$)/,"$1");ag[0]=parseInt(ab.replace(/^(.*)\..*$/,"$1"),10);ag[1]=parseInt(ab.replace(/^.*\.(.*)\s.*$/,"$1"),10);ag[2]=/[a-zA-Z]/.test(ab)?parseInt(ab.replace(/^.*[a-zA-Z]+(.*)$/,"$1"),10):0}}else{if(typeof O.ActiveXObject!=D){try{var ad=new ActiveXObject(W);if(ad){ab=ad.GetVariable("$version");if(ab){X=true;ab=ab.split(" ")[1].split(",");ag=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}}catch(Z){}}}return{w3:aa,pv:ag,wk:af,ie:X,win:ae,mac:ac}}(),k=function(){if(!M.w3){return}if((typeof j.readyState!=D&&j.readyState=="complete")||(typeof j.readyState==D&&(j.getElementsByTagName("body")[0]||j.body))){f()}if(!J){if(typeof j.addEventListener!=D){j.addEventListener("DOMContentLoaded",f,false)}if(M.ie&&M.win){j.attachEvent(x,function(){if(j.readyState=="complete"){j.detachEvent(x,arguments.callee);f()}});if(O==top){(function(){if(J){return}try{j.documentElement.doScroll("left")}catch(X){setTimeout(arguments.callee,0);return}f()})()}}if(M.wk){(function(){if(J){return}if(!/loaded|complete/.test(j.readyState)){setTimeout(arguments.callee,0);return}f()})()}s(f)}}();function f(){if(J){return}try{var Z=j.getElementsByTagName("body")[0].appendChild(C("span"));Z.parentNode.removeChild(Z)}catch(aa){return}J=true;var X=U.length;for(var Y=0;Y<X;Y++){U[Y]()}}function K(X){if(J){X()}else{U[U.length]=X}}function s(Y){if(typeof O.addEventListener!=D){O.addEventListener("load",Y,false)}else{if(typeof j.addEventListener!=D){j.addEventListener("load",Y,false)}else{if(typeof O.attachEvent!=D){i(O,"onload",Y)}else{if(typeof O.onload=="function"){var X=O.onload;O.onload=function(){X();Y()}}else{O.onload=Y}}}}}function h(){if(T){V()}else{H()}}function V(){var X=j.getElementsByTagName("body")[0];var aa=C(r);aa.setAttribute("type",q);var Z=X.appendChild(aa);if(Z){var Y=0;(function(){if(typeof Z.GetVariable!=D){var ab=Z.GetVariable("$version");if(ab){ab=ab.split(" ")[1].split(",");M.pv=[parseInt(ab[0],10),parseInt(ab[1],10),parseInt(ab[2],10)]}}else{if(Y<10){Y++;setTimeout(arguments.callee,10);return}}X.removeChild(aa);Z=null;H()})()}else{H()}}function H(){var ag=o.length;if(ag>0){for(var af=0;af<ag;af++){var Y=o[af].id;var ab=o[af].callbackFn;var aa={success:false,id:Y};if(M.pv[0]>0){var ae=c(Y);if(ae){if(F(o[af].swfVersion)&&!(M.wk&&M.wk<312)){w(Y,true);if(ab){aa.success=true;aa.ref=z(Y);ab(aa)}}else{if(o[af].expressInstall&&A()){var ai={};ai.data=o[af].expressInstall;ai.width=ae.getAttribute("width")||"0";ai.height=ae.getAttribute("height")||"0";if(ae.getAttribute("class")){ai.styleclass=ae.getAttribute("class")}if(ae.getAttribute("align")){ai.align=ae.getAttribute("align")}var ah={};var X=ae.getElementsByTagName("param");var ac=X.length;for(var ad=0;ad<ac;ad++){if(X[ad].getAttribute("name").toLowerCase()!="movie"){ah[X[ad].getAttribute("name")]=X[ad].getAttribute("value")}}P(ai,ah,Y,ab)}else{p(ae);if(ab){ab(aa)}}}}}else{w(Y,true);if(ab){var Z=z(Y);if(Z&&typeof Z.SetVariable!=D){aa.success=true;aa.ref=Z}ab(aa)}}}}}function z(aa){var X=null;var Y=c(aa);if(Y&&Y.nodeName=="OBJECT"){if(typeof Y.SetVariable!=D){X=Y}else{var Z=Y.getElementsByTagName(r)[0];if(Z){X=Z}}}return X}function A(){return !a&&F("6.0.65")&&(M.win||M.mac)&&!(M.wk&&M.wk<312)}function P(aa,ab,X,Z){a=true;E=Z||null;B={success:false,id:X};var ae=c(X);if(ae){if(ae.nodeName=="OBJECT"){l=g(ae);Q=null}else{l=ae;Q=X}aa.id=R;if(typeof aa.width==D||(!/%$/.test(aa.width)&&parseInt(aa.width,10)<310)){aa.width="310"}if(typeof aa.height==D||(!/%$/.test(aa.height)&&parseInt(aa.height,10)<137)){aa.height="137"}j.title=j.title.slice(0,47)+" - Flash Player Installation";var ad=M.ie&&M.win?"ActiveX":"PlugIn",ac="MMredirectURL="+O.location.toString().replace(/&/g,"%26")+"&MMplayerType="+ad+"&MMdoctitle="+j.title;if(typeof ab.flashvars!=D){ab.flashvars+="&"+ac}else{ab.flashvars=ac}if(M.ie&&M.win&&ae.readyState!=4){var Y=C("div");X+="SWFObjectNew";Y.setAttribute("id",X);ae.parentNode.insertBefore(Y,ae);ae.style.display="none";(function(){if(ae.readyState==4){ae.parentNode.removeChild(ae)}else{setTimeout(arguments.callee,10)}})()}u(aa,ab,X)}}function p(Y){if(M.ie&&M.win&&Y.readyState!=4){var X=C("div");Y.parentNode.insertBefore(X,Y);X.parentNode.replaceChild(g(Y),X);Y.style.display="none";(function(){if(Y.readyState==4){Y.parentNode.removeChild(Y)}else{setTimeout(arguments.callee,10)}})()}else{Y.parentNode.replaceChild(g(Y),Y)}}function g(ab){var aa=C("div");if(M.win&&M.ie){aa.innerHTML=ab.innerHTML}else{var Y=ab.getElementsByTagName(r)[0];if(Y){var ad=Y.childNodes;if(ad){var X=ad.length;for(var Z=0;Z<X;Z++){if(!(ad[Z].nodeType==1&&ad[Z].nodeName=="PARAM")&&!(ad[Z].nodeType==8)){aa.appendChild(ad[Z].cloneNode(true))}}}}}return aa}function u(ai,ag,Y){var X,aa=c(Y);if(M.wk&&M.wk<312){return X}if(aa){if(typeof ai.id==D){ai.id=Y}if(M.ie&&M.win){var ah="";for(var ae in ai){if(ai[ae]!=Object.prototype[ae]){if(ae.toLowerCase()=="data"){ag.movie=ai[ae]}else{if(ae.toLowerCase()=="styleclass"){ah+=' class="'+ai[ae]+'"'}else{if(ae.toLowerCase()!="classid"){ah+=" "+ae+'="'+ai[ae]+'"'}}}}}var af="";for(var ad in ag){if(ag[ad]!=Object.prototype[ad]){af+='<param name="'+ad+'" value="'+ag[ad]+'" />'}}aa.outerHTML='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'+ah+">"+af+"</object>";N[N.length]=ai.id;X=c(ai.id)}else{var Z=C(r);Z.setAttribute("type",q);for(var ac in ai){if(ai[ac]!=Object.prototype[ac]){if(ac.toLowerCase()=="styleclass"){Z.setAttribute("class",ai[ac])}else{if(ac.toLowerCase()!="classid"){Z.setAttribute(ac,ai[ac])}}}}for(var ab in ag){if(ag[ab]!=Object.prototype[ab]&&ab.toLowerCase()!="movie"){e(Z,ab,ag[ab])}}aa.parentNode.replaceChild(Z,aa);X=Z}}return X}function e(Z,X,Y){var aa=C("param");aa.setAttribute("name",X);aa.setAttribute("value",Y);Z.appendChild(aa)}function y(Y){var X=c(Y);if(X&&X.nodeName=="OBJECT"){if(M.ie&&M.win){X.style.display="none";(function(){if(X.readyState==4){b(Y)}else{setTimeout(arguments.callee,10)}})()}else{X.parentNode.removeChild(X)}}}function b(Z){var Y=c(Z);if(Y){for(var X in Y){if(typeof Y[X]=="function"){Y[X]=null}}Y.parentNode.removeChild(Y)}}function c(Z){var X=null;try{X=j.getElementById(Z)}catch(Y){}return X}function C(X){return j.createElement(X)}function i(Z,X,Y){Z.attachEvent(X,Y);I[I.length]=[Z,X,Y]}function F(Z){var Y=M.pv,X=Z.split(".");X[0]=parseInt(X[0],10);X[1]=parseInt(X[1],10)||0;X[2]=parseInt(X[2],10)||0;return(Y[0]>X[0]||(Y[0]==X[0]&&Y[1]>X[1])||(Y[0]==X[0]&&Y[1]==X[1]&&Y[2]>=X[2]))?true:false}function v(ac,Y,ad,ab){if(M.ie&&M.mac){return}var aa=j.getElementsByTagName("head")[0];if(!aa){return}var X=(ad&&typeof ad=="string")?ad:"screen";if(ab){n=null;G=null}if(!n||G!=X){var Z=C("style");Z.setAttribute("type","text/css");Z.setAttribute("media",X);n=aa.appendChild(Z);if(M.ie&&M.win&&typeof j.styleSheets!=D&&j.styleSheets.length>0){n=j.styleSheets[j.styleSheets.length-1]}G=X}if(M.ie&&M.win){if(n&&typeof n.addRule==r){n.addRule(ac,Y)}}else{if(n&&typeof j.createTextNode!=D){n.appendChild(j.createTextNode(ac+" {"+Y+"}"))}}}function w(Z,X){if(!m){return}var Y=X?"visible":"hidden";if(J&&c(Z)){c(Z).style.visibility=Y}else{v("#"+Z,"visibility:"+Y)}}function L(Y){var Z=/[\\\"<>\.;]/;var X=Z.exec(Y)!=null;return X&&typeof encodeURIComponent!=D?encodeURIComponent(Y):Y}var d=function(){if(M.ie&&M.win){window.attachEvent("onunload",function(){var ac=I.length;for(var ab=0;ab<ac;ab++){I[ab][0].detachEvent(I[ab][1],I[ab][2])}var Z=N.length;for(var aa=0;aa<Z;aa++){y(N[aa])}for(var Y in M){M[Y]=null}M=null;for(var X in swfobject){swfobject[X]=null}swfobject=null})}}();return{registerObject:function(ab,X,aa,Z){if(M.w3&&ab&&X){var Y={};Y.id=ab;Y.swfVersion=X;Y.expressInstall=aa;Y.callbackFn=Z;o[o.length]=Y;w(ab,false)}else{if(Z){Z({success:false,id:ab})}}},getObjectById:function(X){if(M.w3){return z(X)}},embedSWF:function(ab,ah,ae,ag,Y,aa,Z,ad,af,ac){var X={success:false,id:ah};if(M.w3&&!(M.wk&&M.wk<312)&&ab&&ah&&ae&&ag&&Y){w(ah,false);K(function(){ae+="";ag+="";var aj={};if(af&&typeof af===r){for(var al in af){aj[al]=af[al]}}aj.data=ab;aj.width=ae;aj.height=ag;var am={};if(ad&&typeof ad===r){for(var ak in ad){am[ak]=ad[ak]}}if(Z&&typeof Z===r){for(var ai in Z){if(typeof am.flashvars!=D){am.flashvars+="&"+ai+"="+Z[ai]}else{am.flashvars=ai+"="+Z[ai]}}}if(F(Y)){var an=u(aj,am,ah);if(aj.id==ah){w(ah,true)}X.success=true;X.ref=an}else{if(aa&&A()){aj.data=aa;P(aj,am,ah,ac);return}else{w(ah,true)}}if(ac){ac(X)}})}else{if(ac){ac(X)}}},switchOffAutoHideShow:function(){m=false},ua:M,getFlashPlayerVersion:function(){return{major:M.pv[0],minor:M.pv[1],release:M.pv[2]}},hasFlashPlayerVersion:F,createSWF:function(Z,Y,X){if(M.w3){return u(Z,Y,X)}else{return undefined}},showExpressInstall:function(Z,aa,X,Y){if(M.w3&&A()){P(Z,aa,X,Y)}},removeSWF:function(X){if(M.w3){y(X)}},createCSS:function(aa,Z,Y,X){if(M.w3){v(aa,Z,Y,X)}},addDomLoadEvent:K,addLoadEvent:s,getQueryParamValue:function(aa){var Z=j.location.search||j.location.hash;if(Z){if(/\?/.test(Z)){Z=Z.split("?")[1]}if(aa==null){return L(Z)}var Y=Z.split("&");for(var X=0;X<Y.length;X++){if(Y[X].substring(0,Y[X].indexOf("="))==aa){return L(Y[X].substring((Y[X].indexOf("=")+1)))}}}return""},expressInstallCallback:function(){if(a){var X=c(R);if(X&&l){X.parentNode.replaceChild(l,X);if(Q){w(Q,true);if(M.ie&&M.win){l.style.display="block"}}if(E){E(B)}}a=false}}}}();/** @license
  * SoundManager 2: JavaScript Sound for the Web
  * ----------------------------------------------
- * http://schillmania.com/projects/soundmanager2/
+ * //schillmania.com/projects/soundmanager2/
  *
  * Copyright (c) 2007, Scott Schiller. All rights reserved.
  * Code provided under the BSD License:
- * http://schillmania.com/projects/soundmanager2/license.txt
+ * //schillmania.com/projects/soundmanager2/license.txt
  *
  * V2.97a.20110424
  */
@@ -1235,7 +1235,7 @@ function SoundManager(smURL, smID) {
 
   var SMSound,
   _s = this, _sm = 'soundManager', _smc = _sm+'::', _h5 = 'HTML5::', _id, _ua = navigator.userAgent, _win = window, _wl = _win.location.href.toString(), _fV = this.flashVersion, _doc = document, _doNothing, _init, _on_queue = [], _debugOpen = true, _debugTS, _didAppend = false, _appendSuccess = false, _didInit = false, _disabled = false, _windowLoaded = false, _wDS, _wdCount = 0, _initComplete, _mixin, _addOnEvent, _processOnEvents, _initUserOnload, _go, _delayWaitForEI, _waitForEI, _setVersionInfo, _handleFocus, _beginInit, _strings, _initMovie, _dcLoaded, _didDCLoaded, _getDocument, _createMovie, _die, _setPolling, _debugLevels = ['log', 'info', 'warn', 'error'], _defaultFlashVersion = 8, _disableObject, _failSafely, _normalizeMovieURL, _oRemoved = null, _oRemovedHTML = null, _str, _flashBlockHandler, _getSWFCSS, _toggleDebug, _loopFix, _policyFix, _complain, _idCheck, _waitingForEI = false, _initPending = false, _smTimer, _onTimer, _startTimer, _stopTimer, _needsFlash = null, _featureCheck, _html5OK, _html5Only = false, _html5CanPlay, _html5Ext,  _dcIE, _testHTML5, _event, _slice = Array.prototype.slice, _useGlobalHTML5Audio = false, _hasFlash, _detectFlash, _badSafariFix,
-  _is_pre = _ua.match(/pre\//i), _is_iDevice = _ua.match(/(ipad|iphone|ipod)/i), _isMobile = (_ua.match(/mobile/i) || _is_pre || _is_iDevice), _isIE = _ua.match(/msie/i), _isWebkit = _ua.match(/webkit/i), _isSafari = (_ua.match(/safari/i) && !_ua.match(/chrome/i)), _isOpera = (_ua.match(/opera/i)), 
+  _is_pre = _ua.match(/pre\//i), _is_iDevice = _ua.match(/(ipad|iphone|ipod)/i), _isMobile = (_ua.match(/mobile/i) || _is_pre || _is_iDevice), _isIE = _ua.match(/msie/i), _isWebkit = _ua.match(/webkit/i), _isSafari = (_ua.match(/safari/i) && !_ua.match(/chrome/i)), _isOpera = (_ua.match(/opera/i)),
   _isBadSafari = (!_wl.match(/usehtml5audio/i) && !_wl.match(/sm2\-ignorebadua/i) && _isSafari && _ua.match(/OS X 10_6_([3-9])/i)), // Safari 4 and 5 occasionally fail to load/play HTML5 audio on Snow Leopard due to bug(s) in QuickTime X and/or other underlying frameworks. :/ Known Apple "radar" bug. https://bugs.webkit.org/show_bug.cgi?id=32159
   _hasConsole = (typeof console !== 'undefined' && typeof console.log !== 'undefined'), _isFocused = (typeof _doc.hasFocus !== 'undefined'?_doc.hasFocus():null), _tryInitOnFocus = (typeof _doc.hasFocus === 'undefined' && _isSafari), _okToDisable = !_tryInitOnFocus;
 
@@ -2599,7 +2599,7 @@ function SoundManager(smURL, smID) {
         _a.autobuffer = false; // early HTML5 implementation (non-standard)
         _a.preload = 'none'; // standard
       }
-      _a.loop = (_iO.loops>1?'loop':''); // boolean instead of "loop", for webkit? - spec says string. http://www.w3.org/TR/html-markup/audio.html#audio.attrs.loop
+      _a.loop = (_iO.loops>1?'loop':''); // boolean instead of "loop", for webkit? - spec says string. //www.w3.org/TR/html-markup/audio.html#audio.attrs.loop
       return _a;
     };
 
@@ -3050,7 +3050,7 @@ function SoundManager(smURL, smID) {
     swf404: _sm + ': Verify that %s is a valid path.',
     tryDebug: 'Try ' + _sm + '.debugFlash = true for more security details (output goes to SWF.)',
     checkSWF: 'See SWF output for more debug info.',
-    localFail: _sm + ': Non-HTTP page (' + _doc.location.protocol + ' URL?) Review Flash player security settings for this special case:\nhttp://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html\nMay need to add/allow path, eg. c:/sm2/ or /users/me/sm2/',
+    localFail: _sm + ': Non-HTTP page (' + _doc.location.protocol + ' URL?) Review Flash player security settings for this special case:\n//www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html\nMay need to add/allow path, eg. c:/sm2/ or /users/me/sm2/',
     waitFocus: _sm + ': Special case: Waiting for focus-related event..',
     waitImpatient: _sm + ': Getting impatient, still waiting for Flash%s...',
     waitForever: _sm + ': Waiting indefinitely for Flash (will recover if unblocked)...',
@@ -3067,7 +3067,7 @@ function SoundManager(smURL, smID) {
     didInit: _smc + 'init(): Already called?',
     flashJS: _sm + ': Attempting to call Flash from JS..',
     noPolling: _sm + ': Polling (whileloading()/whileplaying() support) is disabled.',
-    secNote: 'Flash security note: Network/internet URLs will not load due to security restrictions. Access can be configured via Flash Player Global Security Settings Page: http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html',
+    secNote: 'Flash security note: Network/internet URLs will not load due to security restrictions. Access can be configured via Flash Player Global Security Settings Page: //www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html',
     badRemove: 'Warning: Failed to remove flash movie.',
     noPeak: 'Warning: peakData features unsupported for movieStar formats',
     shutdown: _sm + '.disable(): Shutting down',
@@ -3320,7 +3320,7 @@ function SoundManager(smURL, smID) {
       'pluginspage': _s._http+'//www.macromedia.com/go/getflashplayer',
       'type': 'application/x-shockwave-flash',
       'wmode': _s.wmode,
-      'hasPriority': 'true' // http://help.adobe.com/en_US/as3/mobile/WS4bebcd66a74275c36cfb8137124318eebc6-7ffd.html
+      'hasPriority': 'true' // //help.adobe.com/en_US/as3/mobile/WS4bebcd66a74275c36cfb8137124318eebc6-7ffd.html
     };
 
     if (_s.debugFlash) {
@@ -3759,7 +3759,7 @@ function SoundManager(smURL, smID) {
 
   _detectFlash = function() {
 
-    // hat tip: Flash Detect library (BSD, (C) 2007) by Carl "DocYes" S. Yestrau - http://featureblend.com/javascript-flash-detection-library.html / http://featureblend.com/license.txt
+    // hat tip: Flash Detect library (BSD, (C) 2007) by Carl "DocYes" S. Yestrau - //featureblend.com/javascript-flash-detection-library.html / //featureblend.com/license.txt
 
     if (_hasFlash !== undefined) {
       // this work has already been done.
@@ -4052,7 +4052,7 @@ function SoundManager(smURL, smID) {
 
 } // SoundManager()
 
-// SM2_DEFER details: http://www.schillmania.com/projects/soundmanager2/doc/getstarted/#lazy-loading
+// SM2_DEFER details: //www.schillmania.com/projects/soundmanager2/doc/getstarted/#lazy-loading
 if (typeof SM2_DEFER === 'undefined' || !SM2_DEFER) {
   soundManager = new SoundManager();
 }
@@ -4079,10 +4079,10 @@ window.soundManager = soundManager; // public API, flash callbacks etc
 						}
 				});
 	});
-	
+
 	soundManager.ontimeout(function() {
 	});
-	
+
 	$('#mute').click(function() {
 		$(this).toggleClass("mutted");
 		if($(this).hasClass("mutted")) {
@@ -4094,8 +4094,8 @@ window.soundManager = soundManager; // public API, flash callbacks etc
 					}
 				});
 		}
-	
-	
+
+
 	});
 	window.log=function(){log.history=log.history||[];log.history.push(arguments);if(this.console){arguments.callee=arguments.callee.caller;console.log(Array.prototype.slice.call(arguments))}};(function(e){function h(){}for(var g="assert,count,debug,dir,dirxml,error,exception,group,groupCollapsed,groupEnd,info,log,markTimeline,profile,profileEnd,time,timeEnd,trace,warn".split(","),f;f=g.pop();){e[f]=e[f]||h}})(window.console=window.console||{});(function(c,d){var a=c.document;(function(){var e=false,f=/xyz/.test(function(){xyz})?/\b_super\b/:/.*/;this.JRClass=function(){};JRClass.extend=function(k){var i=this.prototype;e=true;var h=new this();e=false;for(var g in k){h[g]=typeof k[g]=="function"&&typeof i[g]=="function"&&f.test(k[g])?(function(l,m){return function(){var o=this._super;this._super=i[l];var n=m.apply(this,arguments);this._super=o;return n}})(g,k[g]):k[g]}function j(){if(!e&&this.init){this.init.apply(this,arguments)}}j.prototype=h;j.constructor=j;j.extend=arguments.callee;return j}})();var b=JRClass.extend({init:function(f,e){if(typeof f=="string"){this.video=a.getElementById(f)}else{this.video=f}this.video.player=this;this.values={};this.elements={};this.options={autoplay:false,preload:true,useBuiltInControls:false,controlsBelow:false,controlsAtStart:false,controlsHiding:true,defaultVolume:0.85,playerFallbackOrder:["html5","flash","links"],flashPlayer:"htmlObject",flashPlayerVersion:false};if(typeof b.options=="object"){_V_.merge(this.options,b.options)}if(typeof e=="object"){_V_.merge(this.options,e)}if(this.getPreloadAttribute()!==d){this.options.preload=this.getPreloadAttribute()}if(this.getAutoplayAttribute()!==d){this.options.autoplay=this.getAutoplayAttribute()}this.box=this.video.parentNode;this.linksFallback=this.getLinksFallback();this.hideLinksFallback();this.each(this.options.playerFallbackOrder,function(g){if(this[g+"Supported"]()){this[g+"Init"]();return true}});this.activateElement(this,"player");this.activateElement(this.box,"box")},behaviors:{},newBehavior:function(e,f,g){this.behaviors[e]=f;this.extend(g)},activateElement:function(e,f){if(typeof e=="string"){e=a.getElementById(e)}this.behaviors[f].call(this,e)},errors:[],warnings:[],warning:function(e){this.warnings.push(e);this.log(e)},history:[],log:function(f){if(!f){return}if(typeof f=="string"){f={type:f}}if(f.type){this.history.push(f.type)}if(this.history.length>=50){this.history.shift()}try{console.log(f.type)}catch(g){try{opera.postError(f.type)}catch(g){}}},setLocalStorage:function(f,g){if(!localStorage){return}try{localStorage[f]=g}catch(h){if(h.code==22||h.code==1014){this.warning(b.warnings.localStorageFull)}}},getPreloadAttribute:function(){if(typeof this.video.hasAttribute=="function"&&this.video.hasAttribute("preload")){var e=this.video.getAttribute("preload");if(e===""||e==="true"){return"auto"}if(e==="false"){return"none"}return e}},getAutoplayAttribute:function(){if(typeof this.video.hasAttribute=="function"&&this.video.hasAttribute("autoplay")){var e=this.video.getAttribute("autoplay");if(e==="false"){return false}return true}},bufferedPercent:function(){return(this.duration())?this.buffered()[1]/this.duration():0},each:function(e,h){if(!e||e.length===0){return}for(var g=0,f=e.length;g<f;g++){if(h.call(this,e[g],g)){break}}},extend:function(f){for(var e in f){if(f.hasOwnProperty(e)){this[e]=f[e]}}}});b.player=b.prototype;b.player.extend({flashSupported:function(){if(!this.flashElement){this.flashElement=this.getFlashElement()}if(this.flashElement&&this.flashPlayerVersionSupported()){return true}else{return false}},flashInit:function(){this.replaceWithFlash();this.element=this.flashElement;this.video.src="";var e=b.flashPlayers[this.options.flashPlayer];this.extend(b.flashPlayers[this.options.flashPlayer].api);(e.init.context(this))()},getFlashElement:function(){var g=this.video.children;for(var f=0,e=g.length;f<e;f++){if(g[f].className=="vjs-flash-fallback"){return g[f]}}},replaceWithFlash:function(){if(this.flashElement){this.box.insertBefore(this.flashElement,this.video);this.video.style.display="none"}},flashPlayerVersionSupported:function(){var e=(this.options.flashPlayerVersion)?this.options.flashPlayerVersion:b.flashPlayers[this.options.flashPlayer].flashPlayerVersion;return b.getFlashVersion()>=e}});b.flashPlayers={};b.flashPlayers.htmlObject={flashPlayerVersion:9,init:function(){return true},api:{width:function(e){if(e!==d){this.element.width=e;this.box.style.width=e+"px";
 this.triggerResizeListeners();return this}return this.element.width},height:function(e){if(e!==d){this.element.height=e;this.box.style.height=e+"px";this.triggerResizeListeners();return this}return this.element.height}}};b.player.extend({linksSupported:function(){return true},linksInit:function(){this.showLinksFallback();this.element=this.video},getLinksFallback:function(){return this.box.getElementsByTagName("P")[0]},hideLinksFallback:function(){if(this.linksFallback){this.linksFallback.style.display="none"}},showLinksFallback:function(){if(this.linksFallback){this.linksFallback.style.display="block"}}});b.merge=function(h,g,f){for(var e in g){if(g.hasOwnProperty(e)&&(!f||!h.hasOwnProperty(e))){h[e]=g[e]}}return h};b.extend=function(e){this.merge(this,e,true)};b.extend({setupAllWhenReady:function(e){b.options=e;b.DOMReady(b.setup)},DOMReady:function(e){b.addToDOMReady(e)},setup:function(g,e){var k=false,j=[],h;if(!g||g=="All"){g=b.getVideoJSTags()}else{if(typeof g!="object"||g.nodeType==1){g=[g];k=true}}for(var f=0;f<g.length;f++){if(typeof g[f]=="string"){h=a.getElementById(g[f])}else{h=g[f]}j.push(new b(h,e))}return(k)?j[0]:j},getVideoJSTags:function(){var g=a.getElementsByTagName("video"),e=[],k;for(var h=0,f=g.length;h<f;h++){k=g[h];if(k.className.indexOf("video-js")!=-1){e.push(k)}}return e},browserSupportsVideo:function(){if(typeof b.videoSupport!="undefined"){return b.videoSupport}b.videoSupport=!!a.createElement("video").canPlayType;return b.videoSupport},getFlashVersion:function(){if(typeof b.flashVersion!="undefined"){return b.flashVersion}var f=0,i;if(typeof navigator.plugins!="undefined"&&typeof navigator.plugins["Shockwave Flash"]=="object"){i=navigator.plugins["Shockwave Flash"].description;if(i&&!(typeof navigator.mimeTypes!="undefined"&&navigator.mimeTypes["application/x-shockwave-flash"]&&!navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin)){f=parseInt(i.match(/^.*\s+([^\s]+)\.[^\s]+\s+[^\s]+$/)[1],10)}}else{if(typeof c.ActiveXObject!="undefined"){try{var g=new ActiveXObject("ShockwaveFlash.ShockwaveFlash");if(g){f=parseInt(g.GetVariable("$version").match(/^[^\s]+\s(\d+)/)[1],10)}}catch(h){}}}b.flashVersion=f;return b.flashVersion},isIE:function(){return !+"\v1"},isIPad:function(){return navigator.userAgent.match(/iPad/i)!==null},isIPhone:function(){return navigator.userAgent.match(/iPhone/i)!==null},isIOS:function(){return b.isIPhone()||b.isIPad()},iOSVersion:function(){var e=navigator.userAgent.match(/OS (\d+)_/i);if(e&&e[1]){return e[1]}},isAndroid:function(){return navigator.userAgent.match(/Android/i)!==null},androidVersion:function(){var e=navigator.userAgent.match(/Android (\d+)\./i);if(e&&e[1]){return e[1]}},warnings:{videoNotReady:"Video is not ready yet (try playing the video first).",localStorageFull:"Local Storage is Full"}});if(b.isIE()){a.createElement("video")}c.VideoJS=c._V_=b;b.player.extend({html5Supported:function(){if(b.browserSupportsVideo()&&this.canPlaySource()){return true}else{return false}},html5Init:function(){this.element=this.video;this.fixPreloading();this.supportProgressEvents();this.volume((localStorage&&localStorage.volume)||this.options.defaultVolume);if(b.isIOS()){this.options.useBuiltInControls=true;this.iOSInterface()}else{if(b.isAndroid()){this.options.useBuiltInControls=true;this.androidInterface()}}if(!this.options.useBuiltInControls){this.video.controls=false;if(this.options.controlsBelow){_V_.addClass(this.box,"vjs-controls-below")}this.activateElement(this.video,"playToggle");this.buildStylesCheckDiv();this.buildAndActivatePoster();this.buildBigPlayButton();this.buildAndActivateSpinner();this.buildAndActivateControlBar();this.loadInterface();this.getSubtitles()}},canPlaySource:function(){if(this.canPlaySourceResult){return this.canPlaySourceResult}var h=this.video.children;for(var g=0,f=h.length;g<f;g++){if(h[g].tagName.toUpperCase()=="SOURCE"){var e=this.video.canPlayType(h[g].type)||this.canPlayExt(h[g].src);if(e=="probably"||e=="maybe"){this.firstPlayableSource=h[g];
