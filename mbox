@@ -1,0 +1,70 @@
+From MAILER-DAEMON  Mon Jun  6 19:24:57 2011
+Return-Path: <>
+X-Original-To: kartben@MacBook-Pro-de-Benjamin-CABE.local
+Delivered-To: kartben@MacBook-Pro-de-Benjamin-CABE.local
+Received: by MacBook-Pro-de-Benjamin-CABE.local (Postfix)
+	id 84D11142C98B; Mon,  6 Jun 2011 19:24:57 +0200 (CEST)
+Date: Mon,  6 Jun 2011 19:24:57 +0200 (CEST)
+From: MAILER-DAEMON@MacBook-Pro-de-Benjamin-CABE.local (Mail Delivery System)
+Subject: Undelivered Mail Returned to Sender
+To: kartben@MacBook-Pro-de-Benjamin-CABE.local
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status;
+	boundary="6E70E142C987.1307381097/MacBook-Pro-de-Benjamin-CABE.local"
+Message-Id: <20110606172457.84D11142C98B@MacBook-Pro-de-Benjamin-CABE.local>
+Status: RO
+
+This is a MIME-encapsulated message.
+
+--6E70E142C987.1307381097/MacBook-Pro-de-Benjamin-CABE.local
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host MacBook-Pro-de-Benjamin-CABE.local.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please send mail to postmaster.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+<hBa_output@MacBook-Pro-de-Benjamin-CABE.local> (expanded from <hBa_output>):
+    unknown user: "hba_output"
+
+--6E70E142C987.1307381097/MacBook-Pro-de-Benjamin-CABE.local
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; MacBook-Pro-de-Benjamin-CABE.local
+X-Postfix-Queue-ID: 6E70E142C987
+X-Postfix-Sender: rfc822; kartben@MacBook-Pro-de-Benjamin-CABE.local
+Arrival-Date: Mon,  6 Jun 2011 19:24:57 +0200 (CEST)
+
+Final-Recipient: rfc822; hBa_output@MacBook-Pro-de-Benjamin-CABE.local
+Original-Recipient: rfc822; hBa_output
+Action: failed
+Status: 5.1.1
+Diagnostic-Code: X-Postfix; unknown user: "hba_output"
+
+--6E70E142C987.1307381097/MacBook-Pro-de-Benjamin-CABE.local
+Content-Description: Undelivered Message
+Content-Type: message/rfc822
+
+Received: by MacBook-Pro-de-Benjamin-CABE.local (Postfix, from userid 501)
+	id 6E70E142C987; Mon,  6 Jun 2011 19:24:57 +0200 (CEST)
+To: hBa_output@MacBook-Pro-de-Benjamin-CABE.local
+Subject: MacBook-Pro-de-Benjamin-CABE.local -a run output
+Message-Id: <20110606172457.6E70E142C987@MacBook-Pro-de-Benjamin-CABE.local>
+Date: Mon,  6 Jun 2011 19:24:57 +0200 (CEST)
+From: kartben@MacBook-Pro-de-Benjamin-CABE.local (Benjamin CABE)
+
+
+Lun jui  6 19:24:57 CEST 2011
+
+--6E70E142C987.1307381097/MacBook-Pro-de-Benjamin-CABE.local--
+

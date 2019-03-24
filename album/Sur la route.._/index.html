@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">	
+	<!-- saved from url=(0014)about:internet -->
+
+<!-- Mirrored from www.compagnieoursbleu.com/album/Sur la route.../index.html by HTTrack Website Copier/3.x [XR&CO'2010], Tue, 15 Oct 2013 22:00:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		<title>Photos Aqualo &raquo; Sur la route...</title>
+				
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="title" content="Photos Aqualo" />
+<meta name="keywords" content="Photos Aqualo, Sur la route..., jAlbum 9, Galleria-OursBleu" />
+<meta name="description" content="Photos Aqualo" />
+<meta property="og:title" content="Photos Aqualo" />
+<meta property="og:site_name" content="Jalbum" />
+<meta property="fb:app_id" content="140299612674733" />
+<meta name="robots" content="noindex,follow"/>
+		<link href="../res/galleria/galleria.css" rel="stylesheet" type="text/css" />
+		<link href="../res/index.css" rel="stylesheet" type="text/css" />		
+		<link href="../res/common.css" rel="stylesheet" type="text/css" />
+		<link href='http://fonts.googleapis.com/css?family=Schoolbell' rel='stylesheet' type='text/css'>
+
+		<style type="text/css">
+	.thumbnails li {
+		width: 75px;
+		height: 75px;
+	}
+
+	#middle_container {
+		height: 430px;
+	}
+
+	#scroller_container {
+		margin-top: 0px;
+		margin-bottom: 0px;
+		width: 343px;	
+	}
+
+	#image_scroller {
+		margin: 0 10px 0 20px;
+		width: 273px;
+	}
+	
+	#thumbnails_container {
+		width: 2366px;
+	}
+	
+	#scroller_container,
+	#image_scroller,
+	#thumbnails_container {
+		height: 85px;
+	}
+	
+	#folders_container {
+		;
+	}		
+	
+	.folders {
+		width: 0px;
+	}
+	
+	.folders li {
+		width: 91px;
+		height: 91px;
+	}
+	
+	.caption,
+	.description {
+		width: 273px;
+	}
+</style>
+		<script src="../res/jquery.js" type="text/javascript"></script>
+			<script src="../res/jquery.hotkeys.js" type="text/javascript"></script>
+	<script src="../res/galleria/jquery.galleria.js" type="text/javascript"></script>
+	<script src="../res/jquery.scrollimages.js" type="text/javascript"></script>	
+	<script type="text/javascript"><!--//--><![CDATA[//><!--	
+		$(function() {
+			$("#thumbnails_container").imageScroller({
+				onBeforeScroll: function() { $.galleria.stop() },
+				onScroll: function() { $.galleria.start() }, 
+				duration: 120, 
+				imageWidth: 91, 
+				size: 3,
+				fastSteps: 5
+			});
+			
+			var formattedThumbnailOpacity = 70/100;
+			
+			$(".thumbnails_unstyled").addClass("thumbnails");
+			$("ul.thumbnails").galleria({
+				history: false,
+				clickNext: true,
+				insert: "#main_image",
+				onImage: function(image, caption, thumb) {
+					var extras = $("#extras").css("display", "none").empty();
+					image.css("display", "none").fadeIn(500);
+					caption.css("display", "none").fadeIn(500);
+					
+					if (false) {
+						var extrasList = $("<ul></ul>");
+						extrasList.addMetadata("Date", thumb.data("originalDate"));
+						extrasList.addMetadata("Camera", thumb.data("cameraModel"));
+						extrasList.addMetadata("Exposure time", thumb.data("exposureTime"));
+						extrasList.addMetadata("ISO", thumb.data("isoEquivalent"));
+						extrasList.addMetadata("Aperture", thumb.data("aperture"));
+						extrasList.addMetadata("Focus distance", thumb.data("focusDistance"));
+						extrasList.addMetadata("Focal length", thumb.data("focalLength35mm"));
+						extrasList.addMetadata("Keywords", thumb.data("keywords"));
+						if (extrasList.children().length > 0) {
+							extras.append(extrasList);						
+							extrasList.find(":first-child").addClass("first");
+							extras.css({ 
+								width : (image.outerWidth() - (5 * 2) + 100) + "px" 
+							}).fadeIn(500);
+						}
+					}
+					
+					var li = thumb.parents("li");
+					li.siblings().children("img.selected").fadeTo(500, formattedThumbnailOpacity);
+					thumb.fadeTo("fast", 1).addClass("selected");
+					image.attr("title", "Next image");
+					
+					var original = thumb.data("original");
+					if (original) {
+						var originalLink = $("<a></a>").attr("href", original).text("Download original");
+						caption.append(" (").append(originalLink).append(")");
+					}
+				},
+				onThumb: function(thumb) {
+					var li = thumb.parents("li");
+					var fadeTo = li.is(".active") ? "1" : formattedThumbnailOpacity;
+					thumb.css({display: "none", opacity: fadeTo}).fadeIn(1500);
+					thumb.hover(
+						function() { 
+							thumb.fadeTo("fast", 1);		
+						},
+						function() {
+							li.not(".active").children("img").fadeTo("fast", formattedThumbnailOpacity);
+						}
+					)
+				},
+				preloads: 8,
+				fastSteps: 5,
+				onPrev: function() {
+					$.imageScroller.scrollLeft();
+				},
+				onNext: function() {
+					$.imageScroller.scrollRight();
+				},
+				onPrevFast: function() {
+					$.imageScroller.fastScrollLeft();
+				},
+				onNextFast: function() {
+					$.imageScroller.fastScrollRight();
+				},
+				enableSlideshow : false,
+				autostartSlideshow : false,
+				slideshowDelay : 3000,
+				onSlideshowPlayed : function() {
+					$('.play').hide();
+					$('.pause').show();	
+				},
+				onSlideshowPaused : function() {
+					$('.play').show();
+					$('.pause').hide();
+				}
+			});
+			
+			$.galleria.loader = $("<div></div>").addClass("loader").append($(new Image()).attr("src","../res/loader.gif").attr("title","Loading..."));
+			
+			prepareArrow = function(arrow) {
+				arrow.css({display: "none", opacity: 0.5, "padding-top": "20px"}).fadeIn( 1000);			
+				arrow.hover(
+					function() {
+						arrow.fadeTo("fast", 1);
+					},
+					function() {
+						arrow.fadeTo("fast", 0.5);			
+					}
+				);	
+			}
+			
+			var leftArrow = $("#left_arrow");
+			prepareArrow(leftArrow);
+			leftArrow.click(function() {
+				$.galleria.prev();	
+			});
+			
+			var rightArrow = $("#right_arrow");
+			prepareArrow(rightArrow);
+			rightArrow.click(function() {
+				$.galleria.next();
+			});
+			
+			if (false) {
+				var leftFastArrow = $("#left_fast_arrow");
+				prepareArrow(leftFastArrow);
+				leftFastArrow.click(function() {
+					$.galleria.prevFast();
+				});
+				
+				var rightFastArrow = $("#right_fast_arrow");
+				prepareArrow(rightFastArrow);
+				rightFastArrow.click(function() {
+					$.galleria.nextFast();
+				});
+			}
+		});
+
+		$(document).bind("keydown", "left", function() {
+			if (!KeyboardNavigation.widgetHasFocus()) {
+				$.galleria.prev();
+			}
+		});
+		$(document).bind("keydown", "right", function() {
+			if (!KeyboardNavigation.widgetHasFocus()) {
+				$.galleria.next();
+			}
+		});
+		$(document).bind("keydown", "space", function() {
+			if (!KeyboardNavigation.widgetHasFocus()) {
+				$.galleria.toggleSlideshow();
+			}
+		});
+
+		var KeyboardNavigation = {
+			widgetHasFocus: function() {
+				if(typeof _jaWidgetFocus != 'undefined' && _jaWidgetFocus) {
+					return true;
+				}
+				return false;
+			}
+		}
+	//--><!]]></script>
+
+	</head>
+	<body>
+		<div id="header">
+	<div id="top_container">
+			<h1><a href="../index.html">Photos Aqualo</a> &raquo; Sur la route...</h1>
+				
+	</div>	
+	
+</div>
+		<div id="main">
+				<div id="scroller_container">
+					<img class="hide" id="left_arrow" src="../res/left.png" alt="Scroll left" title="Scroll left" />					
+					<div id="image_scroller">
+						<ul id="thumbnails_container" class="thumbnails_unstyled">
+								<li class="active">
+												
+
+									<a href="slides/Bordeaux.JPG" title="">
+										<img src="thumbs/Bordeaux.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/musee.JPG" title="">
+										<img src="thumbs/musee.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/Ble.JPG" title="">
+										<img src="thumbs/Ble.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/Eau.JPG" title="">
+										<img src="thumbs/Eau.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/Angouleme.JPG" title="">
+										<img src="thumbs/Angouleme.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/1105Allem3(1).JPG" title="">
+										<img src="thumbs/1105Allem3(1).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/dessin-eau-1.JPG" title="">
+										<img src="thumbs/dessin-eau-1.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/Poitiers.JPG" title="">
+										<img src="thumbs/Poitiers.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/barcelonnette.JPG" title="">
+										<img src="thumbs/barcelonnette.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/avion.JPG" title="">
+										<img src="thumbs/avion.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/Molieres.JPG" title="">
+										<img src="thumbs/Molieres.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/poisson.JPG" title="">
+										<img src="thumbs/poisson.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/photo.JPG" title="">
+										<img src="thumbs/photo.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/1105Wiss2(1).JPG" title="">
+										<img src="thumbs/1105Wiss2(1).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/dessin-eau-3.JPG" title="">
+										<img src="thumbs/dessin-eau-3.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/Beauvoir(2).JPG" title="">
+										<img src="thumbs/Beauvoir(2).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/Cabourg1(2).JPG" title="">
+										<img src="thumbs/Cabourg1(2).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/dessin-eau-2.JPG" title="">
+										<img src="thumbs/dessin-eau-2.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/1105Allem4(1).JPG" title="">
+										<img src="thumbs/1105Allem4(1).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/Caen1(2).JPG" title="">
+										<img src="thumbs/Caen1(2).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/photo%20(1).JPG" title="">
+										<img src="thumbs/photo%20(1).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/dessin-eau-5.JPG" title="">
+										<img src="thumbs/dessin-eau-5.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/photo%20(2).JPG" title="">
+										<img src="thumbs/photo%20(2).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/photo%20(3).JPG" title="">
+										<img src="thumbs/photo%20(3).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/photo%20(4).JPG" title="">
+										<img src="thumbs/photo%20(4).JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+								<li class="">
+												
+
+									<a href="slides/dessin-eau-4.JPG" title="">
+										<img src="thumbs/dessin-eau-4.JPG" alt="" title="" style="width: 75px; height: 75px;" />
+									</a>
+								</li>
+								
+						</ul>
+						<div class="clear"></div>
+					</div>					
+					<img class="hide" id="right_arrow" src="../res/right.png" alt="Scroll right" title="Scroll right" />
+					
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+				<div id="middle_container">
+					<div id="main_image"></div>
+					<div id="extras"></div>
+				</div>
+			<div class="clear"></div>	
+		</div>
+		<div class="clear"></div>
+		<div id="footer">
+		<p id="bottom_container">
+			Photo album created with <a href="http://jalbum.net/" target="_blank" title="jAlbum 9">jAlbum 9</a> and <a href="http://jalbum.net/skins/skin/Galleria-OursBleu" title="Galleria-OursBleu">Galleria-OursBleu</a>.<br />Create <a href="http://jalbum.net/">online photo albums</a> with jAlbum
+		</p>
+	
+</div>
+		
+			<script type="text/javascript">
+				_jaWidgetBarColor = "white";
+			</script>
+		
+	<div id="jalbumwidgetcontainer"></div>
+<script type="text/javascript" charset="utf-8"><!--//--><![CDATA[//><!--
+_jaSkin = "Galleria-OursBleu";
+_jaStyle = "Light.html";
+_jaVersion = "9.3";
+_jaGeneratorType = "desktop";
+_jaLanguage = "fr";
+_jaPageType = "index";
+_jaRootPath = "..";
+var script = document.createElement("script");
+script.type = "text/javascript";
+script.src = "http://jalbum.net/widgetapi/load.js";
+document.getElementById("jalbumwidgetcontainer").appendChild(script);
+//--><!]]></script>
+
+</body>
+
+<!-- Mirrored from www.compagnieoursbleu.com/album/Sur la route.../index.html by HTTrack Website Copier/3.x [XR&CO'2010], Tue, 15 Oct 2013 22:01:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+</html>
