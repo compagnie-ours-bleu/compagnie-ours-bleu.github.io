@@ -1,14 +1,14 @@
 
 // *
 // * jQuery JavaScript Library v1.4.2
-// * http://jquery.com/
+// * //jquery.com/
 // *
 // * Copyright 2010, John Resig
 // * Dual licensed under the MIT or GPL Version 2 licenses.
-// * http://jquery.org/license
+// * //jquery.org/license
 // *
 // * Includes Sizzle.js
-// * http://sizzlejs.com/
+// * //sizzlejs.com/
 // * Copyright 2010, The Dojo Foundation
 // * Released under the MIT, BSD, and GPL Licenses.
 // *
@@ -160,11 +160,11 @@ e&&e.document?e.document.compatMode==="CSS1Compat"&&e.document.documentElement["
 // *
 // * jQuery Effects Core & Clip 1.7.2 - New Wave Javascript (Packed)
 // *
-// * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
+// * Copyright (c) 2009 AUTHORS.txt (//jqueryui.com/about)
 // * Dual licensed under the MIT (MIT-LICENSE.txt)
 // * and GPL (GPL-LICENSE.txt) licenses.
 // *
-// * http://docs.jquery.com/UI
+// * //docs.jquery.com/UI
 // *
 
 if (typeof(jQuery) == "function") {

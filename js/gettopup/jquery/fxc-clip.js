@@ -2,11 +2,11 @@
 // *
 // * jQuery Effects Core & Clip 1.7.2 - New Wave Javascript (Packed)
 // *
-// * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
+// * Copyright (c) 2009 AUTHORS.txt (//jqueryui.com/about)
 // * Dual licensed under the MIT (MIT-LICENSE.txt)
 // * and GPL (GPL-LICENSE.txt) licenses.
 // *
-// * http://docs.jquery.com/UI
+// * //docs.jquery.com/UI
 // *
 
 if (typeof(jQuery) == "function") {

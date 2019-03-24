@@ -1,12 +1,12 @@
 /**
- * Galleria (http://monc.se/kitchen)
+ * Galleria (//monc.se/kitchen)
  *
- * Galleria is a javascript image gallery written in jQuery. 
- * It loads the images one by one from an unordered list and displays thumbnails when each image is loaded. 
- * It will create thumbnails for you if you choose so, scaled or unscaled, 
+ * Galleria is a javascript image gallery written in jQuery.
+ * It loads the images one by one from an unordered list and displays thumbnails when each image is loaded.
+ * It will create thumbnails for you if you choose so, scaled or unscaled,
  * centered and cropped inside a fixed thumbnail box defined by CSS.
- * 
- * The core of Galleria lies in it's smart preloading behaviour, snappiness and the fresh absence 
+ *
+ * The core of Galleria lies in it's smart preloading behaviour, snappiness and the fresh absence
  * of obtrusive design elements. Use it as a foundation for your custom styled image gallery.
  *
  * MAJOR CHANGES v.FROM 0.9
@@ -15,20 +15,20 @@
  * onImage and onThumb functions lets you customize the behaviours of the images on the site
  *
  * Tested in Safari 3, Firefox 2, MSIE 6, MSIE 7, Opera 9
- * 
+ *
  * Version 1.0
  * Februari 21, 2008
  *
- * Copyright (c) 2008 David Hellsing (http://monc.se)
+ * Copyright (c) 2008 David Hellsing (//monc.se)
  * Licensed under the GPL licenses.
- * http://www.gnu.org/licenses/gpl.txt
+ * //www.gnu.org/licenses/gpl.txt
  **/
 ;(function($){
 
 var $$;
 
 /**
- * 
+ *
  * @desc Convert images from a simple html <ul> into a thumbnail gallery
  * @author David Hellsing
  * @version 1.0
@@ -37,7 +37,7 @@ var $$;
  * @type jQuery
  *
  * @cat plugins/Media
- * 
+ *
  * @example $('ul.gallery').galleria({options});
  * @desc Create a a gallery from an unordered list of images with thumbnails
  * @options
@@ -52,13 +52,13 @@ var $$;
  *
 **/
 $$ = $.fn.galleria = function($options) {
-	
+
 	// check for basic CSS support
 	if (!$$.hasCSS()) { return false; }
-	
+
 	// init the modified history object
 	$.historyInit($$.onPageLoad);
-	
+
 	// set default options
 	var $defaults = {
 		insert      : '.galleria_container',
@@ -78,65 +78,65 @@ $$ = $.fn.galleria = function($options) {
 		preloads	: 3,
 		fastSteps	: 3
 	};
-	
+
 
 	// extend the options
 	var $opts = $.extend($defaults, $options);
-	
+
 	// bring the options to the galleria object
 	for (var i in $opts) {
 		$.galleria[i]  = $opts[i];
 	}
-	
+
 	// if no insert selector, create a new division and insert it before the ul
-	var _insert = ($($opts.insert).is($opts.insert)) ? 
-		$($opts.insert) : 
+	var _insert = ($($opts.insert).is($opts.insert)) ?
+		$($opts.insert) :
 		jQuery(document.createElement('div')).insertBefore(this);
-		
+
 	// create a wrapping div for the image
 	var _div = $(document.createElement('div')).addClass('galleria_wrapper');
-	
+
 	// create a caption span
 	var _span = $(document.createElement('span')).addClass('caption');
-	
+
 	// inject the wrapper in in the insert selector
 	_insert.addClass('galleria_container').append(_div).append(_span);
-	
+
 	//-------------
-	
+
 	return this.each(function(){
-		
+
 		// add the Galleria class
 		$(this).addClass('galleria');
-		
+
 		// loop through list
 		$(this).children('li').each(function(i) {
-			
+
 			// bring the scope
 			var _container = $(this);
-			                
+
 			// build element specific options
 			var _o = $.meta ? $.extend({}, $opts, _container.data()) : $opts;
-			
+
 			// remove the clickNext if image is only child
 			_o.clickNext = $(this).is(':only-child') ? false : _o.clickNext;
-			
+
 			/************************** Modified to get faster loads ******************************************/
-			
+
 			// try to fetch an anchor
 			var _a = $(this).find('a');
-			
+
 			// reference the original image as a variable and hide it
 			var _img = $(this).children('img').css('display','none');
-			
+
 			// extract the original source
 			var _src = _a.attr('href');
-			
+
 			// Added for faster loads
 			if (i < _o.preloads) {
 				$.galleria.queue.push(_src);
 			}
-			
+
 			// find a title
 			var _title = _a.attr('title');
 
@@ -145,28 +145,28 @@ $$ = $.fn.galleria = function($options) {
 				_container.siblings('.active').removeClass('active');
 				_container.addClass('active');
 			}
-			
+
 			var _thumb = _a.find('img').addClass('thumb').css('display','none');
 			_thumb.toData(_a.siblings('span'));
 			_a.replaceWith(_thumb);
-			
+
 			// center thumbnails.
 			_thumb.css({
-				marginLeft: (_thumb.width > 0 ? (-( _thumb.width() - _container.width() )/2) : 0), 
-				marginTop: (_thumb.height > 0 ? (-( _thumb.height() - _container.height() )/2) : 0) 
+				marginLeft: (_thumb.width > 0 ? (-( _thumb.width() - _container.width() )/2) : 0),
+				marginTop: (_thumb.height > 0 ? (-( _thumb.height() - _container.height() )/2) : 0)
 			});
-			
+
 			// add the rel attribute
 			_thumb.attr('rel',_src);
-			
+
 			// add the title attribute
 			_thumb.attr('title',_title);
-			
+
 			// add the click functionality to the _thumb
 			_thumb.click(function() {
 				$.galleria.activate(_src);
 			});
-			
+
 			// hover classes for IE6
 			_thumb.hover(
 				function() { $(this).addClass('hover'); },
@@ -179,30 +179,30 @@ $$ = $.fn.galleria = function($options) {
 
 			// prepend the thumbnail in the container
 			_container.prepend(_thumb);
-			
+
 			// show the thumbnail
 			_thumb.css('display','block');
-			
+
 			// call the onThumb function
 			_o.onThumb(jQuery(_thumb));
-			
+
 			// check active class and activate image if match
 			if (_container.hasClass('active')) {
 				$.galleria.activate(_src);
 			}
-			
+
 			// finally delete the original image
 			_img.remove();
-				
-			/********************************************************************/									
+
+			/********************************************************************/
 		});
-		
+
 		// Added for faster loading. Init loading.
 		var _first = $.galleria.nextInQueue();
 		if (_first != null) {
 			$.galleria.preload(_first);
 		}
-		
+
 		// Added to enable slideshow.
 		if ($.galleria.enableSlideshow && $.galleria.autostartSlideshow) {
 			$.galleria.playSlideshow();
@@ -221,7 +221,7 @@ $$.nextSelector = function(selector) {
 	return $(selector).is(':last-child') ?
 		   $(selector).siblings(':first-child') :
     	   $(selector).next();
-    	   
+
 };
 
 /**
@@ -235,7 +235,7 @@ $$.previousSelector = function(selector) {
 	return $(selector).is(':first-child') ?
 		   $(selector).siblings(':last-child') :
     	   $(selector).prev();
-    	   
+
 };
 
 /**
@@ -249,7 +249,7 @@ $$.stepSelector = function(selector, steps) {
 	if (_i > (_l - 1)) {
 		_i -= _l;
 	} else if (_i < 0) {
-		_i += _l;	
+		_i += _l;
 	}
 	return $(selector).parent().find(':nth-child(' + (_i + 1) + ')');
 };
@@ -283,39 +283,39 @@ $$.hasCSS = function()  {
  * 3. after pushing "Go Back" button of a browser
  *
 **/
-$$.onPageLoad = function(_src) {	
-	
+$$.onPageLoad = function(_src) {
+
 	// get the wrapper
 	var _wrapper = $('.galleria_wrapper');
-	
+
 	// get the thumb
 	// Modified to work with latest version of jQuery
 	var _thumb = $('.galleria img[rel="'+_src+'"]');
-	
+
 	if (_src) {
-		
+
 		// new hash location
 		if ($.galleria.history) {
 			window.location = window.location.href.replace(/\#.*/,'') + '#' + _src;
 		}
-		
+
 		// alter the active classes
 		_thumb.parents('li').siblings('.active').removeClass('active');
 		_thumb.parents('li').addClass('active');
-	
+
 		// define a new image
 		// Modified for faster loads
 		var _loader = $.galleria.loader;
 		if (!$.galleria.isLoaded(_src) && _loader != null) {
 			var _width = _thumb.data('width');
 			var _height = _thumb.data('height');
-			_wrapper.empty().append(_loader.css({ 
+			_wrapper.empty().append(_loader.css({
 				'width' : _width + 'px',
 				'height' : _height + 'px',
 				'display' : 'none' }).fadeIn('fast'));
 			_loader.children('img').css('marginTop', (_height/3) + 'px');
 			_wrapper.siblings('.caption').empty();
-			
+
 			// Also hide siblings to parent of wrapper
 			// Added to remove additional metadata
 			_wrapper.parent().siblings().hide();
@@ -323,28 +323,28 @@ $$.onPageLoad = function(_src) {
 		var _img = $.galleria.loadImage(_src, function() {
 			// empty the wrapper and insert the new image
 			_wrapper.empty().append($(this));
-	
+
 			// insert the caption
 			// Modified to allow html in captions
 			_wrapper.siblings('.caption').html(_thumb.attr('title'));
-			
+
 			// fire the onImage function to customize the loaded image's features
 			$.galleria.onImage($(this),_wrapper.siblings('.caption'),_thumb);
-			
+
 			// add clickable image helper
 			if($.galleria.clickNext) {
 				$(this).css('cursor','pointer').click(function() { $.galleria.next(); })
 			}
-			
+
 			// Added to deal with weird resize bug in IE
 			$(this).removeAttr('width');
-			$(this).removeAttr('height');		
+			$(this).removeAttr('height');
 		}).addClass('replaced');
 	} else {
-		
+
 		// clean up the container if none are active
 		_wrapper.siblings().andSelf().empty();
-		
+
 		// remove active classes
 		$('.galleria li.active').removeClass('active');
 	}
@@ -370,7 +370,7 @@ $$.onPageLoad = function(_src) {
 $.extend({galleria : {
 	current : '',
 	onImage : function(){},
-	activate : function(_src) { 
+	activate : function(_src) {
 		if ($.galleria.history) {
 			$.historyLoad(_src);
 			// Add to support widgets when history plugin is enabled.
@@ -396,16 +396,16 @@ $.extend({galleria : {
 			$.galleria.onNextFast();
 		}
 	},
-	next : function() {		
-		// Added to keep thumbnail scroller in sync with main image		
+	next : function() {
+		// Added to keep thumbnail scroller in sync with main image
 		if (!$.galleria.stopped) {
-		
+
 			// Modified to work with latest version of jQuery
 			$.galleria.activate($.galleria.getNext());
-			
+
 			// Added additional callback
 			$.galleria.onNext();
-			
+
 			// Added additional preloads
 			var _next = $.galleria.getNext();
 			if (!$.galleria.isLoaded(_next) && !$.galleria.isQueued(_next)) {
@@ -427,15 +427,15 @@ $.extend({galleria : {
 		}
 	},
 	prev : function() {
-		// Added to keep thumbnail scroller in sync with main image				
+		// Added to keep thumbnail scroller in sync with main image
 		if (!$.galleria.stopped) {
-		
+
 			// Modified to work with latest version of jQuery
 			$.galleria.activate($.galleria.getPrev());
-			
+
 			// Added additional callback
 			$.galleria.onPrev();
-			
+
 			// Added additional preloads
 			var _prev = $.galleria.getPrev();
 			if (!$.galleria.isLoaded(_prev) && !$.galleria.isQueued(_prev)) {
@@ -445,12 +445,12 @@ $.extend({galleria : {
 				$.galleria.preload($.galleria.nextInQueue());
 			}
 		}
-	},	
+	},
 	// Added to enable faster loads
 	queue : new Array(),
 	loaded : new Array(),
 	isQueued : function(_src) {
-		return $.inArray(_src, $.galleria.queue) > -1;	
+		return $.inArray(_src, $.galleria.queue) > -1;
 	},
 	isLoaded : function(_src) {
 		return $.inArray(_src, $.galleria.loaded) > -1;
@@ -466,7 +466,7 @@ $.extend({galleria : {
 		return null;
 	},
 	preload : function(_src) {
-		return $.galleria.loadImage(_src, function() {				
+		return $.galleria.loadImage(_src, function() {
 			if ($.galleria.queue.length > 0) {
 				var _next = $.galleria.nextInQueue();
 				if (_next != null) {
@@ -482,8 +482,8 @@ $.extend({galleria : {
 			_img.load(_onLoad);
 		}
 		return _img.attr('src',_src);
-	}, 
-	// Added to keep thumbnail scroller in sync with main image	
+	},
+	// Added to keep thumbnail scroller in sync with main image
 	stopped : false,
 	start : function() {
 		$.galleria.stopped = false;
@@ -496,17 +496,17 @@ $.extend({galleria : {
 	playingSlideshow : false,
 	slideshowTimer : null,
 	slideshow : function() {
-		$.galleria.slideshowTimer = setTimeout(function() { 
-			$.galleria.next(); 
-			$.galleria.slideshow(); 
+		$.galleria.slideshowTimer = setTimeout(function() {
+			$.galleria.next();
+			$.galleria.slideshow();
 		}, $.galleria.slideshowDelay)
 	},
 	playSlideshow : function() {
 		if (!$.galleria.playingSlideshow) {
 			$.galleria.slideshow();
-			$.galleria.playingSlideshow = true;		
+			$.galleria.playingSlideshow = true;
 		}
-		$.galleria.onSlideshowPlayed();			
+		$.galleria.onSlideshowPlayed();
 	},
 	pauseSlideshow : function() {
 		if ($.galleria.playingSlideshow) {
@@ -539,14 +539,14 @@ $.extend({galleria : {
 (function($) {
 	$.fn.toData = function(element) {
 		var cont = element.text();
-		var arr = cont.split(';;');	
+		var arr = cont.split(';;');
 		for (var i = 0; i < arr.length; i++) {
 			var len = arr[i].length;
 			if (len > 2) {
 				var cIndex = arr[i].indexOf(':');
 				if (cIndex > 0 && cIndex < len-2) {
 					var key = arr[i].substring(0, cIndex);
-					var val = arr[i].substring(cIndex+1, len);		
+					var val = arr[i].substring(cIndex+1, len);
 					this.data(key, val);
 				}
 			}
@@ -558,7 +558,7 @@ $.extend({galleria : {
 /**
  *
  * Packed history extension for jQuery
- * Credits to http://www.mikage.to/
+ * Credits to //www.mikage.to/
  *
 **/
 jQuery.extend({historyCurrentHash:undefined,historyCallback:undefined,historyInit:function(callback){jQuery.historyCallback=callback;var current_hash=location.hash;jQuery.historyCurrentHash=current_hash;if(jQuery.browser.msie){if(jQuery.historyCurrentHash==''){jQuery.historyCurrentHash='#'}$("body").prepend('<iframe id="jQuery_history" style="display: none;"></iframe>');var ihistory=$("#jQuery_history")[0];var iframe=ihistory.contentWindow.document;iframe.open();iframe.close();iframe.location.hash=current_hash}else if($.browser.safari){jQuery.historyBackStack=[];jQuery.historyBackStack.length=history.length;jQuery.historyForwardStack=[];jQuery.isFirst=true}jQuery.historyCallback(current_hash.replace(/^#/,''));setInterval(jQuery.historyCheck,100)},historyAddHistory:function(hash){jQuery.historyBackStack.push(hash);jQuery.historyForwardStack.length=0;this.isFirst=true},historyCheck:function(){if(jQuery.browser.msie){var ihistory=$("#jQuery_history")[0];var iframe=ihistory.contentDocument||ihistory.contentWindow.document;var current_hash=iframe.location.hash;if(current_hash!=jQuery.historyCurrentHash){location.hash=current_hash;jQuery.historyCurrentHash=current_hash;jQuery.historyCallback(current_hash.replace(/^#/,''))}}else if($.browser.safari){if(!jQuery.dontCheck){var historyDelta=history.length-jQuery.historyBackStack.length;if(historyDelta){jQuery.isFirst=false;if(historyDelta<0){for(var i=0;i<Math.abs(historyDelta);i++)jQuery.historyForwardStack.unshift(jQuery.historyBackStack.pop())}else{for(var i=0;i<historyDelta;i++)jQuery.historyBackStack.push(jQuery.historyForwardStack.shift())}var cachedHash=jQuery.historyBackStack[jQuery.historyBackStack.length-1];if(cachedHash!=undefined){jQuery.historyCurrentHash=location.hash;jQuery.historyCallback(cachedHash)}}else if(jQuery.historyBackStack[jQuery.historyBackStack.length-1]==undefined&&!jQuery.isFirst){if(document.URL.indexOf('#')>=0){jQuery.historyCallback(document.URL.split('#')[1])}else{var current_hash=location.hash;jQuery.historyCallback('')}jQuery.isFirst=true}}}else{var current_hash=location.hash;if(current_hash!=jQuery.historyCurrentHash){jQuery.historyCurrentHash=current_hash;jQuery.historyCallback(current_hash.replace(/^#/,''))}}},historyLoad:function(hash){var newhash;if(jQuery.browser.safari){newhash=hash}else{newhash='#'+hash;location.hash=newhash}jQuery.historyCurrentHash=newhash;if(jQuery.browser.msie){var ihistory=$("#jQuery_history")[0];var iframe=ihistory.contentWindow.document;iframe.open();iframe.close();iframe.location.hash=newhash;jQuery.historyCallback(hash)}else if(jQuery.browser.safari){jQuery.dontCheck=true;this.historyAddHistory(hash);var fn=function(){jQuery.dontCheck=false};window.setTimeout(fn,200);jQuery.historyCallback(hash);location.hash=newhash}else{jQuery.historyCallback(hash)}}});
